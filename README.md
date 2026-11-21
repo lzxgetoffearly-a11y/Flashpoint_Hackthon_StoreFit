@@ -79,21 +79,23 @@ What we actually did with Flashpoint:
 ### Survey results (Flashpoint pilot, % of respondents)
 | Question | Result |
 |---|---|
-| Who are you | 67% run or plan to open a small shop/cafe · 33% customers |
-| What matters most when judging a location (multi) | Rent worth it 67% · Equipment and seating fit 67% · Nearby customers (students, workers) 67% · Foot traffic 33% · Competition 0% |
-| How helpful is a 3D layout preview before signing (1–5) | **3.67 / 5** (67% rated it 4) |
-| How much do you trust an automatic site score (1–5) | **2.33 / 5** (67% rated it 2) |
+| Who are you | 60% run or plan to open a small shop/cafe · 40% customers |
+| What matters most when judging a location (multi) | Rent worth it 80% · Equipment and seating fit 60% · Nearby customers (students, workers) 60% · Foot traffic 20% · Competition 0% |
+| How helpful is a 3D layout preview before signing (1–5) | **3.8 / 5** (80% rated it 4 or 5) |
+| How much do you trust an automatic site score (1–5) | **2.8 / 5** (only 20% rated it 4 or 5; 80% rated it 2–3) |
 
 Open answers, verbatim:
 1. "As a customer I notice when the entrance is awkward or the queue blocks the seats. A shop should be easy to reach and comfortable to use not just look good in pictures. I have no experience signing a commercial lease so I cannot judge the business economics."
-2. "Mistaking a busy street for enough paying customers. Before signing my first cafe lease I would count traffic at different times check whether those people would buy coffee and work out how many daily sales cover rent. A nice layout would not fix weak demand."
-3. "Signing a lease before checking kitchen equipment ventilation and electrical capacity. Cheap rent can hide expensive fit-out work. I would verify the layout and renovation costs with a contractor before committing to a second food shop."
+2. "I think the biggest mistake is to combine a lot of things together. For example: How many people walk across your store / What percentage of those people are your target customers / How much of that is your main target. You also need to consider seasonal effects. For example, if you are selling something pretty hot and the weather is cool, you will probably sell much more than in the summer. So yeah, there are a lot of things you need to combine together."
+3. "Mistaking a busy street for enough paying customers. Before signing my first cafe lease I would count traffic at different times check whether those people would buy coffee and work out how many daily sales cover rent. A nice layout would not fix weak demand."
+4. "Moving for a lower rent without checking whether regular clients can still get there easily. I would also measure the space for nail stations ventilation and a private treatment area before agreeing to the lease. More floor area is not useful if the working layout is awkward."
+5. "Signing a lease before checking kitchen equipment ventilation and electrical capacity. Cheap rent can hide expensive fit-out work. I would verify the layout and renovation costs with a contractor before committing to a second food shop."
 
 ### What the results changed
-- **Kept:** the Fit Lab as the lead feature. "Will my equipment and seating fit" tied for the top concern, and the 3D preview scored 3.67/5.
-- **Reinforced:** every score shows its source and range instead of a bare number. Trust in an automatic score was low (2.33/5), so a black-box score would not be used.
-- **Ruled out as a headline:** foot traffic alone (33%) and competitor counts (0%). Answer 2 says a busy street is not the same as paying customers, so the next step is a demand-vs-rent check (daily sales needed to cover rent), not a bigger traffic number.
-- **Added to the Fit Lab backlog (not built yet):** entrance and queue path not blocking seats (answer 1); ventilation and electrical capacity flags (answer 3).
+- **Kept:** the Fit Lab as the lead feature. "Will my equipment and seating fit" is a top-two concern (60%), and 80% rated the 3D preview 4 or 5 (avg 3.8/5).
+- **Reinforced:** every score shows its source and range instead of a bare number. Trust in an automatic score was low (2.8/5; only 20% rated it 4 or 5), so a black-box score would not be used.
+- **Ruled out as a headline:** foot traffic alone (20%) and competitor counts (0%). Rent worth it is the top concern (80%). Answers 2 and 3 say a busy street is not the same as paying customers, so the next step is a demand-vs-rent check (daily sales needed to cover rent), not a bigger traffic number.
+- **Added to the Fit Lab backlog (not built yet):** entrance and queue path not blocking seats (answer 1); ventilation and electrical capacity flags (answers 4 and 5); target-customer share and seasonality in the demand check (answer 2); access for existing regulars when relocating (answer 4).
 
 Each question is tied to a product decision we will make when answers arrive:
 
