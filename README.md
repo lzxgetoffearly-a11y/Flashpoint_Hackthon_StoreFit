@@ -6,6 +6,8 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 
 > Status: prototype. Scores use public-data proxies (no foot-traffic counts or real rents). Floor sizes and rents are user inputs. See [SPEC.md](SPEC.md).
 
+**Live demo:** https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/ (built from `main`, served from the `gh-pages` branch)
+
 ## What to try (for judges)
 1. Open the app → **Start a search**. Cards load live data from NYC Open Data (takes a few seconds).
 2. Click the top card: see each factor, its raw value and source link; competitors appear on the map.
