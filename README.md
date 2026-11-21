@@ -15,6 +15,41 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 > Status: prototype. Scores use public data (food businesses, coffee competitors, subway distance and station ridership), not pedestrian counts or real rents. Unit sizes are estimates from city lot data that the user can overwrite; rent is a user input. See [SPEC.md](SPEC.md).
 
 
+
+## Why this matters
+- **About 22 million new companies are registered worldwide every year.** That is roughly **60,000 a day, or about 40 every minute**. Our estimate: the World Bank's global rate of 4.3 new limited-liability firms per 1,000 working-age adults in 2024, across 188 economies ([World Bank, 2026](https://blogs.worldbank.org/en/psd/a-global-snapshot-of-entrepreneurship-trends)), multiplied by roughly 5.2 billion working-age adults (UN World Population Prospects).
+- In the US alone, about **497,000 business applications** were filed in December 2025, about **16,000 a day** ([US Census Business Formation Statistics](https://www.census.gov/econ/bfs/pdf/historic/bfs_2025m12.pdf)).
+- Many of these founders have to answer the same two questions before signing a lease: *Is this the right location?* and *Will my store actually fit inside it?* Today they answer them with broker tours, guesswork and a tape measure.
+
+## How it works
+StoreFit is a **location-intelligence engine plus a 3D spatial-planning agent**.
+
+**1. Multi-source data fusion.** For every candidate storefront, StoreFit queries city and transit open data live, then joins the results on location:
+- NYC Open Data: vacant storefronts (Local Law 157), the DOHMH restaurant inspection registry, and PLUTO tax-lot geometry
+- MTA: subway station locations and hourly station ridership
+- USGS 3DEP aerial LiDAR point clouds, and Google Photorealistic 3D Tiles
+
+**2. Explainable site scoring.** A weighted multi-factor model combines five signals into one 0–100 score:
+- demand density (nearby food activity)
+- competitive saturation (a non-linear curve: a few competitors confirm demand, more split it)
+- transit accessibility (walking distance blended with station ridership)
+- build-out readiness (previous use of the unit)
+- rent-to-revenue ratio
+
+Every factor shows its raw value, its rule and its source, so the score is a decision aid, not a black box. Flashpoint research showed users distrust opaque scores (2.33 / 5), which is why we kept it this way.
+
+**3. Spatial reconstruction.** StoreFit estimates each unit's footprint from lot geometry and orients the storefront from the LiDAR point cloud. This gives a 3D model of the real block.
+
+**4. Constraint-solving layout agent.** The agent places the counter, back of house, queue and seating. It checks every layout against accessibility and egress codes (ADA 2010, IBC / NYC Building Code) and treats each dimension as a range, not a single number. Each layout gets a verdict: **Works**, **Tight**, **Fails** or **Needs measuring**.
+
+## Business model (proposed, not yet tested)
+The Fit Lab places real, purchasable furniture and equipment into the owner's actual space. Each item links to its product page, and the shopping list totals the list prices. That makes it a sales channel for manufacturers:
+- **Manufacturers and suppliers** (furniture, seating, coffee and refrigeration equipment) pay to have their catalog as 3D models inside the Fit Lab. Their products then get "demoed" in thousands of real storefronts before purchase, which shortens the sales cycle and cuts returns from items that don't fit.
+- **Revenue:** a per-SKU listing fee, plus a referral commission on orders placed from the shopping list.
+- **Owners** use site search and layout for free. A paid, detailed report can be added later.
+
+This model is a hypothesis. Our next research step is to interview suppliers and owners to test it.
+
 ## What to try (for judges)
 Use **2905 Broadway** for the walkthrough; it is the address we checked end to end.
 
