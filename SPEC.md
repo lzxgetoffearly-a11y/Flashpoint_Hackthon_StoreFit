@@ -55,3 +55,9 @@ Vite + React 18, three.js via @react-three/fiber + drei, Leaflet via react-leafl
 - Dark 3D stage with translucent walls, numbered check pins, camera fly-to, and a bottom toolbar (Overview, Top, Street, Walk in, Dimensions, Zones, LiDAR, Dark).
 - Fit checks (`src/lib/fitchecks.js`) are measured from the plan geometry, each with Needs / Has / Method / Source / On the tour. Status: Works (≥10% margin), Tight (meets rule, <10% margin), Fails.
 - LiDAR layer: real USGS 3DEP points around the address, host building cut away so the plan shows through.
+
+## Fit Lab rebuild (2026-11-21, late morning)
+- `buildScene()` returns `{site, layout, rules, tolerances, alternatives[{items, zones, measures, checks, sections}], builtAt}`. The UI renders only from this object.
+- Measures: `{id, label, value, unit, method, range{min,max}, source}`. Room size is an assumption (±0.30 m) until taped; furniture placement ±5 cm; a chair in use sits up to 0.30 m out.
+- Checks: `{id, label, op, need{value,unit,source}, have -> measure, verdict, why, explain, tour, pin, measure line, sweep?}`.
+- Limits: massing is a 2.5 m height grid from LiDAR (median-filtered), not surveyed footprints; the room's position on the block is approximate; ceiling height is unknown and shown as a placeholder.

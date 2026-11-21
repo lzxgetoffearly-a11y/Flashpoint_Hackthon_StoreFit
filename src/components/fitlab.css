@@ -1,0 +1,114 @@
+/* Fit Lab: palette and structure follow Obia's Fit Lab viewer */
+.fitlab{--canvas:#f7f6f3;--surface:#fff;--line:#eaeaea;--text:#2f3437;--muted:#787774;--faint:#a3a19c;--hover:#f4f3ef;
+  --works:#346538;--works-bg:#edf3ec;--works-3d:#4c8a57;--tight:#956400;--tight-bg:#fbf3db;--tight-3d:#c28a1e;
+  --fails:#9f2f2d;--fails-bg:#fdebec;--fails-3d:#c2453d;--needs:#5f5e5b;--needs-bg:#f1f1ef;--needs-3d:#8e8d89;
+  --ease:cubic-bezier(.16,1,.3,1);--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Geist,sans-serif;--mono:"SF Mono",ui-monospace,Menlo,monospace;
+  display:grid;grid-template-columns:400px 1fr;height:calc(100vh - 60px);font-family:var(--sans);color:var(--text);background:var(--canvas)}
+.fitlab.dark{--canvas:#2b2d31;--surface:#36383d;--line:#484b51;--text:#ececef;--muted:#a9acb3;--faint:#7d8087;--hover:#3d4045;
+  --works:#7fc58c;--works-bg:rgba(95,174,110,.16);--works-3d:#5fae6e;--tight:#e9b55a;--tight-bg:rgba(226,163,54,.16);--tight-3d:#e2a336;
+  --fails:#f08a84;--fails-bg:rgba(229,83,75,.16);--fails-3d:#e5534b;--needs:#b9bbc1;--needs-bg:rgba(255,255,255,.08);--needs-3d:#a3a19c}
+.fitlab #panel{background:var(--surface);border-right:1px solid var(--line);overflow:auto;padding:22px 18px 28px;display:flex;flex-direction:column;gap:14px}
+.fitlab .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.fitlab h1{font-size:21px;font-weight:600;line-height:1.25;margin:0;letter-spacing:-.01em}
+.fitlab .addr{margin:6px 0 0;font-size:13px;color:var(--muted)}
+.fitlab .use{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+.fitlab .linkbtn{all:unset;cursor:pointer;font-size:12px;color:var(--muted);text-decoration:underline;margin-top:8px}
+.fitlab .brief{margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--muted)}
+.fitlab .brief .two{display:flex;gap:8px}.fitlab .brief label{flex:1;display:flex;flex-direction:column;gap:4px}
+.fitlab .brief input,.fitlab .brief textarea{width:100%;box-sizing:border-box;background:var(--canvas);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:13px var(--sans)}
+.fitlab .run{all:unset;cursor:pointer;text-align:center;background:var(--text);color:var(--surface);border-radius:999px;padding:9px;font-size:13px;font-weight:500}
+.fitlab .opts{border:1px solid var(--line);border-radius:10px;background:var(--canvas)}
+.fitlab .opts summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 12px;font-size:14px}
+.fitlab .opts summary::-webkit-details-marker{display:none}
+.fitlab .opts .n{margin-left:auto;font-size:12px;color:var(--muted);font-weight:400}
+.fitlab .opt-list{border-top:1px solid var(--line);padding:4px}
+.fitlab .opt-list button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;padding:9px 8px;border-radius:7px;font-size:13.5px}
+.fitlab .opt-list button:hover,.fitlab .opt-list button.on{background:var(--hover)}
+.fitlab .dot{width:8px;height:8px;border-radius:50%;background:var(--works-3d);flex:none}
+.fitlab .dot.tight{background:var(--tight-3d)}.fitlab .dot.fails{background:var(--fails-3d)}.fitlab .dot.needs{background:var(--needs-3d)}
+.fitlab #summary{display:flex;gap:6px;flex-wrap:wrap}
+.pill-v{font:500 11px var(--mono);padding:3px 8px;border-radius:999px;white-space:nowrap;background:var(--works-bg);color:var(--works)}
+.pill-v b{font-weight:600}
+.pill-v.tight{background:var(--tight-bg);color:var(--tight)}.pill-v.fails{background:var(--fails-bg);color:var(--fails)}.pill-v.needs{background:var(--needs-bg);color:var(--needs)}
+.fitlab .sec{border-top:1px solid var(--line)}
+.fitlab .sec-row{all:unset;box-sizing:border-box;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:15px 2px;font-size:14.5px;font-weight:600}
+.fitlab .sec-pills{display:flex;gap:5px;align-items:center;flex:none}
+.fitlab .chev{width:7px;height:7px;border-right:1.5px solid var(--faint);border-bottom:1.5px solid var(--faint);transform:rotate(45deg);margin:0 4px 3px 6px;transition:transform .3s var(--ease)}
+.fitlab .sec.open .chev{transform:rotate(-135deg);margin-bottom:-3px}
+.fitlab .sec-body{padding:0 2px 16px;font-size:13.5px;line-height:1.55;animation:fl-in .35s var(--ease)}
+@keyframes fl-in{from{opacity:0;transform:translateY(-4px)}}
+.fitlab .sec-body p{margin:0 0 12px;color:var(--muted)}
+.fitlab table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px}
+.fitlab th{text-align:left;font-weight:500;color:var(--faint);padding:5px 6px 5px 0;border-bottom:1px solid var(--line)}
+.fitlab td{padding:6px 6px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.fitlab td:nth-child(2){font-family:var(--mono);white-space:nowrap}
+.fitlab .chks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.fitlab .chk{border-radius:10px;border:1px solid transparent}
+.fitlab .chk.open{border-color:var(--line);background:var(--canvas)}
+.fitlab .chk-row{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:20px 1fr auto;gap:8px;align-items:start;width:100%;padding:10px 8px}
+.fitlab .chk-row:hover{background:var(--hover);border-radius:10px}
+.fitlab .num{font:600 12px var(--mono);color:var(--works);padding-top:2px}
+.fitlab .chk.tight .num{color:var(--tight)}.fitlab .chk.fails .num{color:var(--fails)}.fitlab .chk.needs .num{color:var(--needs)}
+.fitlab .chk-t{font-size:13.5px;font-weight:600;line-height:1.3;display:flex;flex-direction:column;gap:3px}
+.fitlab .chk-t em{font:600 12px var(--mono);font-style:normal}.fitlab .chk-t em i{font-style:normal;font-weight:400;color:var(--muted)}
+.fitlab .chk-body{padding:2px 10px 12px 36px;font-size:13px}
+.fitlab .chk-body dl{margin:0 0 10px}
+.fitlab .chk-body dl>div{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.fitlab dt{color:var(--faint)}.fitlab dd{margin:0}.fitlab dd small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.fitlab .sweep{border-top:1px solid var(--line);padding:10px 0;font-size:12.5px;color:var(--muted)}
+.fitlab .sweep label{display:flex;flex-direction:column;gap:8px}
+.fitlab .sweep input{width:100%;accent-color:var(--tight-3d)}
+.fitlab .sweep output{display:block;margin-top:6px;color:var(--text)}.fitlab .sweep .ok{color:var(--works)}.fitlab .sweep .no{color:var(--fails)}
+.fitlab .tour{background:var(--tight-bg);border-radius:8px;padding:9px 11px;display:flex;flex-direction:column;gap:3px;font-size:13px}
+.fitlab .tour span{color:var(--tight);font-size:12px;font-weight:600}
+.fitlab .steps{margin:0 0 10px;padding-left:18px;color:var(--muted);font-size:12.5px;display:flex;flex-direction:column;gap:5px}
+.fitlab #facts{border-top:1px solid var(--line);margin-top:auto;padding-top:14px}
+.fitlab #facts summary{cursor:pointer;font-size:14px;font-weight:600;list-style:none;display:flex;justify-content:space-between}
+.fitlab #facts summary::after{content:'+';color:var(--faint);font-weight:400}.fitlab #facts[open] summary::after{content:'–'}
+.fitlab .facts{margin:10px 0 0;font-size:13px}.fitlab .facts>div{display:grid;grid-template-columns:70px 1fr;gap:2px 10px;padding:7px 0;border-top:1px solid var(--line)}
+.fitlab .facts small{grid-column:2;color:var(--muted);font-size:11.5px}
+.fitlab .built{font:11px var(--mono);color:var(--faint);margin:10px 0 0}
+/* shopping */
+.fitlab .shop{display:flex;flex-direction:column;gap:10px}
+.fitlab .shop-sum{background:var(--needs-bg);border-radius:10px;padding:10px 12px;font-size:13px}.fitlab .shop-sum b{font-size:20px;font-weight:600}
+.fitlab .shop-sum small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
+.fitlab .shop-cat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin:4px 0}
+.fitlab .shop-row{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.fitlab .shop-row .qty{font-weight:600;font-family:var(--mono)}.fitlab .sname{cursor:pointer}.fitlab .sname:hover{text-decoration:underline}
+.fitlab .sname em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.fitlab .buy{display:inline-block;text-decoration:none;font-size:11px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--text);color:var(--surface);white-space:nowrap;text-align:center}
+.fitlab .buy.similar{background:transparent;color:var(--text);border:1px solid var(--faint)}
+/* stage */
+.fitlab #stage{position:relative;overflow:hidden;background:var(--canvas)}
+.fitlab #brand{position:absolute;left:18px;top:16px;z-index:30;display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.05em;font-size:15px}
+.fitlab #brand .ring{width:15px;height:15px;border-radius:50%;border:3.5px solid currentColor;border-right-color:#5b6cff;box-sizing:border-box}
+.fitlab #brand i{width:1px;height:14px;background:var(--faint)}
+.fitlab #brand{font-weight:500}.fitlab #brand .ring+*{font-weight:700}
+.fitlab #north{position:absolute;right:16px;top:14px;z-index:30;width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center}
+.fitlab #north span{display:block;width:100%;height:100%;position:relative}
+.fitlab #north b{position:absolute;left:50%;top:2px;transform:translateX(-50%);font:700 9px var(--sans);color:var(--fails-3d)}
+.fitlab #north span::after{content:'';position:absolute;left:50%;top:13px;width:2px;height:12px;margin-left:-1px;background:var(--faint);border-radius:1px}
+.fitlab #dock{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:30;display:flex;gap:6px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+.fitlab #dock .seg{display:flex;gap:2px}
+.fitlab #dock button{all:unset;cursor:pointer;color:var(--muted);font-size:12px;padding:7px 10px;border-radius:9px;white-space:nowrap;transition:background .2s var(--ease)}
+.fitlab #dock button:hover{background:var(--hover)}
+.fitlab #dock button.on{background:var(--hover);color:var(--text);font-weight:600}
+.fitlab #dock #walk{background:var(--text);color:var(--surface);font-weight:600;padding:7px 14px}
+.fitlab #credit{position:absolute;right:14px;bottom:6px;z-index:5;font-size:10px;color:var(--faint)}
+.fitlab .marker{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.9);color:#fff;font:700 12px var(--sans);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35);transition:transform .25s var(--ease);background:var(--works-3d);padding:0}
+.fitlab .marker.tight{background:var(--tight-3d)}.fitlab .marker.fails{background:var(--fails-3d)}.fitlab .marker.needs{background:var(--needs-3d)}
+.fitlab .marker.on{transform:scale(1.35);box-shadow:0 0 0 6px rgba(255,255,255,.2),0 2px 12px rgba(0,0,0,.4)}
+.fitlab .needtag{font:600 11px var(--mono);white-space:nowrap;background:var(--surface);border:1px solid var(--line);padding:2px 7px;border-radius:6px}
+.fitlab .dim3d{background:var(--text);color:var(--surface);font:600 11px var(--mono);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.fitlab .dim3d.door{background:#5b6cff;color:#fff}
+.fitlab .pcard{position:absolute;right:16px;top:60px;z-index:30;width:270px;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,.2);display:flex;flex-direction:column;gap:6px}
+.fitlab .pcard .x{position:absolute;right:10px;top:6px;border:0;background:none;font-size:20px;cursor:pointer;color:var(--faint)}
+.fitlab .pcard small{color:var(--muted)}.fitlab .pname{font-size:15px;font-weight:600;line-height:1.3;padding-right:14px}
+.fitlab .pdims{font:12px var(--mono);color:var(--muted)}.fitlab .pprice{font-size:20px;font-weight:600}.fitlab .pprice small{font-size:11px;font-weight:400}
+.fitlab .tagk{align-self:flex-start;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--needs-bg);color:var(--needs)}
+.fitlab .tagk.exact{background:var(--works-bg);color:var(--works)}
+.fitlab .pcard .buy{padding:9px 14px;font-size:13px}
+.fitlab #lidar-note{position:absolute;left:16px;bottom:84px;z-index:30;width:300px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12px;display:flex;flex-direction:column;gap:5px}
+.fitlab #lidar-note small{color:var(--muted)}.fitlab .lg-row{display:flex;align-items:center;gap:6px}
+.fitlab .dot.g{background:#6b7079}.fitlab .grad{width:70px;height:7px;border-radius:4px;background:linear-gradient(90deg,#3d4fd1,#dfe6ff);margin-left:8px}
+@media (max-width:900px){.fitlab{grid-template-columns:1fr;height:auto}.fitlab #stage{height:70vh}.fitlab #dock{max-width:94vw;overflow:auto}}

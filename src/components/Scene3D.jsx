@@ -1,11 +1,11 @@
 import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, ContactShadows, Html, Environment, Lightformer, Line, Grid, Edges } from '@react-three/drei'
-import Lidar from './Lidar.jsx'
+import { OrbitControls, ContactShadows, Html, Environment, Lightformer, Line, Grid, Edges, OrthographicCamera, PerspectiveCamera } from '@react-three/drei'
+import { LidarPoints, Massing } from './Lidar.jsx'
 import * as THREE from 'three'
 import { Item } from './Furniture.jsx'
 
-function useFloorTexture(W, D) {
+function useFloorTexture() {
   return useMemo(() => {
     const c = document.createElement('canvas'); c.width = 1024; c.height = 1024
     const g = c.getContext('2d')
@@ -25,10 +25,9 @@ function useFloorTexture(W, D) {
     }
     const t = new THREE.CanvasTexture(c)
     t.wrapS = t.wrapT = THREE.RepeatWrapping
-    t.repeat.set(W / 1.6, D / 1.6)
     t.colorSpace = THREE.SRGBColorSpace
     return t
-  }, [W, D])
+  }, [])
 }
 
 function Dim({ a, b, label, offset = [0, 0, 0], color = '#0b0c12' }) {
@@ -44,7 +43,8 @@ function Dim({ a, b, label, offset = [0, 0, 0], color = '#0b0c12' }) {
 }
 
 function Room({ W, D, zones, showZones, dark, dims, items }) {
-  const floor = useFloorTexture(W, D)
+  const floor = useFloorTexture()
+  floor.repeat.set(W / 1.6, D / 1.6)
   const wallH = 3.4, sideH = 1.1, t = 0.15
   const wall = useMemo(() => dark ? new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.9, transparent: true, opacity: 0.18, depthWrite: false }) : new THREE.MeshStandardMaterial({ color: '#efede8', roughness: 0.95 }), [dark])
   const ec = dark ? '#e8ebf2' : '#0b0c12'
@@ -96,96 +96,121 @@ function Room({ W, D, zones, showZones, dark, dims, items }) {
 }
 
 const VIEWS = (W, D, Z) => ({
-  overview: { p: [W + 6, 12.5, -7], t: [W / 2, 0, D / 2 + 0.6] },
-  top: { p: [W / 2, 21, D / 2 + 0.01], t: [W / 2, 0, D / 2] },
-  street: { p: [W / 2 + 2.5, 1.7, -10], t: [W / 2, 1.3, D / 2] },
+  overview: { p: [W / 2 + 42, 78, -58], t: [W / 2, 0, D / 2] },
+  inside: { p: [W + 6, 12.5, -7], t: [W / 2, 0, D / 2 + 0.6] },
+  top: { p: [W / 2, 60, D / 2 + 0.01], t: [W / 2, 0, D / 2], ortho: true },
+  street: { p: [W / 2 + 3, 1.7, -11], t: [W / 2, 1.4, D / 2] },
   walk: { p: [(Z?.doorX ?? W / 2), 1.6, 0.3], t: [(Z?.doorX ?? W / 2) - 0.8, 1.2, D] },
-  lidar: { p: [W / 2 + 70, 62, -70], t: [W / 2, 0, D / 2] },
+  counter: { p: [W / 2 + 1.5, 4.2, (Z?.counterZ ?? D) - 6.5], t: [W / 2 - 0.5, 0.9, (Z?.counterZ ?? D)] },
 })
 
-function CameraRig({ goal }) {
+function CameraRig({ goal, north, compassRef }) {
   const { camera, controls } = useThree()
   const moving = useRef(false)
   useEffect(() => { moving.current = true }, [goal])
   useFrame((_, dt) => {
+    if (compassRef?.current && controls) {
+      const dx = controls.target.x - camera.position.x, dz = controls.target.z - camera.position.z
+      const view = Math.atan2(dx, -dz), n = Math.atan2(north[0], -north[1])
+      compassRef.current.style.transform = `rotate(${n - view}rad)`
+    }
     if (!moving.current || !goal || !controls) return
     const k = 1 - Math.pow(0.0015, dt)
     camera.position.lerp(new THREE.Vector3(...goal.p), k)
     controls.target.lerp(new THREE.Vector3(...goal.t), k)
     controls.update()
-    if (camera.position.distanceTo(new THREE.Vector3(...goal.p)) < 0.02) moving.current = false
+    if (camera.position.distanceTo(new THREE.Vector3(...goal.p)) < 0.03) moving.current = false
   })
   return null
 }
 
-const STATUS_COLOR = { works: '#5fae6e', tight: '#e2a336', fails: '#e5534b' }
-
-function CheckLayer({ checks, active, onCheck, dark }) {
+function CheckLayer({ checks, active, onCheck, colors }) {
   return (checks || []).map((c, i) => {
-    const on = active === c.key, col = STATUS_COLOR[c.status]
+    const on = active === c.id, col = colors[c.verdict]
+    const m = c.measure
+    const len = m ? Math.hypot(m[1][0] - m[0][0], m[1][1] - m[0][1]) : 0
     return (
-      <group key={c.key}>
+      <group key={c.id}>
         <Html position={c.pin} center zIndexRange={[4, 0]}>
-          <button className={'pin3d ' + c.status + (on ? ' on' : '')} onClick={() => onCheck?.(on ? null : c.key)}>{i + 1}</button>
+          <button className={'marker ' + c.verdict.toLowerCase() + (on ? ' on' : '')} onClick={() => onCheck?.(on ? null : c.id)}>{i + 1}</button>
         </Html>
-        {on && c.measure && !c.vertical && (
-          <group position={[0, 0.03, 0]}>
-            <Line points={[[c.measure[0][0], 0, c.measure[0][1]], [c.measure[1][0], 0, c.measure[1][1]]]} color={col} lineWidth={3} />
-            {c.measure.map((p, j) => <mesh key={j} position={[p[0], 0, p[1]]}><sphereGeometry args={[0.06]} /><meshBasicMaterial color={col} /></mesh>)}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[(c.measure[0][0] + c.measure[1][0]) / 2, -0.01, (c.measure[0][1] + c.measure[1][1]) / 2]}>
-              <ringGeometry args={[Math.max(0.35, Math.hypot(c.measure[1][0] - c.measure[0][0], c.measure[1][1] - c.measure[0][1]) / 2 + 0.25), Math.max(0.35, Math.hypot(c.measure[1][0] - c.measure[0][0], c.measure[1][1] - c.measure[0][1]) / 2 + 0.33), 64]} />
+        {on && m && (
+          <group position={[0, 0.035, 0]}>
+            <Line points={[[m[0][0], 0, m[0][1]], [m[1][0], 0, m[1][1]]]} color={col} lineWidth={3.5} />
+            {m.map((p, j) => <mesh key={j} position={[p[0], 0, p[1]]}><sphereGeometry args={[0.06]} /><meshBasicMaterial color={col} /></mesh>)}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[(m[0][0] + m[1][0]) / 2, -0.01, (m[0][1] + m[1][1]) / 2]}>
+              <ringGeometry args={[Math.max(0.35, len / 2 + 0.25), Math.max(0.42, len / 2 + 0.32), 64]} />
               <meshBasicMaterial color={col} transparent opacity={0.85} />
             </mesh>
+            <Html position={[(m[0][0] + m[1][0]) / 2, 0.5, (m[0][1] + m[1][1]) / 2]} center zIndexRange={[4, 0]}>
+              <div className="needtag" style={{ color: col }}>{len.toFixed(2)} m · needs ≥ {c.need.value.toFixed(2)}</div>
+            </Html>
           </group>
-        )}
-        {on && c.vertical && (
-          <Line points={[[c.vertical[0] + 0.3, 0, c.vertical[2]], [c.vertical[0] + 0.3, c.vertical[1], c.vertical[2]]]} color={col} lineWidth={3} />
         )}
       </group>
     )
   })
 }
 
-export default function Scene3D({ room, plan, onPick, picked, showZones = true, dark = true, view = 'overview', dims = true, lidarSite = null, onLidarInfo, checks, activeCheck, onCheck }) {
-  const { W, D } = room
+// sweep = { kind: 'wallR' | 'back' | 'chair', off } moves the uncertain thing inside its margin
+function sweptItem(it, sweep) {
+  if (!sweep || !sweep.off) return it
+  if (sweep.kind === 'back' && ['boh', 'counter', 'light'].includes(it.zone)) return { ...it, z: it.z + sweep.off }
+  if (sweep.kind === 'chair' && it.kind === 'chair') return { ...it, z: it.z + (Math.abs(it.rotY) > 1 ? sweep.off : -sweep.off) }
+  return it
+}
+
+export default function Scene3D({ room, plan, onPick, picked, showZones = false, dark = true, view = 'inside', dims = true, block = true, lidar = false, lidarData, checks, activeCheck, onCheck, sweep, compassRef }) {
+  const W0 = room.W, D0 = room.D
+  const W = W0 + (sweep?.kind === 'wallR' ? sweep.off : 0), D = D0 + (sweep?.kind === 'back' ? sweep.off : 0)
   const [hover, setHover] = useState(null)
-  const views = VIEWS(W, D, plan?.zones)
-  const ac = checks?.find((c) => c.key === activeCheck)
+  const views = useMemo(() => VIEWS(W0, D0, plan?.zones), [W0, D0, plan])
+  const ac = checks?.find((c) => c.id === activeCheck)
   const goal = useMemo(() => {
-    if (ac) return { p: [ac.pin[0] + 4.5, 7.5, ac.pin[2] - 6], t: ac.pin }
-    if (lidarSite && view === 'overview') return views.lidar
-    return views[view] || views.overview
-  }, [view, ac?.key, lidarSite, W, D])
-  const bg = dark ? '#2b2d31' : '#f2f2f0'
+    if (ac) return { p: [ac.pin[0] + 4.5, 7.5, ac.pin[2] - 6], t: [ac.pin[0], 0, ac.pin[2]] }
+    return views[view] || views.inside
+  }, [view, ac?.id, views])
+  const ortho = !ac && !!views[view]?.ortho
+  const bg = dark ? '#2b2d31' : '#f7f6f3'
+  const colors = dark ? { WORKS: '#5fae6e', TIGHT: '#e2a336', FAILS: '#e5534b', NEEDS: '#a3a19c' } : { WORKS: '#4c8a57', TIGHT: '#c28a1e', FAILS: '#c2453d', NEEDS: '#8e8d89' }
   return (
-    <Canvas shadows camera={{ position: views.overview.p, fov: 40, near: 0.1, far: 2000 }} dpr={[1, 2]} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}>
+    <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}>
+      {ortho
+        ? <OrthographicCamera makeDefault position={views.top.p} zoom={Math.min(46, 560 / D0)} near={0.1} far={500} />
+        : <PerspectiveCamera makeDefault position={views.overview.p} fov={40} near={0.1} far={2000} />}
       <color attach="background" args={[bg]} />
-      {lidarSite && <fog attach="fog" args={[bg, 120, 320]} />}
-      <ambientLight intensity={dark ? 0.25 : 0.35} />
-      <directionalLight position={[W + 5, 14, -6]} intensity={dark ? 1.2 : 1.6} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={12} shadow-camera-bottom={-12} />
+      <fog attach="fog" args={[bg, 140, 360]} />
+      <ambientLight intensity={dark ? 0.3 : 0.55} />
+      <hemisphereLight args={[dark ? '#c9ccd4' : '#ffffff', dark ? '#3a3c40' : '#d8d5cd', dark ? 1.1 : 1.3]} />
+      <directionalLight position={[W + 5, 14, -6]} intensity={dark ? 1.2 : 1.5} castShadow shadow-mapSize={[2048, 2048]} shadow-camera-left={-12} shadow-camera-right={12} shadow-camera-top={12} shadow-camera-bottom={-12} />
       <Environment resolution={256}>
         <Lightformer intensity={2} position={[0, 6, -9]} scale={[14, 4, 1]} />
         <Lightformer intensity={1} position={[-6, 4, 4]} rotation-y={Math.PI / 2} scale={[10, 3, 1]} />
         <Lightformer intensity={0.6} color="#ffe7c7" position={[6, 4, 6]} rotation-y={-Math.PI / 2} scale={[10, 3, 1]} />
       </Environment>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[W0 / 2, -0.06, D0 / 2]}><planeGeometry args={[900, 900]} /><meshStandardMaterial color={dark ? '#34363a' : '#eceae4'} roughness={1} /></mesh>
       <Suspense fallback={<Html center><div className="dim3d">Loading 3D furniture…</div></Html>}>
-        <Room W={W} D={D} zones={plan?.zones} showZones={showZones} dark={dark} dims={dims && !lidarSite} items={plan?.items} />
-        {plan?.items.map((it) => (
-          <group key={it.id} position={[it.x, it.y || 0, it.z]} rotation={[0, it.rotY || 0, 0]}
-            onPointerOver={(e) => { e.stopPropagation(); setHover(it.id) }} onPointerOut={() => setHover(null)}
-            onClick={(e) => { e.stopPropagation(); onPick?.(it.id) }}>
-            <Item it={it} />
-            {(hover === it.id || picked === it.id) && (
-              <Html position={[0, (it.h || 0.8) + 0.25, 0]} center zIndexRange={[4, 0]}><div className="tag3d">{it.label}</div></Html>
-            )}
-          </group>
-        ))}
+        <Room W={W} D={D} zones={plan?.zones} showZones={showZones} dark={dark} dims={dims} items={plan?.items} />
+        {plan?.items.map((raw) => {
+          const it = sweptItem(raw, sweep)
+          return (
+            <group key={it.id} position={[it.x, it.y || 0, it.z]} rotation={[0, it.rotY || 0, 0]}
+              onPointerOver={(e) => { e.stopPropagation(); setHover(it.id) }} onPointerOut={() => setHover(null)}
+              onClick={(e) => { e.stopPropagation(); onPick?.(it.id) }}>
+              <Item it={it} />
+              {(hover === it.id || picked === it.id) && (
+                <Html position={[0, (it.h || 0.8) + 0.25, 0]} center zIndexRange={[4, 0]}><div className="tag3d">{it.label}</div></Html>
+              )}
+            </group>
+          )
+        })}
         <ContactShadows position={[W / 2, 0.008, D / 2]} scale={Math.max(W, D) * 1.4} opacity={0.4} blur={2.2} far={3} />
-        <CheckLayer checks={checks} active={activeCheck} onCheck={onCheck} dark={dark} />
-        {lidarSite && <Lidar siteId={lidarSite} W={W} D={D} onInfo={onLidarInfo} />}
+        <CheckLayer checks={checks} active={activeCheck} onCheck={onCheck} colors={colors} />
+        {lidarData && block && !lidar && <Massing data={lidarData} dark={dark} />}
+        {lidarData && lidar && <LidarPoints data={lidarData} W={W0} D={D0} />}
       </Suspense>
-      <OrbitControls makeDefault target={views.overview.t} maxPolarAngle={Math.PI / 2.05} minDistance={1} maxDistance={400} />
-      <CameraRig goal={goal} />
+      <OrbitControls makeDefault target={views.inside.t} maxPolarAngle={Math.PI / 2.05} minDistance={1} maxDistance={400} />
+      <CameraRig goal={goal} north={lidarData?.north || [0, -1]} compassRef={compassRef} />
     </Canvas>
   )
 }

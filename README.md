@@ -11,10 +11,13 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 ## What to try (for judges)
 1. Open the app → **Start a search**. Cards load live data from NYC Open Data (takes a few seconds).
 2. Click the top card: see each factor, its raw value and source link; competitors appear on the map.
-3. **Fit a cafe in this space** → edit the request (e.g. `12 seats, mostly takeout`) → **Run layout agent**. Drag to orbit the 3D view.
-   - **Fit check** tab: each check is measured on the plan (aisle width, door clearance, queue, table aisles, staff pass, pendant headroom, occupant load / single exit, seats) and marked Works / Tight / Fails with its rule and source (ADA 2010, NYC Building Code / IBC). Click a check or its numbered pin to fly to it.
-   - Toolbar: Overview / Top / Street / Walk in views, Dimensions, Zones, **LiDAR** (real USGS point cloud of the surrounding block), Dark.
-   - Click any furniture for a product card; **Shopping list** groups everything with buy links (exact product or "find similar").
+3. **Fit a cafe in this space** opens the **Fit Lab** (form modeled on Obia's Fit Lab case-study viewer; all code is ours).
+   - One scene object drives the panel and the 3D view (`src/lib/scene.js`; download it from "How the agent built this"). Every number carries a range, a method and a source.
+   - Verdicts use the whole range: **Works** if the worst end passes, **Tight** if the range crosses the rule, **Fails** if the best end fails, **Needs measuring** if nobody measured it (ceiling height).
+   - Open a check and drag its slider: the wall (or the chairs) moves inside its margin and the clearance updates live.
+   - Switch between 3 layouts (Your brief / Grab-and-go / Max seating). "Change the brief or the room size" reruns the agent.
+   - Dock: Overview (block massing built from LiDAR), Top (orthographic), Street, Inside, Walk in; Dimensions, Zones, Block, LiDAR, Dark. Compass top right.
+   - Click any furniture for a product card; "Furniture and equipment" lists everything with product links and list prices.
 4. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
 
 ## How we use Flashpoint AI
