@@ -204,7 +204,7 @@ export default function FitLab({ site, state, setState }) {
       </aside>
       <main id="stage">
         <Scene3D room={room} plan={plan} onPick={(id) => { setPicked(id === picked ? null : id); setActive(null) }} picked={picked}
-          showZones={layers.zones} dims={layers.dims && !layers.lidar && view !== 'overview'} block={layers.block && view === 'overview' && !active} lidar={layers.lidar} google={layers.google && GOOGLE_KEY !== ''} site={site} lidarData={lidarData}
+          showZones={layers.zones} dims={layers.dims && !layers.lidar && view !== 'overview'} block={layers.block && view === 'overview' && !active} lidar={layers.lidar} google={layers.google && GOOGLE_KEY !== '' && view === 'overview' && !active} site={site} lidarData={lidarData}
           dark={dark} view={view} checks={checks3d} activeCheck={active} onCheck={pick} compassRef={compassRef}
           sweep={ac?.sweep ? { kind: ac.sweep.kind, off: sweep } : null} />
         <div id="brand"><span className="ring" />STOREFIT<i />Fit Lab</div>

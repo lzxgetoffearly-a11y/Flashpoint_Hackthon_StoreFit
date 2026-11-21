@@ -19,9 +19,8 @@ export default function Google3D({ site, info, north, W, D }) {
     return [
       new THREE.Plane(new THREE.Vector3(-1, 0, 0), -m),
       new THREE.Plane(new THREE.Vector3(1, 0, 0), -(W + m)),
-      new THREE.Plane(new THREE.Vector3(0, 0, -1), -14),
+      new THREE.Plane(new THREE.Vector3(0, 0, -1), -1.5),
       new THREE.Plane(new THREE.Vector3(0, 0, 1), -(D + m)),
-      new THREE.Plane(new THREE.Vector3(0, -1, 0), 0.6), // keep the street and sidewalk
     ]
   }, [W, D])
   useEffect(() => { gl.localClippingEnabled = true; return () => { gl.localClippingEnabled = false } }, [gl])
