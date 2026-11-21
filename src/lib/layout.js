@@ -96,16 +96,42 @@ export function planLayout({ W, D }, params) {
     seats += 3
     steps.push('休息区：左墙放一张丝绒沙发 + 茶几 + 单人沙发（+3 座）')
   }
-  // two-top bistro modules
+  if (placed.length) add({ kind: 'rug', w: Math.min(aisleL - 0.3, 2.9), d: 2.7, h: 0.01, y: 0.007, x: 0.15 + Math.min(aisleL - 0.3, 2.9) / 2, z: zStart + 1.1, zone: 'decor', label: '地毯 Rug', onTop: true })
+  // banquette along the left wall: one bench, a run of small tables, one chair opposite each.
+  // This is how most narrow cafes seat people: it uses the wall and keeps the middle free to walk.
   const T = 0.7, CH = 0.48
   const modD = T + 2 * CH
-  let tables = 0
+  let tables = 0, bqEnd = 0.15
+  {
+    const need0 = Math.max(0, params.seats - seats)
+    const zb0 = placed.length ? zStart + 2.2 + 0.75 : zStart + 0.1
+    const pitch = 1.3, nMax = Math.floor((seatZoneEnd - 0.15 - zb0) / pitch)
+    const reserve = need0 >= 10 ? 2 : need0 >= 6 ? 1 : 0 // keep a few free-standing two-tops for variety
+    const nb = params.style !== 'takeout' && aisleL - 0.15 >= 2.0 && nMax >= 2 && need0 >= 2 ? Math.min(nMax, Math.max(2, Math.ceil((need0 - reserve * 2) / 2))) : 0
+    if (nb) {
+      const len = nb * pitch
+      add({ kind: 'banquette', w: 0.55, d: len, h: 0.95, x: 0.15 + 0.275, z: zb0 + len / 2, zone: 'seat', label: '靠墙卡座 Banquette (custom millwork, no product link)' })
+      for (let i = 0; i < nb; i++) {
+        const z = zb0 + pitch / 2 + i * pitch
+        add({ kind: 'cafetable', w: 0.7, d: 0.7, h: 0.75, x: 1.07, z, zone: 'seat', label: '双人桌 Two-top', product: 'bistro' })
+        add({ kind: 'cup', w: 0.12, d: 0.12, h: 0.1, y: 0.76, x: 1.0, z: z - 0.1, zone: 'decor', label: '咖啡杯 Cup', product: 'cup', onTop: true })
+        add({ kind: 'chair', w: 0.48, d: 0.45, h: 0.82, x: 1.66, z, rotY: -Math.PI / 2, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
+        if (i % 2 === 0) add({ kind: 'art', w: 0.03, d: 0.6, h: 0.8, y: 1.45, x: 0.17, z, zone: 'decor', label: '装饰画 Wall art', onTop: true })
+        seats += 2; tables++
+      }
+      placed.push({ x: (0.15 + 1.9) / 2, z: zb0 + len / 2, w: 1.75, d: len })
+      bqEnd = 1.9 + RULES.aisle
+      segs[0][0] = bqEnd
+      steps.push(`靠墙卡座：左墙一条 ${len.toFixed(1)} m 卡座，配 ${nb} 张小桌和对面的椅子（+${nb * 2} 座），中间留出走道`)
+    }
+  }
   // Build every free table slot row by row, then spread the tables we need evenly over the depth
   // (front to back) instead of packing one side first.
   const colW = T + RULES.aisle, rows = []
   for (let z = zStart + modD / 2; z + modD / 2 <= seatZoneEnd; z += modD + RULES.aisle) {
     const row = []
     for (const [x0, x1] of segs) {
+      if (x1 - x0 < T) continue
       const cols = Math.max(0, Math.floor((x1 - x0 + RULES.aisle) / colW))
       const pad = (x1 - x0 - (cols * colW - RULES.aisle)) / 2
       for (let c = 0; c < cols; c++) {

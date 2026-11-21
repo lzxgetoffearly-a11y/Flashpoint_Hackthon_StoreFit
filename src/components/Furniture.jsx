@@ -166,10 +166,50 @@ function Glb({ name, w, d, h, fit = 'footprint' }) {
   return <group scale={[s, s, s]}><primitive object={obj} position={off} /></group>
 }
 
+const LEATHER = new THREE.MeshStandardMaterial({ color: '#8a4b2a', roughness: 0.55 })
+function Banquette({ w, d }) {
+  const n = Math.max(1, Math.round(d / 0.65))
+  return (
+    <group>
+      <S material={M.walnut} position={[0, 0.2, 0]}><boxGeometry args={[w, 0.4, d]} /></S>
+      <S material={LEATHER} position={[0.02, 0.45, 0]}><boxGeometry args={[w - 0.04, 0.1, d - 0.04]} /></S>
+      {Array.from({ length: n }).map((_, i) => (
+        <S key={i} material={LEATHER} position={[-w / 2 + 0.07, 0.75, -d / 2 + (i + 0.5) * (d / n)]}><boxGeometry args={[0.1, 0.46, d / n - 0.03]} /></S>
+      ))}
+      <S material={M.walnut} position={[-w / 2 + 0.07, 1.0, 0]}><boxGeometry args={[0.14, 0.04, d]} /></S>
+    </group>
+  )
+}
+const RUG = new THREE.MeshStandardMaterial({ color: '#b7a58a', roughness: 1 }), RUG2 = new THREE.MeshStandardMaterial({ color: '#8c7a62', roughness: 1 })
+function Rug({ w, d }) {
+  return (
+    <group>
+      <mesh material={RUG2} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[w, d]} /></mesh>
+      <mesh material={RUG} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.002, 0]}><planeGeometry args={[w - 0.3, d - 0.3]} /></mesh>
+    </group>
+  )
+}
+const ART = ['#c96f3b', '#2f4a40', '#d9c7a3'].map((c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.9 }))
+function Art({ d, h, id }) {
+  const k = (id || '').length % 3
+  return (
+    <group>
+      <mesh material={M.black}><boxGeometry args={[0.03, h, d]} /></mesh>
+      <mesh material={M.white} position={[0.017, 0, 0]}><boxGeometry args={[0.005, h - 0.08, d - 0.08]} /></mesh>
+      <mesh material={ART[k]} position={[0.021, -0.05, 0]}><boxGeometry args={[0.004, h * 0.45, d * 0.5]} /></mesh>
+      <mesh material={ART[(k + 1) % 3]} position={[0.022, 0.16, 0.06]}><boxGeometry args={[0.004, h * 0.2, d * 0.3]} /></mesh>
+    </group>
+  )
+}
+
 export function Item({ it }) {
   const { kind, w, d, h } = it
   switch (kind) {
     case 'bistro': return <Bistro />
+    case 'cafetable': return <Bistro />
+    case 'banquette': return <Banquette w={w} d={d} />
+    case 'rug': return <Rug w={w} d={d} />
+    case 'art': return <Art d={d} h={h} id={it.id} />
     case 'chair': return <Chair />
     case 'stool': return <Stool />
     case 'windowbar': return <WindowBar w={w} d={d} />

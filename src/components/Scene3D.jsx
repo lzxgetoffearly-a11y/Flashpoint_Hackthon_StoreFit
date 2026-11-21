@@ -184,7 +184,7 @@ function CheckLayer({ checks, active, onCheck, colors }) {
 function sweptItem(it, sweep) {
   if (!sweep || !sweep.off) return it
   if (sweep.kind === 'back' && ['boh', 'counter', 'light'].includes(it.zone)) return { ...it, z: it.z + sweep.off }
-  if (sweep.kind === 'chair' && it.kind === 'chair') return { ...it, z: it.z + (Math.abs(it.rotY) > 1 ? sweep.off : -sweep.off) }
+  if (sweep.kind === 'chair' && it.kind === 'chair' && Math.abs(Math.cos(it.rotY)) > 0.5) return { ...it, z: it.z + (Math.abs(it.rotY) > 1 ? sweep.off : -sweep.off) }
   return it
 }
 
