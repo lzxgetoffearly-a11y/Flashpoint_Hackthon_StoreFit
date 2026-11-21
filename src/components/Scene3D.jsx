@@ -31,6 +31,22 @@ function useFloorTexture() {
   }, [])
 }
 
+function useBoardTexture() {
+  return useMemo(() => {
+    const c = document.createElement('canvas'); c.width = 768; c.height = 320
+    const g = c.getContext('2d')
+    g.fillStyle = '#17191c'; g.fillRect(0, 0, 768, 320)
+    g.strokeStyle = '#b98b4e'; g.lineWidth = 4; g.strokeRect(10, 10, 748, 300)
+    g.fillStyle = '#f3efe6'; g.font = '600 54px Georgia, serif'; g.fillText('COFFEE', 44, 92)
+    g.font = '28px Georgia, serif'; g.fillStyle = '#cfc8b8'
+    ;['Espresso', 'Cortado', 'Flat white', 'Cold brew'].forEach((t, i) => g.fillText(t, 48, 150 + i * 40))
+    ;['Matcha', 'Chai', 'Pastry', 'Bagels'].forEach((t, i) => g.fillText(t, 420, 150 + i * 40))
+    g.fillStyle = '#b98b4e'; g.fillRect(44, 108, 680, 2)
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+    return t
+  }, [])
+}
+
 function Dim({ a, b, label, offset = [0, 0, 0], color = '#0b0c12' }) {
   const pts = [a, b].map((p) => [p[0] + offset[0], p[1] + offset[1], p[2] + offset[2]])
   const mid = [(pts[0][0] + pts[1][0]) / 2, pts[0][1], (pts[0][2] + pts[1][2]) / 2]
@@ -45,6 +61,7 @@ function Dim({ a, b, label, offset = [0, 0, 0], color = '#0b0c12' }) {
 
 function Room({ W, D, zones, showZones, dark, dims, items }) {
   const floor = useFloorTexture()
+  const board = useBoardTexture()
   floor.repeat.set(W / 1.6, D / 1.6)
   const wallH = 3.4, sideH = 1.1, t = 0.15
   const wall = useMemo(() => dark ? new THREE.MeshStandardMaterial({ color: '#9aa0aa', roughness: 0.9, transparent: true, opacity: 0.18, depthWrite: false }) : new THREE.MeshStandardMaterial({ color: '#efede8', roughness: 0.95 }), [dark])
@@ -67,7 +84,17 @@ function Room({ W, D, zones, showZones, dark, dims, items }) {
         </group>
       )}
       <Grid position={[W / 2, 0.006, D / 2]} args={[W, D]} cellSize={1} cellThickness={0.6} cellColor={dark ? "#8a8f99" : "#6f6a60"} sectionSize={5} sectionThickness={1} sectionColor={dark ? "#cfd3db" : "#3b3834"} fadeDistance={60} infiniteGrid={false} />
-      <mesh material={wall} position={[W / 2, wallH / 2, D + t / 2]} receiveShadow><boxGeometry args={[W + 2 * t, wallH, t]} />{dark && <Edges color={ec} />}</mesh>
+      <mesh position={[W / 2, wallH / 2, D + t / 2]} receiveShadow><boxGeometry args={[W + 2 * t, wallH, t]} /><meshStandardMaterial color="#2f4a40" roughness={0.85} />{dark && <Edges color={ec} />}</mesh>
+      {/* tiled splash behind the back bar and a plain menu board (no prices: decoration only) */}
+      <mesh position={[W / 2, 0.6, D - 0.005]}><planeGeometry args={[W, 1.2]} /><meshStandardMaterial color="#e9e4d8" roughness={0.35} /></mesh>
+      <mesh position={[W / 2, 1.2, D - 0.01]} rotation={[0, Math.PI, 0]}><planeGeometry args={[W, 0.04]} /><meshStandardMaterial color="#b98b4e" metalness={0.6} roughness={0.3} /></mesh>
+      <mesh position={[Math.min(W - 1.4, W * 0.62), 2.35, D - 0.03]} rotation={[0, Math.PI, 0]}><planeGeometry args={[Math.min(2.4, W * 0.45), 1.0]} /><meshStandardMaterial map={board} roughness={0.9} /></mesh>
+      {(items || []).filter((it) => it.kind === 'lamp').map((it) => <pointLight key={it.id} position={[it.x, 2.2, it.z]} color="#ffc98a" intensity={6} distance={5} decay={2} />)}
+      {/* full-height storefront frame */}
+      {[0, dx - doorW / 2, dx + doorW / 2, W].map((x, i) => <mesh key={'p' + i} position={[x, wallH / 2, -0.02]}><boxGeometry args={[0.05, wallH, 0.06]} /><meshStandardMaterial color="#141416" /></mesh>)}
+      <mesh position={[W / 2, wallH, -0.02]}><boxGeometry args={[W + 0.05, 0.06, 0.08]} /><meshStandardMaterial color="#141416" /></mesh>
+      <mesh position={[dx, 2.15, -0.02]}><boxGeometry args={[doorW, 0.05, 0.06]} /><meshStandardMaterial color="#141416" /></mesh>
+      <mesh position={[W / 2, wallH / 2, -0.02]}><planeGeometry args={[W, wallH]} /><meshPhysicalMaterial color="#cfe0f2" transparent opacity={0.06} roughness={0} side={THREE.DoubleSide} depthWrite={false} /></mesh>
       <mesh material={wall} position={[-t / 2, (dark ? wallH : sideH) / 2, D / 2]} receiveShadow castShadow={!dark}><boxGeometry args={[t, dark ? wallH : sideH, D]} />{dark && <Edges color={ec} />}</mesh>
       <mesh material={wall} position={[W + t / 2, (dark ? wallH : sideH) / 2, D / 2]} receiveShadow castShadow={!dark}><boxGeometry args={[t, dark ? wallH : sideH, D]} />{dark && <Edges color={ec} />}</mesh>
       {/* storefront: glass + black mullions + door opening */}

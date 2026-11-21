@@ -100,23 +100,34 @@ export function planLayout({ W, D }, params) {
   const T = 0.7, CH = 0.48
   const modD = T + 2 * CH
   let tables = 0
-  for (const [x0, x1] of segs) {
-    const colW = T + RULES.aisle
-    const cols = Math.max(0, Math.floor((x1 - x0 + RULES.aisle) / colW))
-    for (let z = zStart + modD / 2; z + modD / 2 <= seatZoneEnd; z += modD + RULES.aisle) {
+  // Build every free table slot row by row, then spread the tables we need evenly over the depth
+  // (front to back) instead of packing one side first.
+  const colW = T + RULES.aisle, rows = []
+  for (let z = zStart + modD / 2; z + modD / 2 <= seatZoneEnd; z += modD + RULES.aisle) {
+    const row = []
+    for (const [x0, x1] of segs) {
+      const cols = Math.max(0, Math.floor((x1 - x0 + RULES.aisle) / colW))
+      const pad = (x1 - x0 - (cols * colW - RULES.aisle)) / 2
       for (let c = 0; c < cols; c++) {
-        if (seats >= params.seats) break
-        const x = x0 + T / 2 + c * colW + (cols === 1 ? (x1 - x0 - T) / 2 : 0)
-        const mod = { x, z, w: T, d: modD }
-        if (placed.some((p) => overlap(p, mod, 0.45))) continue
-        placed.push(mod)
-        add({ kind: 'bistro', w: T, d: T, h: 0.75, x, z, zone: 'seat', label: '双人桌 Bistro table', product: 'bistro' })
-        add({ kind: 'cup', w: 0.12, d: 0.12, h: 0.1, y: 0.76, x: x + 0.12, z: z - 0.1, zone: 'decor', label: '咖啡杯 Cup', product: 'cup', onTop: true })
-        add({ kind: 'chair', w: 0.45, d: 0.48, h: 0.82, x, z: z - T / 2 - 0.2, rotY: Math.PI, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
-        add({ kind: 'chair', w: 0.45, d: 0.48, h: 0.82, x, z: z + T / 2 + 0.2, rotY: 0, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
-        seats += 2; tables++
+        const mod = { x: x0 + pad + T / 2 + c * colW, z, w: T, d: modD }
+        if (!placed.some((p) => overlap(p, mod, 0.45))) row.push(mod)
       }
     }
+    if (row.length) rows.push(row)
+  }
+  const need = Math.ceil(Math.max(0, params.seats - seats) / 2)
+  const perRow = Math.max(1, ...rows.map((r) => r.length))
+  const useRows = Math.min(rows.length, Math.ceil(need / perRow))
+  const picked = useRows <= 1 ? rows.slice(0, useRows) : Array.from({ length: useRows }, (_, i) => rows[Math.round((i * (rows.length - 1)) / (useRows - 1))])
+  for (const row of [...new Set(picked)]) for (const mod of row) {
+    if (seats >= params.seats) break
+    const { x, z } = mod
+    placed.push(mod)
+    add({ kind: 'bistro', w: T, d: T, h: 0.75, x, z, zone: 'seat', label: '双人桌 Bistro table', product: 'bistro' })
+    add({ kind: 'cup', w: 0.12, d: 0.12, h: 0.1, y: 0.76, x: x + 0.12, z: z - 0.1, zone: 'decor', label: '咖啡杯 Cup', product: 'cup', onTop: true })
+    add({ kind: 'chair', w: 0.45, d: 0.48, h: 0.82, x, z: z - T / 2 - 0.2, rotY: Math.PI, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
+    add({ kind: 'chair', w: 0.45, d: 0.48, h: 0.82, x, z: z + T / 2 + 0.2, rotY: 0, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
+    seats += 2; tables++
   }
   steps.push(`座位区：${tables} 张双人桌，桌组前后保持 ≥ ${RULES.aisle} m 无障碍通道`)
   add({ kind: 'plant', w: 0.6, d: 0.6, h: 1.4, x: W - 0.45, z: Math.max(0.9, seatZoneEnd - 0.4), zone: 'decor', label: '绿植 Plant', product: 'plant' })
