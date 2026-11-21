@@ -36,7 +36,7 @@ StoreFit is a **location-intelligence engine plus a 3D spatial-planning agent**.
 - build-out readiness (previous use of the unit)
 - rent-to-revenue ratio
 
-Every factor shows its raw value, its rule and its source, so the score is a decision aid, not a black box. Flashpoint research showed users distrust opaque scores (2.33 / 5), which is why we kept it this way.
+Every factor shows its raw value, its rule and its source, so the score is a decision aid, not a black box. Flashpoint research showed users distrust opaque scores (2.8 / 5), which is why we kept it this way.
 
 **3. Spatial reconstruction.** StoreFit estimates each unit's footprint from lot geometry and orients the storefront from the LiDAR point cloud. This gives a 3D model of the real block.
 
