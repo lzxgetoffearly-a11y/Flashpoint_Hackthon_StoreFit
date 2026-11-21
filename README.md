@@ -17,7 +17,7 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 
 
 ## Why this matters
-- **About 22 million new companies are registered worldwide every year.** That is roughly **60,000 a day, or about 40 every minute**. Our estimate: the World Bank's global rate of 4.3 new limited-liability firms per 1,000 working-age adults in 2024, across 188 economies ([World Bank, 2026](https://blogs.worldbank.org/en/psd/a-global-snapshot-of-entrepreneurship-trends)), multiplied by roughly 5.2 billion working-age adults (UN World Population Prospects).
+- **Roughly 50 million new businesses start worldwide every year: about 137,000 a day, or about 95 every minute.** This is a widely cited industry estimate, not an official count. (A stricter measure, registered limited-liability companies, is about 4.3 per 1,000 working-age adults a year across 188 economies ([World Bank, 2026](https://blogs.worldbank.org/en/psd/a-global-snapshot-of-entrepreneurship-trends)).)
 - In the US alone, about **497,000 business applications** were filed in December 2025, about **16,000 a day** ([US Census Business Formation Statistics](https://www.census.gov/econ/bfs/pdf/historic/bfs_2025m12.pdf)).
 - Many of these founders have to answer the same two questions before signing a lease: *Is this the right location?* and *Will my store actually fit inside it?* Today they answer them with broker tours, guesswork and a tape measure.
 
