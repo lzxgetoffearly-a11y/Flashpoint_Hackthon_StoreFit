@@ -38,7 +38,7 @@ export function planLayout({ W, D }, params) {
   const bohZ = D - RULES.bohDepth / 2
   const bohItems = [
     { model: 'restaurant/fridge_A', w: 1.4, d: 0.8, label: '冷柜 Fridge' },
-    { model: 'restaurant/kitchencounter_sink', w: 1.2, d: 0.75, label: '水槽台 Sink' },
+    { model: 'restaurant/kitchencounter_sink', w: 1.2, d: 0.75, h: 1.6, squash: true, label: '水槽台 Sink' },
     { model: 'restaurant/kitchencabinet', w: 1.2, d: 0.6, label: '储物柜 Storage' },
   ]
   let bx = 0.2
@@ -54,7 +54,7 @@ export function planLayout({ W, D }, params) {
   const counterLen = Math.max(1.8, W - RULES.staffPass - 0.4)
   const modules = Math.max(1, Math.floor(counterLen / 1.2))
   for (let i = 0; i < modules; i++) {
-    add({ model: i === 0 ? 'restaurant/kitchencounter_straight_A_decorated' : 'restaurant/kitchencounter_straight_A', w: 1.2, d: RULES.counterDepth, x: 0.2 + 0.6 + i * 1.2, z: counterZ, zone: 'counter', label: i === 0 ? '咖啡机吧台 Espresso bar' : '服务台 Counter' })
+    add({ model: i === 0 ? 'restaurant/kitchencounter_straight_A_decorated' : 'restaurant/kitchencounter_straight_A', w: 1.2, d: RULES.counterDepth, h: 0.95, squash: true, x: 0.2 + 0.6 + i * 1.2, z: counterZ, zone: 'counter', label: i === 0 ? '咖啡机吧台 Espresso bar' : '服务台 Counter' })
   }
   add({ model: 'restaurant/menu', w: 0.4, d: 0.2, x: 0.2 + modules * 1.2 - 0.3, z: counterZ - RULES.counterDepth / 2 - 0.15, zone: 'counter', label: '点单牌 Menu' })
   steps.push(`服务台：${modules} 段柜台，右侧保留 ${RULES.staffPass} m 员工通道`)
@@ -73,7 +73,7 @@ export function planLayout({ W, D }, params) {
     for (const [x0, x1] of [[0.2, aisleL - 0.1], [aisleR + 0.1, W - 0.2]]) {
       const len = x1 - x0
       if (len < 1.2) continue
-      add({ model: 'furniture/table_medium_long', w: len, d: barD, x: x0 + len / 2, z: 0.15 + barD / 2, zone: 'seat', label: '临窗吧台 Window bar', squash: true })
+      add({ model: 'furniture/table_medium_long', w: len, d: barD, x: x0 + len / 2, z: 0.15 + barD / 2, zone: 'seat', label: '临窗吧台 Window bar', squash: true, h: 1.05 })
       const n = Math.floor(len / 0.6)
       for (let i = 0; i < n && seats < params.seats; i++) {
         add({ model: 'furniture/chair_stool_wood', w: 0.4, d: 0.4, x: x0 + 0.3 + i * 0.6, z: 0.15 + barD + 0.3, zone: 'seat', label: '吧凳 Stool' })

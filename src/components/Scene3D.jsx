@@ -18,7 +18,7 @@ function Model({ it, showLabels }) {
     const fw = rotated ? it.d : it.w, fd = rotated ? it.w : it.d
     let s = Math.min(fw / size.x, fd / size.z)
     let sv = [s, s, s]
-    if (it.squash) sv = [fw / size.x, Math.min(fw / size.x, fd / size.z) * 1.4, fd / size.z]
+    if (it.squash) sv = [fw / size.x, it.h ? it.h / size.y : Math.min(fw / size.x, fd / size.z) * 1.4, fd / size.z]
     return { obj, scale: sv, offset: [-center.x, -box.min.y, -center.z] }
   }, [scene, it])
   return (
