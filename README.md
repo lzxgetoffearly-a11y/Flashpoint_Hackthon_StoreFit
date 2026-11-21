@@ -3,6 +3,11 @@
 ## ▶ Open the live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
 No install or login. Open the link in Chrome on a laptop, click **Start a search**, pick **2905 Broadway**, then **Fit a cafe in this space**. (Hosted on GitHub Pages from the `gh-pages` branch, built from `main`.)
 
+### Demo video (60 s)
+[![StoreFit demo: click to watch the video](docs/demo.gif)](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)
+
+Click the preview to watch the MP4 ([direct link](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)). Recorded step by step on the live site; every screen shows real data.
+
 Engineering & Product track · Flashpoint AI × CUB Hackathon (Nov 13–21, 2026)
 
 StoreFit helps a first-time owner open a small cafe in New York. It ranks **real vacant storefronts** near Columbia using **live NYC open data**, explains every score with its source, and then runs a **layout agent** that fits a counter, queue and seats into the chosen space in 3D, checking aisles and overlaps.
