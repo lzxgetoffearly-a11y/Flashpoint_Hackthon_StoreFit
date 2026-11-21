@@ -96,10 +96,10 @@ function Room({ W, D, zones, showZones, dark, dims, items }) {
 }
 
 const VIEWS = (W, D, Z) => ({
-  overview: { p: [W / 2 + 42, 78, -58], t: [W / 2, 0, D / 2] },
+  overview: { p: [W / 2 + 34, 56, -46], t: [W / 2, 0, D / 2] },
   inside: { p: [W + 6, 12.5, -7], t: [W / 2, 0, D / 2 + 0.6] },
   top: { p: [W / 2, 60, D / 2 + 0.01], t: [W / 2, 0, D / 2], ortho: true },
-  street: { p: [W / 2 + 3, 1.7, -11], t: [W / 2, 1.4, D / 2] },
+  street: { p: [W / 2, 1.7, -Math.max(11, W * 1.25)], t: [W / 2, 1.5, D / 2] },
   walk: { p: [(Z?.doorX ?? W / 2), 1.6, 0.3], t: [(Z?.doorX ?? W / 2) - 0.8, 1.2, D] },
   counter: { p: [W / 2 + 1.5, 4.2, (Z?.counterZ ?? D) - 6.5], t: [W / 2 - 0.5, 0.9, (Z?.counterZ ?? D)] },
 })

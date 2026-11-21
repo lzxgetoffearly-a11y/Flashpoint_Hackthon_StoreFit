@@ -4,6 +4,7 @@ import { useLidar } from './Lidar.jsx'
 import { buildScene, fmtRange, fmtM, fmtFt, METHODS } from '../lib/scene.js'
 import { llmParams, parseRequest } from '../lib/layout.js'
 import { PRODUCTS, PRICE_DATE } from '../data/products.js'
+import { estimateRoom } from '../data/candidates.js'
 import './fitlab.css'
 
 const FT = 0.3048
@@ -80,7 +81,8 @@ const DOCK = [
 ]
 
 export default function FitLab({ site, state, setState }) {
-  const [w, setW] = useState(state.room.wFt), [d, setD] = useState(state.room.dFt)
+  const est = useMemo(() => estimateRoom(site), [site])
+  const [w, setW] = useState(est.wFt), [d, setD] = useState(est.dFt)
   const [req, setReq] = useState(state.request)
   const [params, setParams] = useState(() => parseRequest(state.request))
   const [via, setVia] = useState('rules')
@@ -97,8 +99,8 @@ export default function FitLab({ site, state, setState }) {
   const compassRef = useRef(null)
   const room = useMemo(() => ({ W: w * FT, D: d * FT }), [w, d])
   const lidarData = useLidar(site.id, room.W, room.D)
-  const dimsSource = w === 20 && d === 40 ? 'default' : 'user'
-  const scene = useMemo(() => buildScene({ site, room, request: req, params, dimsSource, lidar: lidarData?.info }), [site, room, params, dimsSource, lidarData?.info])
+  const dimsSource = w === est.wFt && d === est.dFt ? est.source : 'user'
+  const scene = useMemo(() => buildScene({ site, room, request: req, params, dimsSource, est, lidar: lidarData?.info }), [site, room, params, dimsSource, lidarData?.info])
   const alt = scene.alternatives.find((a) => a.id === altId) || scene.alternatives[0]
   const plan = alt
   useEffect(() => { setState((s) => ({ ...s, plan: { ...alt, steps: alt.sections.find((x) => x.steps)?.steps || [], checks: alt.checks.map((c) => ({ ok: c.verdict === 'WORKS', text: `${c.label}: ${V[c.verdict]}` })) }, scene, request: req, room: { wFt: w, dFt: d } })) }, [alt])
@@ -191,7 +193,8 @@ export default function FitLab({ site, state, setState }) {
           <dl className="facts">
             <div><dt>Address</dt><dd>{site.address}, {site.zip}</dd><small>city vacancy record</small></div>
             <div><dt>Last use</dt><dd>{site.prevUse.toLowerCase()}</dd><small>city vacancy record, 2025</small></div>
-            <div><dt>Room</dt><dd>{room.W.toFixed(1)} × {room.D.toFixed(1)} m · {Math.round(w * d)} ft²</dd><small>{dimsSource === 'default' ? 'assumed, not measured' : 'typed in, not measured'}</small></div>
+            <div><dt>Room</dt><dd>{room.W.toFixed(1)} × {room.D.toFixed(1)} m · {Math.round(w * d)} ft²</dd><small>{dimsSource === 'pluto' ? `estimated: ${est.areaFt2.toLocaleString()} ft² = lot retail area ÷ storefronts (PLUTO)` : dimsSource === 'default' ? 'assumed, not measured' : 'typed in, not measured'}</small></div>
+            {site.pluto && <div><dt>Building</dt><dd>{site.pluto.numfloors} floors, built {site.pluto.yearbuilt}, zoning {site.pluto.zone}</dd><small>NYC PLUTO 26v2, lot {site.pluto.bbl}; {site.pluto.retailarea.toLocaleString()} ft² retail across {site.pluto.storefronts} storefronts</small></div>}
             {lidarData && <div><dt>Ground</dt><dd>{lidarData.info.groundElevM} m</dd><small>LiDAR, at the centre</small></div>}
             {lidarData && <div><dt>Faces</dt><dd>street on the {lidarData.info.streetSide} side</dd><small>found from the LiDAR points; approximate</small></div>}
           </dl>

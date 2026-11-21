@@ -10,7 +10,7 @@ a=math.radians(28.9); AV=np.array([math.sin(a),math.cos(a)]); AC=np.array([math.
 meta={}
 for c in cands:
     k=1/math.cos(math.radians(c['lat'])); cx,cy=merc(c['lat'],c['lng']); r=R*k*1.45
-    keys=collect((cx-r,cy-r,cx+r,cy+r),10)
+    keys=collect((cx-r,cy-r,cx+r,cy+r),12)
     with ThreadPoolExecutor(16) as ex: P=np.vstack(list(ex.map(fetch,keys)))
     P=P[(P[:,3]!=7)&(P[:,3]!=18)]
     E=(P[:,0]-cx)/k; N=(P[:,1]-cy)/k
@@ -30,10 +30,13 @@ for c in cands:
     # room frame: x along avenue, z away from street (into building), origin at street face
     X=u*s*-1 if False else u; Zr=s*(d - s*v)  # distance from street face into building
     Zr=d - s*v
+    front=g&(abs(X)<8)&(Zr>-6)&(Zr<-0.5)
+    zs=float(np.median(Z[front])) if front.sum()>10 else 0.0
+    Z=Z-zs; zg=zg+zs  # zero height = the sidewalk in front of the shop
     keep=(abs(X)<R)&(abs(Zr)<R)
     X,Zr,Y,cls=X[keep],Zr[keep],Z[keep],P[keep][:,3]
-    if len(X)>220000:
-        idx=np.random.default_rng(0).choice(len(X),220000,replace=False); X,Zr,Y,cls=X[idx],Zr[idx],Y[idx],cls[idx]
+    if len(X)>2000000:
+        idx=np.random.default_rng(0).choice(len(X),700000,replace=False); X,Zr,Y,cls=X[idx],Zr[idx],Y[idx],cls[idx]
     q=lambda a:np.clip(np.round(a*10),-32767,32767).astype(np.int16)
     with open(out+c['id']+'.bin','wb') as f:
         f.write(struct.pack('<I',len(X))); f.write(np.vstack([q(X),q(Y),q(Zr)]).T.copy().tobytes()); f.write(cls.astype(np.uint8).tobytes())

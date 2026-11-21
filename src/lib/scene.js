@@ -13,6 +13,7 @@ const FT = 0.3048
 export const TOL = { wall: 0.3, place: 0.05, chair: 0.3 } // metres
 export const METHODS = {
   assumed: 'assumed, not measured',
+  estimated: 'estimated from city lot data',
   listing_claim: 'from the listing (a claim)',
   derived: 'worked out by code',
   counted: 'counted by code',
@@ -54,7 +55,7 @@ function rectPts(a, b) {
   return [[ax, az], [bx, bz]]
 }
 
-function analyse(plan, room, target, dimsSource) {
+function analyse(plan, room, target, dimsSource, est) {
   const { W, D } = room
   const Z = plan.zones
   const floor = plan.items.filter((it) => !it.onTop).map(fp)
@@ -64,11 +65,12 @@ function analyse(plan, room, target, dimsSource) {
   const cz = (counters[0].z0 + counters[0].z1) / 2
   const measures = [], checks = []
   const M = (m) => { measures.push(m); return m }
-  const wallSrc = dimsSource === 'user' ? 'You typed this size; nobody has taped the walls yet, so we allow ±0.30 m (±1 ft)' : 'Default 20 × 40 ft. Not in the city data, so we allow ±0.30 m (±1 ft) until it is taped'
+  const TOLW = dimsSource === 'pluto' ? 0.6 : TOL.wall
+  const wallSrc = dimsSource === 'pluto' ? `Estimated: ${est?.areaFt2?.toLocaleString()} ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)` : dimsSource === 'user' ? 'You typed this size; nobody has taped the walls yet, so we allow ±0.30 m (±1 ft)' : 'Default 20 × 40 ft. Not in the city data, so we allow ±0.30 m (±1 ft) until it is taped'
 
-  M({ id: 'frontage', label: 'Frontage (wall to wall)', value: W, unit: 'm', method: 'assumed', range: { min: W - TOL.wall, max: W + TOL.wall }, source: wallSrc })
-  M({ id: 'depth', label: 'Depth (storefront to back wall)', value: D, unit: 'm', method: 'assumed', range: { min: D - TOL.wall, max: D + TOL.wall }, source: wallSrc })
-  M({ id: 'area', label: 'Floor area', value: W * D, unit: 'm²', method: 'derived', range: { min: (W - TOL.wall) * (D - TOL.wall), max: (W + TOL.wall) * (D + TOL.wall) }, source: 'frontage × depth' })
+  M({ id: 'frontage', label: 'Frontage (wall to wall)', value: W, unit: 'm', method: dimsSource === 'pluto' ? 'estimated' : 'assumed', range: { min: W - TOLW, max: W + TOLW }, source: wallSrc })
+  M({ id: 'depth', label: 'Depth (storefront to back wall)', value: D, unit: 'm', method: dimsSource === 'pluto' ? 'estimated' : 'assumed', range: { min: D - TOLW, max: D + TOLW }, source: wallSrc })
+  M({ id: 'area', label: 'Floor area', value: W * D, unit: 'm²', method: 'derived', range: { min: (W - TOLW) * (D - TOLW), max: (W + TOLW) * (D + TOLW) }, source: 'frontage × depth' })
   M({ id: 'ceiling', label: 'Ceiling height', value: null, unit: 'm', method: 'not_measured', source: 'Not in any public record. The 3D view draws 3.4 m as a placeholder.' })
   M({ id: 'door', label: 'Entrance position', value: Z.doorX, unit: 'm', method: 'assumed', range: { min: Z.doorX - TOL.wall, max: Z.doorX + TOL.wall }, source: 'Placed at 62% of the frontage. Check where the real door is.' })
 
@@ -100,14 +102,14 @@ function analyse(plan, room, target, dimsSource) {
     const near = front.filter((f) => xOv(f, cLeft, cRight) && f.z1 <= cFront + 0.01)
     const edge = near.length ? Math.max(...near.map((f) => f.z1)) : 0
     const has = cFront - edge, xm = (cLeft + cRight) / 2
-    M({ id: 'queue:clear', label: 'Open depth between the counter front and the nearest seat', value: has, unit: 'm', method: 'derived', range: { min: has - TOL.wall, max: has + TOL.wall }, source: 'The counter is set off the back wall, so it moves with the depth (±0.30 m)' })
-    checks.push({ id: 'queue', label: 'Queue space at the counter', op: '>=', need: { value: RULES.queueDepth, unit: 'm', source: 'Our rule: 1.5 m holds one line without blocking seats' }, have: 'queue:clear', pin: [xm, 0.05, (edge + cFront) / 2], measure: [[xm, edge], [xm, cFront]], explain: 'The counter and back of house are measured off the back wall.', tour: 'Tape the depth from the storefront glass to the back wall.', sweep: { kind: 'back', min: -TOL.wall, max: TOL.wall, label: 'Slide the back wall anywhere in its margin' } })
+    M({ id: 'queue:clear', label: 'Open depth between the counter front and the nearest seat', value: has, unit: 'm', method: 'derived', range: { min: has - TOLW, max: has + TOLW }, source: `The counter is set off the back wall, so it moves with the depth (±${TOLW.toFixed(2)} m)` })
+    checks.push({ id: 'queue', label: 'Queue space at the counter', op: '>=', need: { value: RULES.queueDepth, unit: 'm', source: 'Our rule: 1.5 m holds one line without blocking seats' }, have: 'queue:clear', pin: [xm, 0.05, (edge + cFront) / 2], measure: [[xm, edge], [xm, cFront]], explain: 'The counter and back of house are measured off the back wall.', tour: 'Tape the depth from the storefront glass to the back wall.', sweep: { kind: 'back', min: -TOLW, max: TOLW, label: 'Slide the back wall anywhere in its margin' } })
   }
   // 4 staff pass (moves with the side wall)
   {
     const has = W - cRight
-    M({ id: 'staff:clear', label: 'Gap between the end of the counter and the side wall', value: has, unit: 'm', method: 'derived', range: { min: has - TOL.wall, max: has + TOL.wall }, source: 'The counter is set off the left wall, so this gap takes the whole frontage margin (±0.30 m)' })
-    checks.push({ id: 'staff', label: 'Staff pass beside the counter', op: '>=', need: { value: RULES.staffPass, unit: 'm', source: 'Our rule: 36 in, same as an accessible route (ADA §403.5.1)' }, have: 'staff:clear', pin: [(cRight + W) / 2, 0.05, cz], measure: [[cRight, cz], [W, cz]], explain: 'Staff walk around the end of the counter to reach the back of house.', tour: 'Tape the frontage wall to wall at the back. Old buildings are rarely square.', sweep: { kind: 'wallR', min: -TOL.wall, max: TOL.wall, label: 'Slide the side wall anywhere in its margin' } })
+    M({ id: 'staff:clear', label: 'Gap between the end of the counter and the side wall', value: has, unit: 'm', method: 'derived', range: { min: has - TOLW, max: has + TOLW }, source: `The counter is set off the left wall, so this gap takes the whole frontage margin (±${TOLW.toFixed(2)} m)` })
+    checks.push({ id: 'staff', label: 'Staff pass beside the counter', op: '>=', need: { value: RULES.staffPass, unit: 'm', source: 'Our rule: 36 in, same as an accessible route (ADA §403.5.1)' }, have: 'staff:clear', pin: [(cRight + W) / 2, 0.05, cz], measure: [[cRight, cz], [W, cz]], explain: 'Staff walk around the end of the counter to reach the back of house.', tour: 'Tape the frontage wall to wall at the back. Old buildings are rarely square.', sweep: { kind: 'wallR', min: -TOLW, max: TOLW, label: 'Slide the side wall anywhere in its margin' } })
   }
   // 5 headroom: needs a ceiling height
   {
@@ -131,7 +133,7 @@ function analyse(plan, room, target, dimsSource) {
   {
     const load = (w, d) => Math.floor((w * (d - (D - cFront))) / (FT * FT) / 15)
     const v = load(W, D)
-    M({ id: 'exit:load', label: 'People the dining area is counted for (net floor area ÷ 15 ft²)', value: v, unit: 'people', method: 'derived', range: { min: load(W - TOL.wall, D - TOL.wall), max: load(W + TOL.wall, D + TOL.wall) }, source: 'Floor in front of the counter, at each end of the frontage and depth margins' })
+    M({ id: 'exit:load', label: 'People the dining area is counted for (net floor area ÷ 15 ft²)', value: v, unit: 'people', method: 'derived', range: { min: load(W - TOLW, D - TOLW), max: load(W + TOLW, D + TOLW) }, source: 'Floor in front of the counter, at each end of the frontage and depth margins' })
     checks.push({ id: 'exit', label: 'One exit is enough', op: '<=', need: { value: 49, unit: 'people', source: 'NYC Building Code / IBC Table 1006.2.1: one exit up to 49 people; Table 1004.5: 15 net ft² per person at tables' }, have: 'exit:load', pin: [W / 2, 0.05, cFront * 0.55], explain: 'The dining area stays under the 49-person line where a second exit is required.', tour: 'Ask the landlord for the Certificate of Occupancy: it caps the number of people.' })
   }
   // 8 seats
@@ -153,7 +155,7 @@ function sections(plan, checks, room) {
   const n = plan.items.filter((it) => PRODUCTS[it.product]).length
   return [
     { id: 'space', title: 'The space and what we assumed', view: 'top', table: true,
-      body: 'The city vacancy record gives the address and the last use, not the floor size. Until someone tapes the walls, the frontage and depth are assumptions, so each carries a ±0.30 m (±1 ft) margin. Every check below is tested at the worst end of that margin.' },
+      body: 'The city vacancy record gives the address and the last use, not the floor size. We size the room from the lot record where there is one (retail area ÷ storefronts on the lot), otherwise from a 20 × 40 ft default. Until someone tapes the walls it is an estimate, so the frontage and depth carry a margin and every check below is tested at the worst end of it.' },
     { id: 'entry', title: 'Getting in and through', view: 'walk', checks: has(['door', 'aisle', 'exit']),
       body: `The entrance sits at 62% of the frontage. A ${RULES.mainAisle} m aisle runs straight from the door to the counter, and the window bar stops short of the door to leave the 60 in turning space.` },
     { id: 'counter', title: 'Counter and queue', view: 'counter', checks: has(['queue', 'staff', 'head']),
@@ -173,17 +175,17 @@ const ALTS = (p) => [
   { id: 'max', name: 'Max seating', params: { seats: 20, style: 'dinein', windowBar: true, lounge: false } },
 ]
 
-export function buildScene({ site, room, request, params, dimsSource = 'default', lidar = null }) {
+export function buildScene({ site, room, request, params, dimsSource = 'default', est = null, lidar = null }) {
   const p = params || parseRequest(request)
   const alternatives = ALTS(p).map((a) => {
     const plan = planLayout(room, a.params)
-    const { measures, checks } = analyse(plan, room, a.params.seats, dimsSource)
+    const { measures, checks } = analyse(plan, room, a.params.seats, dimsSource, est)
     return { id: a.id, name: a.name, params: a.params, seats: plan.seats, items: plan.items, zones: plan.zones, measures, checks, sections: sections(plan, checks, room) }
   })
   return {
     site: {
       slug: site.id, address: site.address, zip: site.zip, lat: site.lat, lng: site.lng,
-      previousUse: site.prevUse, vacancySource: 'NYC Storefronts Reported Vacant or Not (Local Law 157), reporting year 2025',
+      previousUse: site.prevUse, pluto: site.pluto || null, vacancySource: 'NYC Storefronts Reported Vacant or Not (Local Law 157), reporting year 2025',
       lidar: lidar ? { dataset: 'USGS 3DEP NY_NewYorkCity (2017)', points: lidar.points, groundElevM: lidar.groundElevM, streetSide: lidar.streetSide } : null,
     },
     layout: {
