@@ -16,6 +16,7 @@ export const candidates = [
   { id: 'ams-1342', address: '1342 Amsterdam Ave', zip: '10027', lat: 40.8138, lng: -73.95625, prevUse: 'FOOD SERVICES', nta: 'MN0902' },
 ]
 
-// Snapshot of the live signals, used only if the live API calls fail during a demo.
-// Filled by `fetchSignals` results captured on 2026-11-21; null = not captured.
-export const snapshot = {}
+// Snapshot of the live signals, used only if the live API calls fail during a demo
+// (e.g. venue Wi-Fi). Captured with the same queries as `fetchSignals` on 2026-11-21 06:42 UTC.
+import snap from './snapshot.json'
+export const snapshot = snap

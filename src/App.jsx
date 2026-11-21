@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { MapContainer, TileLayer, CircleMarker, Circle, Tooltip, ScaleControl, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { PRODUCTS } from './data/products.js'
-import { candidates, DATASET_URL } from './data/candidates.js'
+import { candidates, DATASET_URL, snapshot } from './data/candidates.js'
 import { research } from './data/research.js'
 import { fetchSignals, SOURCES } from './lib/nycdata.js'
 import { scoreSite, WEIGHTS } from './lib/score.js'
 import { planLayout, llmParams, RULES } from './lib/layout.js'
 import Scene3D from './components/Scene3D.jsx'
+import { fitChecks, fmtHas, fmtNeed } from './lib/fitchecks.js'
 
 const FT = 0.3048
 
@@ -72,7 +73,7 @@ function AgentLog({ rows }) {
   rows.forEach(({ c, s }) => {
     if (!s) lines.push({ t: `Scanning 300 m around ${c.address}…`, live: true })
     else if (s.error) lines.push({ t: `${c.address}: live data unavailable`, bad: true })
-    else lines.push({ t: `${c.address}: ${s.cafes.length} coffee shops · ${s.foodCount} food businesses · ${Math.round(s.subway?.d ?? 0)} m to ${s.subway?.name}` })
+    else lines.push({ t: `${c.address}: ${s.cafes.length} coffee shops · ${s.foodCount} food businesses · ${Math.round(s.subway?.d ?? 0)} m to ${s.subway?.name}${s.fromSnapshot ? ' (snapshot)' : ''}` })
   })
   return <div className="agentlog"><div className="al-h"><span className="dot" />Site agent</div>{lines.map((l, i) => <div key={i} className={l.bad ? 'bad' : l.live ? 'live' : ''}>{l.bad ? '!' : l.live ? '◌' : '✓'} {l.t}</div>)}</div>
 }
@@ -83,7 +84,7 @@ function Sites({ go, state, setState }) {
     candidates.forEach((c) => {
       if (signals[c.id]) return
       fetchSignals(c).then((s) => setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: s } })))
-        .catch((e) => setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: { error: String(e) } } })))
+        .catch((e) => setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: snapshot[c.id] ? { ...snapshot[c.id], fromSnapshot: true } : { error: String(e) } } })))
     })
   }, [])
   const rows = candidates.map((c) => {
@@ -121,6 +122,7 @@ function Sites({ go, state, setState }) {
               </div>
             )}
             {s?.error && <div className="err">Live data failed: {s.error}</div>}
+            {s?.fromSnapshot && <div className="muted small">Live API unreachable: showing the snapshot captured {s.fetchedAt.slice(0, 10)}</div>}
           </div>
         ))}
       </div>
@@ -199,6 +201,45 @@ function ShoppingList({ items, onPick }) {
   )
 }
 
+function FitCheck({ checks, active, onCheck }) {
+  const n = (s) => checks.filter((c) => c.status === s).length
+  return (
+    <div className="fit">
+      <div className="fit-sum">
+        {n('fails') > 0 && <span className="badge-s fails">{n('fails')} Fails</span>}
+        {n('tight') > 0 && <span className="badge-s tight">{n('tight')} Tight</span>}
+        <span className="badge-s works">{n('works')} Works</span>
+      </div>
+      {checks.map((c, i) => {
+        const on = active === c.key
+        return (
+          <div key={c.key} className={'fit-row' + (on ? ' on' : '')}>
+            <button className="fit-h" onClick={() => onCheck(on ? null : c.key)}>
+              <span className={'num ' + c.status}>{i + 1}</span>
+              <span className="fit-t">{c.title}<em>{fmtHas(c)} <span>needs {fmtNeed(c)}</span></em></span>
+              <span className={'badge-s ' + c.status}>{c.status[0].toUpperCase() + c.status.slice(1)}</span>
+            </button>
+            {on && (
+              <div className="fit-b">
+                <p>{c.where}</p>
+                <dl>
+                  <dt>Needs</dt><dd>{fmtNeed(c)}</dd>
+                  <dt>Has</dt><dd>{fmtHas(c)}</dd>
+                  <dt>Method</dt><dd>{c.method}</dd>
+                  <dt>Source</dt><dd>{c.source}</dd>
+                </dl>
+                <div className="tour"><b>On the tour</b>{c.tour}</div>
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+const TOOLS = [['overview', 'Overview'], ['top', 'Top'], ['street', 'Street'], ['walk', 'Walk in']]
+
 function Layout({ state, setState }) {
   const site = candidates.find((c) => c.id === state.selected) || candidates[0]
   const [w, setW] = useState(state.room.wFt), [d, setD] = useState(state.room.dFt)
@@ -206,69 +247,91 @@ function Layout({ state, setState }) {
   const [shown, setShown] = useState(state.plan ? state.plan.steps.length : 0)
   const [busy, setBusy] = useState(false)
   const [picked, setPicked] = useState(null)
-  const [zones, setZones] = useState(true)
-  const [tab, setTab] = useState('agent')
+  const [zones, setZones] = useState(false)
+  const [tab, setTab] = useState(state.plan ? 'fit' : 'agent')
+  const [view, setView] = useState('overview')
+  const [dims, setDims] = useState(true)
+  const [lidar, setLidar] = useState(false)
+  const [lidarInfo, setLidarInfo] = useState(null)
+  const [dark, setDark] = useState(true)
+  const [active, setActive] = useState(null)
   const room = { W: w * FT, D: d * FT }
   async function run() {
-    setBusy(true); setShown(0); setPicked(null); setTab('agent')
+    setBusy(true); setShown(0); setPicked(null); setActive(null); setTab('agent')
     const params = await llmParams(req)
     const plan = planLayout(room, params)
-    plan.via = params.via
+    plan.via = params.via; plan.target = params.seats
     setState((s) => ({ ...s, plan, request: req, room: { wFt: w, dFt: d } }))
     for (let i = 1; i <= plan.steps.length; i++) { await new Promise((r) => setTimeout(r, 380)); setShown(i) }
-    setBusy(false)
+    setBusy(false); setTab('fit')
   }
   useEffect(() => { if (!state.plan) run() }, [])
   const plan = state.plan
+  const checks = useMemo(() => (plan ? fitChecks(plan, room, plan.target || 12) : []), [plan, w, d])
   const pickedItem = plan && picked ? plan.items.find((x) => x.id === picked) : null
+  const pick = (k) => { setActive(k); if (k) { setTab('fit'); setPicked(null) } }
   return (
-    <section className="layout">
+    <section className={'layout' + (dark ? ' dark' : '')}>
       <aside className="panel">
-        <div className="muted">Selected space</div>
+        <div className="eyebrow">Fit check</div>
         <h2>{site.address}</h2>
+        <div className="muted small">{site.zip} · vacant storefront, was {site.prevUse.toLowerCase()}</div>
         <div className="dims">
           <label>Frontage (ft)<input type="number" value={w} onChange={(e) => setW(+e.target.value)} /></label>
           <label>Depth (ft)<input type="number" value={d} onChange={(e) => setD(+e.target.value)} /></label>
         </div>
-        <p className="note">Floor size is not in the city data. Default 20 × 40 ft ({(20 * FT).toFixed(1)} × {(40 * FT).toFixed(1)} m) is an assumption: replace it with the listing’s numbers.</p>
+        <p className="note">Floor size is not in the city data. 20 × 40 ft is an assumption: replace it with the listing’s numbers.</p>
         <label className="req">Tell the agent what you need
-          <textarea value={req} onChange={(e) => setReq(e.target.value)} rows={3} />
+          <textarea value={req} onChange={(e) => setReq(e.target.value)} rows={2} />
         </label>
         <button className="pill" disabled={busy} onClick={run}>{busy ? 'Agent working…' : 'Run layout agent'}</button>
         {plan && (
           <>
             <div className="tabs">
+              <a className={tab === 'fit' ? 'on' : ''} onClick={() => setTab('fit')}>Fit check</a>
               <a className={tab === 'agent' ? 'on' : ''} onClick={() => setTab('agent')}>Agent log</a>
               <a className={tab === 'shop' ? 'on' : ''} onClick={() => setTab('shop')}>Shopping list</a>
             </div>
+            {tab === 'fit' && <FitCheck checks={checks} active={active} onCheck={pick} />}
             {tab === 'agent' && (
               <>
                 <ol className="agent-steps">
                   {plan.steps.slice(0, shown).map((s, i) => <li key={i}>{s}</li>)}
                 </ol>
-                {shown >= plan.steps.length && (
-                  <div className="checks">
-                    {plan.checks.map((c, i) => <div key={i} className={c.ok ? 'ok' : 'bad'}>{c.ok ? '✓' : '!'} {c.text}</div>)}
-                    <div className="muted small">Parsed by: {plan.via === 'llm' ? 'LLM' : 'built-in rules (no API key set)'} · Placement and checks: rule engine</div>
-                  </div>
-                )}
+                {shown >= plan.steps.length && <div className="muted small">Parsed by: {plan.via === 'llm' ? 'LLM' : 'built-in rules (no API key set)'} · Placement and checks: rule engine</div>}
               </>
             )}
-            {tab === 'shop' && <ShoppingList items={plan.items} onPick={setPicked} />}
+            {tab === 'shop' && <ShoppingList items={plan.items} onPick={(id) => { setPicked(id); setActive(null) }} />}
           </>
         )}
       </aside>
       <div className="stage">
-        {plan && <Scene3D room={room} plan={plan} onPick={(id) => setPicked(id === picked ? null : id)} picked={picked} showZones={zones} />}
+        {plan && <Scene3D room={room} plan={plan} onPick={(id) => { setPicked(id === picked ? null : id); setActive(null) }} picked={picked} showZones={zones}
+          dark={dark} view={view} dims={dims} lidarSite={lidar ? site.id : null} onLidarInfo={setLidarInfo} checks={checks} activeCheck={active} onCheck={pick} />}
+        <div className="brand3d"><span className="ring" />STOREFIT <span className="sep" />Fit Lab</div>
         <div className="hud">
           <div className="hud-row"><b>{plan ? plan.seats : '–'}</b> seats</div>
-          <div className="hud-row"><b>{room.W.toFixed(1)} × {room.D.toFixed(1)}</b> m · {(room.W * room.D).toFixed(0)} m² · {Math.round(w * d)} ft²</div>
-          <div className="scalebar"><span /><em>1 m</em></div>
-          <label className="tog"><input type="checkbox" checked={zones} onChange={(e) => setZones(e.target.checked)} /> Show zones</label>
+          <div className="hud-row"><b>{room.W.toFixed(1)} × {room.D.toFixed(1)}</b> m · {Math.round(w * d)} ft²</div>
+          <div className="scalebar"><span /><em>1 m grid</em></div>
         </div>
         {pickedItem && <ProductCard it={pickedItem} onClose={() => setPicked(null)} />}
-        <div className="stage-legend"><span className="lg aisle" />Main aisle {RULES.mainAisle} m <span className="lg queue" />Queue {RULES.queueDepth} m <span className="muted">Grid 1 m · bold 5 m · click any item to shop it</span></div>
-        <div className="credit3d">Sofa, lamp: Wayfair (CC-BY 4.0) · Chair, cup: Wayfair/Khronos (CC0) · Plant: DGG (CC-BY 4.0) · via Khronos glTF-Sample-Assets</div>
+        {lidar && lidarInfo && (
+          <div className="lidar-card">
+            <b>LiDAR · USGS 3DEP, New York City 2017</b>
+            <div>{lidarInfo.shown.toLocaleString()} of {lidarInfo.total.toLocaleString()} points within {lidarInfo.radiusM} m</div>
+            <div className="lg-row"><span className="dot g" />ground <span className="grad" />2–30+ m high</div>
+            <div className="muted small">Roofs, trees and street only. Shop front faces the {lidarInfo.streetSide} street, found from the points; placement is approximate.</div>
+          </div>
+        )}
+        <div className="toolbar">
+          {TOOLS.map(([k, l]) => <button key={k} className={view === k && !active ? 'on' : ''} onClick={() => { setActive(null); setView(k) }}>{l}</button>)}
+          <span className="sep" />
+          <button className={dims ? 'on' : ''} onClick={() => setDims(!dims)}>Dimensions</button>
+          <button className={zones ? 'on' : ''} onClick={() => setZones(!zones)}>Zones</button>
+          <button className={lidar ? 'on' : ''} onClick={() => { setLidar(!lidar); setActive(null); setView('overview') }}>LiDAR</button>
+          <button className={dark ? 'on' : ''} onClick={() => setDark(!dark)}>Dark</button>
+        </div>
+        <div className="credit3d">Sofa, lamp: Wayfair (CC-BY 4.0) · Chair, cup: Wayfair/Khronos (CC0) · Plant: DGG (CC-BY 4.0) · LiDAR: USGS 3DEP (public domain)</div>
       </div>
     </section>
   )

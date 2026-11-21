@@ -10,6 +10,9 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 1. Open the app → **Start a search**. Cards load live data from NYC Open Data (takes a few seconds).
 2. Click the top card: see each factor, its raw value and source link; competitors appear on the map.
 3. **Fit a cafe in this space** → edit the request (e.g. `12 seats, mostly takeout`) → **Run layout agent**. Drag to orbit the 3D view.
+   - **Fit check** tab: each check is measured on the plan (aisle width, door clearance, queue, table aisles, staff pass, pendant headroom, occupant load / single exit, seats) and marked Works / Tight / Fails with its rule and source (ADA 2010, NYC Building Code / IBC). Click a check or its numbered pin to fly to it.
+   - Toolbar: Overview / Top / Street / Walk in views, Dimensions, Zones, **LiDAR** (real USGS point cloud of the surrounding block), Dark.
+   - Click any furniture for a product card; **Shopping list** groups everything with buy links (exact product or "find similar").
 4. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
 
 ## How we use Flashpoint AI
@@ -45,6 +48,9 @@ Never commit `.env`. Note: `VITE_` variables are bundled into the client — use
 - [Storefronts Reported Vacant or Not](https://data.cityofnewyork.us/City-Government/Storefronts-Reported-Vacant-or-Not/92iy-9c3n) (NYC Local Law 157) — candidate list, reporting year 2025
 - [DOHMH Restaurant Inspection Results](https://data.cityofnewyork.us/Health/DOHMH-New-York-City-Restaurant-Inspection-Results/43nn-pn8j) — competitors, food activity (live)
 - [MTA Subway Stations](https://data.ny.gov/Transportation/MTA-Subway-Stations/39hk-dx4f) — transit access (live)
+- Offline fallback: `src/data/snapshot.json` holds the same queries' results captured 2026-11-21 06:42 UTC; the UI labels it "snapshot" whenever it is used.
+- [USGS 3DEP LiDAR, NY_NewYorkCity (2017)](https://registry.opendata.aws/usgs-lidar/) — public domain, Entwine Point Tiles on AWS Open Data. `scripts/lidar_export.py` cuts a 200 m square around each candidate into `public/lidar/*.bin` (int16 decimetres). Shop orientation is detected from the points (nearest street face) and is approximate.
+- Fit-check rules: ADA 2010 Standards §403.5.1, §404.2.4.1, §307.4, §902; IBC / NYC Building Code Tables 1004.5 and 1006.2.1.
 - Map tiles © OpenStreetMap contributors © CARTO
 
 ## Work during the event & disclosures

@@ -98,7 +98,7 @@ input,textarea{font:inherit;border:1px solid #d3d2cc;border-radius:10px;padding:
 .tog{display:flex;gap:6px;align-items:center;cursor:pointer}
 .credit3d{position:absolute;right:16px;bottom:16px;font-size:10px;color:#777;z-index:5;max-width:420px;text-align:right}
 /* product card & shopping */
-.pcard{position:absolute;right:16px;top:16px;z-index:6;width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 12px 40px rgba(11,12,18,.12);display:flex;flex-direction:column;gap:6px}
+.pcard{position:absolute;right:16px;top:16px;z-index:30;width:280px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 12px 40px rgba(11,12,18,.12);display:flex;flex-direction:column;gap:6px}
 .pcard .x{position:absolute;right:10px;top:6px;border:0;background:none;font-size:20px;cursor:pointer;color:#888}
 .pname{font-size:16px;font-weight:500;line-height:1.3;padding-right:14px}
 .pdims{font-size:12px;color:#555}
@@ -116,3 +116,54 @@ input,textarea{font:inherit;border:1px solid #d3d2cc;border-radius:10px;padding:
 .shop-row .qty{font-weight:600}.shop-row .sname{cursor:pointer}.shop-row .sname:hover{text-decoration:underline}
 .shop-row .buy{font-size:11px;padding:4px 9px}
 .agentlog .al-h .dot{width:7px;height:7px;border-radius:50%;background:#5b6cff}
+/* ---- Fit Lab (Obia-style) ---- */
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.layout.dark{--fl-bg:#2b2d31;--fl-panel:#36383d;--fl-line:#4a4d53;--fl-ink:#ececef;--fl-mut:#a3a6ad}
+.layout.dark .panel{background:var(--fl-panel);color:var(--fl-ink);border-color:var(--fl-line)}
+.layout.dark .panel .muted,.layout.dark .panel .note,.layout.dark .eyebrow,.layout.dark .dims label,.layout.dark .req{color:var(--fl-mut)}
+.layout.dark .panel input,.layout.dark .panel textarea{background:#2b2d31;color:var(--fl-ink);border-color:var(--fl-line)}
+.layout.dark .pill{background:#ececef;color:#16171a}
+.layout.dark .tabs{background:#2b2d31}.layout.dark .tabs a.on{background:#4a4d53;color:#fff}
+.layout.dark .shop-row,.layout.dark .fit-row{border-color:var(--fl-line)}
+.layout.dark .buy{background:#ececef;color:#16171a}.layout.dark .buy.similar{background:transparent;color:#ececef;border-color:#8d9097}
+.layout.dark .hud,.layout.dark .pcard{background:rgba(54,56,61,.92);color:var(--fl-ink);border-color:var(--fl-line)}
+.layout.dark .scalebar span{border-color:#ececef}.layout.dark .scalebar em{color:var(--fl-mut)}
+.layout.dark .pdims,.layout.dark .credit3d{color:var(--fl-mut)}
+.layout.dark .stage{background:#2b2d31}
+.fit{display:flex;flex-direction:column}
+.fit-sum{display:flex;gap:6px;margin-bottom:8px}
+.badge-s{font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap;font-weight:500}
+.badge-s.works{background:rgba(95,174,110,.18);color:#5fae6e}.badge-s.tight{background:rgba(226,163,54,.18);color:#e2a336}.badge-s.fails{background:rgba(229,83,75,.18);color:#e5534b}
+.fit-row{border-top:1px solid var(--line)}
+.fit-row.on{background:rgba(255,255,255,.04);border-radius:10px}
+.fit-h{all:unset;box-sizing:border-box;display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;width:100%;padding:11px 6px;cursor:pointer}
+.fit-h .num{font:600 12px Geist,sans-serif;color:var(--muted);padding-top:2px}
+.fit-h .num.tight{color:#e2a336}.fit-h .num.fails{color:#e5534b}
+.fit-t{font-size:14px;font-weight:500;line-height:1.3;display:flex;flex-direction:column;gap:3px}
+.fit-t em{font:600 12px ui-monospace,Menlo,monospace;font-style:normal}.fit-t em span{font-weight:400;opacity:.65}
+.fit-b{padding:0 8px 12px 38px;font-size:13px}
+.fit-b p{margin:0 0 8px;opacity:.85}
+.fit-b dl{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;margin:0 0 10px}
+.fit-b dt{opacity:.6}.fit-b dd{margin:0}
+.tour{background:rgba(226,163,54,.08);border:1px solid rgba(226,163,54,.3);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.tour b{color:#e2a336;font-size:12px;font-weight:600}
+.pin3d{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.85);color:#fff;font:700 12px Geist,sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.35);transition:transform .15s}
+.pin3d.works{background:#5fae6e}.pin3d.tight{background:#e2a336}.pin3d.fails{background:#e5534b}
+.pin3d.on{transform:scale(1.35);box-shadow:0 0 0 6px rgba(255,255,255,.18),0 2px 12px rgba(0,0,0,.4)}
+.toolbar{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);z-index:30;display:flex;gap:2px;align-items:center;background:rgba(54,56,61,.94);border:1px solid #4a4d53;border-radius:14px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.toolbar button{all:unset;cursor:pointer;color:#c9cbd0;font-size:12px;padding:7px 11px;border-radius:9px;white-space:nowrap}
+.toolbar button:hover{background:rgba(255,255,255,.07)}
+.toolbar button.on{background:#ececef;color:#16171a}
+.toolbar .sep{width:1px;height:20px;background:#4a4d53;margin:0 4px}
+.layout:not(.dark) .toolbar{background:#fff;border-color:var(--line)}.layout:not(.dark) .toolbar button{color:#333}.layout:not(.dark) .toolbar button.on{background:#0B0C12;color:#fff}
+.brand3d{position:absolute;left:50%;top:16px;transform:translateX(-50%);z-index:5;font-weight:600;letter-spacing:.06em;font-size:14px;display:flex;align-items:center;gap:8px;color:#ececef}
+.layout:not(.dark) .brand3d{color:#0B0C12}
+.brand3d .ring{width:14px;height:14px;border-radius:50%;border:3px solid currentColor;border-right-color:#5b6cff}
+.brand3d .sep{width:1px;height:14px;background:currentColor;opacity:.4;margin:0 2px}
+.lidar-card{position:absolute;left:16px;bottom:96px;z-index:30;width:320px;background:rgba(54,56,61,.94);color:#ececef;border:1px solid #4a4d53;border-radius:12px;padding:12px 14px;font-size:12px;display:flex;flex-direction:column;gap:5px}
+.lidar-card .lg-row{display:flex;align-items:center;gap:6px}
+.lidar-card .dot.g{width:9px;height:9px;border-radius:50%;background:#6b7079}
+.lidar-card .grad{width:70px;height:7px;border-radius:4px;background:linear-gradient(90deg,#3d4fd1,#dfe6ff);margin-left:8px}
+.layout .stage-legend{display:none}
+.credit3d{bottom:12px}
+.hud{z-index:30}

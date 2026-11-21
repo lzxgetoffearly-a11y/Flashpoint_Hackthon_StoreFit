@@ -71,7 +71,9 @@ export function planLayout({ W, D }, params) {
   const segs = [[0.15, aisleL - 0.05], [aisleR + 0.05, W - 0.15]]
   if (params.windowBar) {
     const barD = 0.45
-    for (const [x0, x1] of segs) {
+    // keep ADA door maneuvering clearance (door + 18 in on the latch side) free of the bar
+    const barSegs = [[0.15, doorX - 0.5 - 0.46 - 0.05], [doorX + 0.55, W - 0.15]]
+    for (const [x0, x1] of barSegs) {
       const len = x1 - x0
       if (len < 1.2) continue
       add({ kind: 'windowbar', w: len, d: barD, h: 1.05, x: x0 + len / 2, z: 0.1 + barD / 2, zone: 'seat', label: '临窗吧台 Window bar', product: 'windowbar' })
@@ -99,8 +101,8 @@ export function planLayout({ W, D }, params) {
   const modD = T + 2 * CH
   let tables = 0
   for (const [x0, x1] of segs) {
-    const colW = T + 0.65
-    const cols = Math.max(0, Math.floor((x1 - x0 + 0.65) / colW))
+    const colW = T + RULES.aisle
+    const cols = Math.max(0, Math.floor((x1 - x0 + RULES.aisle) / colW))
     for (let z = zStart + modD / 2; z + modD / 2 <= seatZoneEnd; z += modD + RULES.aisle) {
       for (let c = 0; c < cols; c++) {
         if (seats >= params.seats) break

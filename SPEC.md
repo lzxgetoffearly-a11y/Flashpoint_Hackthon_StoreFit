@@ -50,3 +50,8 @@ The LLM (optional, OpenAI-compatible endpoint via env vars) only extracts `{seat
 
 ## Tech
 Vite + React 18, three.js via @react-three/fiber + drei, Leaflet via react-leaflet. No backend; all data calls are browser → Socrata (CORS).
+
+## Fit Lab view (added 2026-11-21, modeled on Obia's Fit Lab case-study viewer)
+- Dark 3D stage with translucent walls, numbered check pins, camera fly-to, and a bottom toolbar (Overview, Top, Street, Walk in, Dimensions, Zones, LiDAR, Dark).
+- Fit checks (`src/lib/fitchecks.js`) are measured from the plan geometry, each with Needs / Has / Method / Source / On the tour. Status: Works (≥10% margin), Tight (meets rule, <10% margin), Fails.
+- LiDAR layer: real USGS 3DEP points around the address, host building cut away so the plan shows through.
