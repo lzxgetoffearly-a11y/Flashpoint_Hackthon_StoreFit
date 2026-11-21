@@ -29,7 +29,7 @@ Use **2905 Broadway** for the walkthrough; it is the address we checked end to e
 3. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
 
 ## How we use Flashpoint AI
-Honest status at submission (Nov 21, 13:00 ET): **one Flashpoint survey is live and collecting; no results are in yet, so nothing in this product is claimed as a research finding.**
+Status (Nov 21, 13:10 ET): **one Flashpoint survey, sent to our own first-party panel, has 3 complete responses (1 more partial).** n=3 is a very small, convenience sample of people we know, so we treat it as directional, not proof.
 
 What we actually did with Flashpoint:
 - Connected the Flashpoint MCP tools with the team's Base USDC wallet (funded with 25 USDC).
@@ -38,7 +38,27 @@ What we actually did with Flashpoint:
   [create](https://basescan.org/tx/0x0e4dd2a3bd01d379aad04ec537128bb5b3f7a50a973f357bef96fb89da00dd01) ·
   [confirm](https://basescan.org/tx/0xb7aaaddc7c6988cbc25f6f89e31846f0f4b3074fdb724584e7c5187c4d797cb0) ·
   [publish](https://basescan.org/tx/0x9f38091424d68d05dda84387331c069c3ed5d6ef73469399da9e627df365c64f) ·
-  [send](https://basescan.org/tx/0x8dfb3b8b11e7ce38ecfd36243be76eb5027e4e63dcf33c3ebc17e289be4653fe)
+  [send](https://basescan.org/tx/0x8dfb3b8b11e7ce38ecfd36243be76eb5027e4e63dcf33c3ebc17e289be4653fe) ·
+  [results](https://basescan.org/tx/0x3875a8715af24eed2a4511673806f9c39a68991be0998a7de4966d64f44f606d) (total $2.50)
+
+### Survey results (Flashpoint, n = 3 complete)
+| Question | Result |
+|---|---|
+| Who are you | 2 run or plan to open a small shop/cafe, 1 customer |
+| What matters most when judging a location (multi) | Rent worth it 2 · Equipment and seating fit 2 · Nearby customers (students, workers) 2 · Foot traffic 1 · Competition 0 |
+| How helpful is a 3D layout preview before signing (1–5) | **3.67** (4, 4, 3) |
+| How much do you trust an automatic site score (1–5) | **2.33** (2, 2, 3) |
+
+Open answers, verbatim:
+1. "As a customer I notice when the entrance is awkward or the queue blocks the seats. A shop should be easy to reach and comfortable to use not just look good in pictures. I have no experience signing a commercial lease so I cannot judge the business economics."
+2. "Mistaking a busy street for enough paying customers. Before signing my first cafe lease I would count traffic at different times check whether those people would buy coffee and work out how many daily sales cover rent. A nice layout would not fix weak demand."
+3. "Signing a lease before checking kitchen equipment ventilation and electrical capacity. Cheap rent can hide expensive fit-out work. I would verify the layout and renovation costs with a contractor before committing to a second food shop."
+
+### What the results changed
+- **Kept:** the Fit Lab as the lead feature. "Will my equipment and seating fit" tied for the top concern, and the 3D preview scored 3.67/5.
+- **Reinforced:** every score shows its source and range instead of a bare number. Trust in an automatic score was low (2.33/5), so a black-box score would not be used.
+- **Ruled out as a headline:** foot traffic alone (1 of 3) and competitor counts (0 of 3). Answer 2 says a busy street is not the same as paying customers, so the next step is a demand-vs-rent check (daily sales needed to cover rent), not a bigger traffic number.
+- **Added to the Fit Lab backlog (not built yet):** entrance and queue path not blocking seats (answer 1); ventilation and electrical capacity flags (answer 3).
 
 Each question is tied to a product decision we will make when answers arrive:
 
@@ -54,10 +74,10 @@ Not done: no synthetic panel was run, no AI-moderated interviews, and Flashpoint
 
 ## Required write-up
 - **Problem and audience:** A first-time owner has to commit to a lease before knowing two things: whether the location has demand without too much competition, and whether the counter, queue and seats they need will fit legally in that unit. Our intended user is a first-time independent cafe owner near Columbia. This is our hypothesis; the survey's first and last questions are there to test it.
-- **Use of Flashpoint (question + evidence):** Question: "what do people opening a small shop find hardest to judge, and do a 3D fit preview and a sourced score help?" Evidence so far is that the survey was built, published and sent (link and four receipts above). Responses: pending.
-- **Impact of decisions (changed / kept / ruled out):** Planned, not yet found. See the table above for which answer changes which part of the product. Nothing has been changed, kept or ruled out on the basis of Flashpoint results yet.
+- **Use of Flashpoint (question + evidence):** Question: "what do people opening a small shop find hardest to judge, and do a 3D fit preview and a sourced score help?" Evidence: survey sent to a 7-person first-party panel, 3 complete responses (results and receipts above).
+- **Impact of decisions (changed / kept / ruled out):** Kept the Fit Lab as the lead feature; kept sources and ranges on every score because trust in automatic scores was low; ruled out foot traffic and competitor counts as headline metrics; added entrance/queue, ventilation and electrical checks and a sales-vs-rent check to the backlog. Based on n=3, so directional only.
 - **Proposed solution:** live-data site shortlist + 3D layout agent (this repo).
-- **Supporting evidence (what was actually tested vs simulated):** Real: live NYC / MTA open-data queries, USGS LiDAR, PLUTO lot data, Google 3D tiles, product pages and list prices, and a survey sent to 7 real people (no answers yet). Estimated or assumed, and labelled so in the app: unit dimensions (from lot data), ceiling height, door position. Simulated: nothing is presented as user feedback; there are no synthetic respondents and no fabricated results. The layout itself is generated by rules, not validated with owners.
+- **Supporting evidence (what was actually tested vs simulated):** Real: live NYC / MTA open-data queries, USGS LiDAR, PLUTO lot data, Google 3D tiles, product pages and list prices, and a survey sent to 7 real people (3 complete answers). Estimated or assumed, and labelled so in the app: unit dimensions (from lot data), ceiling height, door position. Simulated: nothing is presented as user feedback; there are no synthetic respondents and no fabricated results. The layout itself is generated by rules, not validated with owners.
 - **Limitations and next steps:** no pedestrian counts or rent data; unit size is an estimate from lot data (±0.6 m) until someone measures; ceiling height is assumed; the layout is rule-generated with one counter position (across the back) and needs professional review; the Google 3D facade alignment was checked on 2905 Broadway only. Next: store-type templates (side counter, loop circulation), listing integration, floor-plan upload, interviews with owners.
 
 ## Run locally
