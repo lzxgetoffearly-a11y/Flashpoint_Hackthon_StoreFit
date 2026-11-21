@@ -3,10 +3,10 @@
 ## ▶ Open the live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
 No install or login. Open the link in Chrome on a laptop, click **Start a search**, pick **2905 Broadway**, then **Fit a cafe in this space**. (Hosted on GitHub Pages from the `gh-pages` branch, built from `main`.)
 
-### Demo video (60 s)
+### Demo video (75 s)
 [![StoreFit demo: click to watch the video](docs/demo.gif)](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)
 
-Click the preview to watch the MP4 ([direct link](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)). Recorded step by step on the live site; every screen shows real data.
+Click the preview to watch the MP4 ([direct link](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)). Recorded step by step on the live site; every screen shows real data. It ends with clicking a piece of furniture, the shopping list, and the retailer product page the link opens.
 
 Engineering & Product track · Flashpoint AI × CUB Hackathon (Nov 13–21, 2026)
 
