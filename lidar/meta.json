@@ -1,0 +1,56 @@
+{
+ "source": "USGS 3DEP LiDAR, NY_NewYorkCity (2017), EPT on AWS Open Data: s3://usgs-lidar-public/NY_NewYorkCity",
+ "radiusM": 100,
+ "quant": 0.1,
+ "frame": "x along avenue (Manhattan grid 28.9\u00b0 east of north), y up from local ground median, z from the street-facing wall into the block",
+ "sites": {
+  "bwy-2905": {
+   "points": 220000,
+   "streetSide": "east",
+   "streetFaceM": 14.5,
+   "groundElevM": 37.73
+  },
+  "ams-960": {
+   "points": 220000,
+   "streetSide": "east",
+   "streetFaceM": 15.5,
+   "groundElevM": 32.65
+  },
+  "bwy-2760": {
+   "points": 220000,
+   "streetSide": "west",
+   "streetFaceM": 34.5,
+   "groundElevM": 32.36
+  },
+  "bwy-2730": {
+   "points": 220000,
+   "streetSide": "west",
+   "streetFaceM": 22.5,
+   "groundElevM": 32.08
+  },
+  "ams-1270": {
+   "points": 109893,
+   "streetSide": "west",
+   "streetFaceM": 13.0,
+   "groundElevM": 20.28
+  },
+  "w121-537": {
+   "points": 220000,
+   "streetSide": "west",
+   "streetFaceM": 14.5,
+   "groundElevM": 31.41
+  },
+  "bwy-2592": {
+   "points": 220000,
+   "streetSide": "east",
+   "streetFaceM": 26.5,
+   "groundElevM": 24.17
+  },
+  "ams-1342": {
+   "points": 107212,
+   "streetSide": "east",
+   "streetFaceM": 6.5,
+   "groundElevM": 6.96
+  }
+ }
+}
