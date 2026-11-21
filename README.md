@@ -53,7 +53,8 @@ Never commit `.env`. Note: `VITE_` variables are bundled into the client — use
 - Offline fallback: `src/data/snapshot.json` holds the same queries' results captured 2026-11-21 06:42 UTC; the UI labels it "snapshot" whenever it is used.
 - [USGS 3DEP LiDAR, NY_NewYorkCity (2017)](https://registry.opendata.aws/usgs-lidar/) — public domain, Entwine Point Tiles on AWS Open Data. `scripts/lidar_export.py` cuts a 200 m square around each candidate into `public/lidar/*.bin` (int16 decimetres). Shop orientation is detected from the points (nearest street face) and is approximate.
 - Fit-check rules: ADA 2010 Standards §403.5.1, §404.2.4.1, §307.4, §902; IBC / NYC Building Code Tables 1004.5 and 1006.2.1.
-- Map tiles © OpenStreetMap contributors © CARTO
+- Map tiles © OpenStreetMap contributors; satellite imagery © Esri, Maxar, Earthstar Geographics. Street view is Google's public embed.
+- Product links and list prices: read from ikea.com and webstaurantstore.com search results on 2026-11-21 (`src/data/products.js`). Only the sofa and pendant are the exact modeled products (Wayfair); the rest are labeled "similar product".
 
 ## Work during the event & disclosures
 - All code, data wiring and research in this repo were done during Nov 13–21, 2026. _Add a short log here._
@@ -63,7 +64,7 @@ Never commit `.env`. Note: `VITE_` variables are bundled into the client — use
   - SheenChair — © 2020 Wayfair LLC, CC0
   - DiffuseTransmissionPlant — © 2024 Darmstadt Graphics Group, CC-BY 4.0
   - DiffuseTransmissionTeacup — CC0
-  - Tables, chairs, stools, counter, espresso machine, fridge, sink and shelves are procedural three.js models we wrote with PBR materials. They are generic, so their links say "Find similar" and open a retailer search. We show no prices because we do not have real price data.
+  - Tables, chairs, stools, counter, espresso machine, fridge, sink and shelves are procedural three.js models we wrote with PBR materials. They are generic, so their links say "Find similar" and open a retailer search. They link to one specific comparable product page each, labeled "similar product".
 - Libraries: React, three.js, @react-three/fiber, drei, Leaflet, Vite (MIT/BSD).
 - Visual style inspired by public startup landing pages; no assets copied.
 - AI tools: Flashpoint AI (primary, research). Claude was used as a coding assistant for scaffolding this prototype.

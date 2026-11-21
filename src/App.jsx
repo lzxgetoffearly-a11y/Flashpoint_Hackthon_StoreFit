@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { MapContainer, TileLayer, CircleMarker, Circle, Tooltip, ScaleControl, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
-import { PRODUCTS } from './data/products.js'
+import { PRODUCTS, PRICE_DATE } from './data/products.js'
 import { candidates, DATASET_URL, snapshot } from './data/candidates.js'
 import { research } from './data/research.js'
 import { fetchSignals, SOURCES } from './lib/nycdata.js'
@@ -81,12 +81,24 @@ function AgentLog({ rows }) {
 function Sites({ go, state, setState }) {
   const { signals, selected, rent, revenue } = state
   useEffect(() => {
-    candidates.forEach((c) => {
-      if (signals[c.id]) return
-      fetchSignals(c).then((s) => setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: s } })))
-        .catch((e) => setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: snapshot[c.id] ? { ...snapshot[c.id], fromSnapshot: true } : { error: String(e) } } })))
-    })
+    let dead = false
+    ;(async () => {
+      // one site at a time: bursts of anonymous Socrata calls get throttled
+      for (const c of candidates) {
+        if (dead) return
+        if (signals[c.id] && !signals[c.id].fromSnapshot) continue
+        let s = null, err = null
+        for (let i = 0; i < 3 && !s; i++) {
+          try { s = await fetchSignals(c) } catch (e) { err = e; await new Promise((r) => setTimeout(r, 800 * (i + 1))) }
+        }
+        if (dead) return
+        const v = s || (snapshot[c.id] ? { ...snapshot[c.id], fromSnapshot: true } : { error: String(err) })
+        setState((st) => ({ ...st, signals: { ...st.signals, [c.id]: v } }))
+      }
+    })()
+    return () => { dead = true }
   }, [])
+  const [sat, setSat] = useState(false)
   const rows = candidates.map((c) => {
     const s = signals[c.id]
     const sc = s && !s.error ? scoreSite(c, s, { rent: +rent || 0, revenue: +revenue || 0 }) : null
@@ -128,7 +140,9 @@ function Sites({ go, state, setState }) {
       </div>
       <div className="map">
         <MapContainer center={[40.8045, -73.9625]} zoom={15} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
-          <TileLayer attribution='&copy; OpenStreetMap &copy; CARTO' url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+          {sat
+            ? <TileLayer key="sat" maxZoom={19} attribution="Imagery &copy; Esri, Maxar, Earthstar Geographics" url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+            : <TileLayer key="map" maxZoom={19} attribution="&copy; OpenStreetMap contributors" url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />}
           {sel && <Circle center={[sel.c.lat, sel.c.lng]} radius={300} pathOptions={{ color: '#5b6cff', weight: 1, fillOpacity: 0.04, dashArray: '4 4' }} />}
           {sel && <Radar center={[sel.c.lat, sel.c.lng]} radius={300} />}
           <ScaleControl position="topright" imperial metric />
@@ -143,6 +157,13 @@ function Sites({ go, state, setState }) {
             </CircleMarker>
           ))}
         </MapContainer>
+        <div className="maptog"><button className={!sat ? 'on' : ''} onClick={() => setSat(false)}>Map</button><button className={sat ? 'on' : ''} onClick={() => setSat(true)}>Satellite</button></div>
+        {sel && (
+          <div className="sv">
+            <div className="sv-h"><b>Street view · {sel.c.address}</b><a href={`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${sel.c.lat},${sel.c.lng}`} target="_blank" rel="noreferrer">Open in Google Maps ↗</a></div>
+            <iframe key={sel.c.id} title="Street view" loading="lazy" referrerPolicy="no-referrer-when-downgrade" src={`https://www.google.com/maps?layer=c&cbll=${sel.c.lat},${sel.c.lng}&cbp=12,0,0,0,0&output=svembed`} />
+          </div>
+        )}
         <div className="legend"><span className="lg dark" />Candidate <span className="lg cafe" />Coffee/tea competitor (DOHMH) <span className="lg ring300" />300 m scan</div>
         <AgentLog rows={rows} />
       </div>
@@ -153,7 +174,7 @@ function Sites({ go, state, setState }) {
 function BuyLink({ p }) {
   return (
     <a className={'buy ' + p.link.kind} href={p.link.url} target="_blank" rel="noreferrer">
-      {p.link.kind === 'exact' ? `Buy on ${p.link.retailer} ↗` : `Find similar · ${p.link.retailer} ↗`}
+      {p.link.kind === 'exact' ? `Buy on ${p.link.retailer} ↗` : `View on ${p.link.retailer} ↗`}
     </a>
   )
 }
@@ -167,7 +188,8 @@ function ProductCard({ it, onClose }) {
       <div className="muted small">{p.cat} · {it.zone}</div>
       <div className="pname">{p.name}</div>
       <div className="pdims">{(it.w * 100).toFixed(0)} × {(it.d * 100).toFixed(0)} × {(it.h * 100).toFixed(0)} cm</div>
-      <span className={'tagk ' + p.link.kind}>{p.link.kind === 'exact' ? 'Exact product model' : 'Generic model · similar items'}</span>
+      <div className="pprice">{p.price ? `$${p.price.toLocaleString()}` : 'Price on retailer page'}{p.price ? <small> seen {PRICE_DATE}</small> : null}</div>
+      <span className={'tagk ' + p.link.kind}>{p.link.kind === 'exact' ? 'Exact product: the 3D model is this item' : 'Similar product: the 3D model is generic'}</span>
       <BuyLink p={p} />
     </div>
   )
@@ -181,17 +203,21 @@ function ShoppingList({ items, onPick }) {
     const g = (groups[p.cat] ||= {})
     ;(g[it.product] ||= { p, n: 0, first: it }).n++
   }
-  const total = items.filter((it) => PRODUCTS[it.product]).length
+  const priced = items.filter((it) => PRODUCTS[it.product])
+  const total = priced.length
+  const sum = priced.reduce((a, it) => a + (PRODUCTS[it.product].price || 0), 0)
+  const unpriced = priced.filter((it) => !PRODUCTS[it.product].price).length
   return (
     <div className="shop">
-      <div className="shop-h"><b>Shopping list</b><span className="muted small">{total} items · prices on retailer page</span></div>
+      <div className="shop-h"><b>Shopping list</b><span className="muted small">{total} items</span></div>
+      <div className="shop-sum"><b>${sum.toLocaleString(undefined, { maximumFractionDigits: 0 })}</b> list-price estimate<div className="muted small">Retailer list prices seen {PRICE_DATE}; excludes {unpriced} items without a captured price, tax, delivery and install.</div></div>
       {Object.entries(groups).map(([cat, g]) => (
         <div key={cat} className="shop-g">
           <div className="shop-cat">{cat}</div>
           {Object.entries(g).map(([k, r]) => (
             <div key={k} className="shop-row">
               <span className="qty">{r.n}×</span>
-              <span className="sname" onClick={() => onPick(r.first.id)}>{r.p.name}</span>
+              <span className="sname" onClick={() => onPick(r.first.id)}>{r.p.name}{r.p.price ? <em> ${r.p.price.toLocaleString()} each</em> : null}</span>
               <BuyLink p={r.p} />
             </div>
           ))}

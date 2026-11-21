@@ -9,7 +9,7 @@ const M = {
   walnut: new THREE.MeshStandardMaterial({ color: '#6b4429', roughness: 0.5 }),
   steel: new THREE.MeshStandardMaterial({ color: '#1d1e22', roughness: 0.35, metalness: 0.8 }),
   brass: new THREE.MeshStandardMaterial({ color: '#b08d57', roughness: 0.3, metalness: 1 }),
-  marble: new THREE.MeshPhysicalMaterial({ color: '#f1efea', roughness: 0.15, clearcoat: 0.6 }),
+  marble: new THREE.MeshPhysicalMaterial({ color: '#3a3d42', roughness: 0.45, clearcoat: 0.2 }),
   quartz: new THREE.MeshPhysicalMaterial({ color: '#e9e6df', roughness: 0.25, clearcoat: 0.4 }),
   stainless: new THREE.MeshStandardMaterial({ color: '#c9ccd1', roughness: 0.25, metalness: 0.95 }),
   glass: new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: 0.02, transmission: 0.9, thickness: 0.02, transparent: true, opacity: 0.35 }),
