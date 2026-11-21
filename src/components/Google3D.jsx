@@ -7,6 +7,7 @@ import { GLTFExtensionsPlugin, GoogleCloudAuthPlugin, ReorientationPlugin, Tiles
 
 export const GOOGLE_KEY = import.meta.env.VITE_GOOGLE_MAPS_KEY || ''
 const draco = new DRACOLoader().setDecoderPath(import.meta.env.BASE_URL + 'draco/')
+const AUTH = { apiToken: GOOGLE_KEY, autoRefreshToken: true }, GLTF = { dracoLoader: draco }
 const GEOID = -31.9 // NAVD88 → WGS84 ellipsoid height in Manhattan, metres (approximate)
 
 // Google Photorealistic 3D Tiles, re-centred on the storefront and turned into the room frame.
@@ -38,7 +39,9 @@ export default function Google3D({ site, info, north, W, D }) {
   const ray = useMemo(() => { const r = new THREE.Raycaster(); r.firstHitOnly = true; r.far = 11; return r }, [])
   useFrame(() => {
     const s = st.current, g = ref.current?.group
-    if (!g || s.done > 3 || ++s.n % 45) return
+    if (!g || ++s.n % 45) return
+    g.traverse((o) => { if (o.material && o.material.clippingPlanes !== planes) { o.material.clippingPlanes = planes; o.material.clipIntersection = true; o.material.needsUpdate = true } })
+    if (s.done > 3) return
     const hits = []
     for (const fx of [0.15, 0.35, 0.5, 0.65, 0.85]) for (const y of [2.0, 2.8]) {
       ray.set(new THREE.Vector3(W * fx, y, -2.5), new THREE.Vector3(0, 0, 1))
@@ -55,9 +58,9 @@ export default function Google3D({ site, info, north, W, D }) {
   const args = useMemo(() => ({ lat: site.lat * Math.PI / 180, lon: site.lng * Math.PI / 180, height: info.groundElevM + GEOID, up: '+y', recenter: true }), [site.lat, site.lng, info.groundElevM])
   return (
     <group position={[W / 2, 0, Math.abs(info.streetFaceM) + off]} rotation={[0, rotY, 0]}>
-      <TilesRenderer ref={ref} key={site.id} onLoadModel={onLoad} errorTarget={10}>
-        <TilesPlugin plugin={GoogleCloudAuthPlugin} args={{ apiToken: GOOGLE_KEY, autoRefreshToken: true }} />
-        <TilesPlugin plugin={GLTFExtensionsPlugin} args={{ dracoLoader: draco }} />
+      <TilesRenderer ref={ref} key={site.id} errorTarget={10}>
+        <TilesPlugin plugin={GoogleCloudAuthPlugin} args={AUTH} />
+        <TilesPlugin plugin={GLTFExtensionsPlugin} args={GLTF} />
         <TilesPlugin plugin={ReorientationPlugin} args={args} />
         <TilesPlugin plugin={TileCompressionPlugin} />
         <TilesPlugin plugin={TilesFadePlugin} />

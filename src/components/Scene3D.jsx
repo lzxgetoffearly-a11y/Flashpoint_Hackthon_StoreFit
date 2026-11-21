@@ -192,7 +192,7 @@ export default function Scene3D({ room, plan, onPick, picked, showZones = false,
   const W0 = room.W, D0 = room.D
   const W = W0 + (sweep?.kind === 'wallR' ? sweep.off : 0), D = D0 + (sweep?.kind === 'back' ? sweep.off : 0)
   const [hover, setHover] = useState(null)
-  const views = useMemo(() => VIEWS(W0, D0, plan?.zones), [W0, D0, plan])
+  const views = useMemo(() => { const v = VIEWS(W0, D0, plan?.zones); return google ? { ...v, overview: { p: [W0 / 2 + 15, 24, -24], t: [W0 / 2, 2, D0 / 2] } } : v }, [W0, D0, plan, google])
   const ac = checks?.find((c) => c.id === activeCheck)
   const goal = useMemo(() => {
     if (ac) return { p: [ac.pin[0] + 4.5, 7.5, ac.pin[2] - 6], t: [ac.pin[0], 0, ac.pin[2]] }
