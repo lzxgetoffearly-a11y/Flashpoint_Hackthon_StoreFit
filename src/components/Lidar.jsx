@@ -50,6 +50,9 @@ export function useLidar(siteId, W, D) {
         if (sm[k] < 4) continue
         const cx = (gx + 0.5) * CELL - 100 + W / 2, czz = (gz + 0.5) * CELL - 100
         // the host building is drawn as glass so the ground-floor unit stays visible inside it
+        // Awnings, sidewalk sheds and street trees sit in front of the facade; extruding them straight
+        // down would wall off the storefront, so the sidewalk strip in front of this building stays empty.
+        if (czz > -12 && czz < 1.25) continue
         const over = Math.abs(cx - W / 2) < W / 2 + 1.25 && czz > -1.25 && czz < D + 1.25
         const near = Math.abs(cx - W / 2) < W / 2 + 9 && czz > -1.25 && czz < D + 9
         if (over || near) host.push([cx, czz, sm[k], over ? 4.2 : 0]); else cells.push([cx, czz, sm[k]])

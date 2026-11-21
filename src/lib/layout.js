@@ -115,7 +115,7 @@ export function planLayout({ W, D }, params) {
         const z = zb0 + pitch / 2 + i * pitch
         add({ kind: 'cafetable', w: 0.7, d: 0.7, h: 0.75, x: 1.07, z, zone: 'seat', label: '双人桌 Two-top', product: 'bistro' })
         add({ kind: 'cup', w: 0.12, d: 0.12, h: 0.1, y: 0.76, x: 1.0, z: z - 0.1, zone: 'decor', label: '咖啡杯 Cup', product: 'cup', onTop: true })
-        add({ kind: 'chair', w: 0.48, d: 0.45, h: 0.82, x: 1.66, z, rotY: -Math.PI / 2, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
+        add({ kind: 'chair', w: 0.48, d: 0.45, h: 0.82, x: 1.66, z, rotY: Math.PI / 2, zone: 'seat', label: '餐椅 Chair', product: 'chair' })
         if (i % 2 === 0) add({ kind: 'art', w: 0.03, d: 0.6, h: 0.8, y: 1.45, x: 0.17, z, zone: 'decor', label: '装饰画 Wall art', onTop: true })
         seats += 2; tables++
       }

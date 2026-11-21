@@ -108,7 +108,7 @@ function Sites({ go, state, setState }) {
     <section className="sites">
       <div className="list">
         <h2>Vacant storefronts near Columbia</h2>
-        <p className="muted">8 storefronts reported vacant on 12/31/2025 · <a href={SOURCES.storefront.url} target="_blank">NYC open data</a></p>
+        <p className="muted">8 real vacancies, ranked with live city data. Click one to see why. · <a href={SOURCES.storefront.url} target="_blank">Source</a></p>
         <div className="inputs">
           <label>Asking rent $/mo <input value={rent} onChange={(e) => setState((s) => ({ ...s, rent: e.target.value }))} placeholder="optional" /></label>
           <label>Expected revenue $/mo <input value={revenue} onChange={(e) => setState((s) => ({ ...s, revenue: e.target.value }))} placeholder="optional" /></label>
@@ -126,7 +126,7 @@ function Sites({ go, state, setState }) {
                     <div className="f-head"><span>{f.label}</span><span>{Math.round(f.score)} <small>× {WEIGHTS[f.key]}</small></span></div>
                     <div className="bar"><i style={{ width: `${f.score}%` }} /></div>
                     <div className="f-val">{f.value}</div>
-                    <div className="f-why">{f.why} {SOURCES[f.source] && <a href={SOURCES[f.source].url} target="_blank">Source: {SOURCES[f.source].name}</a>}{f.source === 'user' && <em>Source: your input</em>}</div>
+                    <div className="f-why" title={f.why}>{SOURCES[f.source] && <a href={SOURCES[f.source].url} target="_blank">Source: {SOURCES[f.source].name}</a>}{f.source === 'user' && <em>Source: your input</em>}</div>
                   </div>
                 ))}
                 <button className="pill" onClick={(e) => { e.stopPropagation(); go('layout') }}>Fit a cafe in this space →</button>
