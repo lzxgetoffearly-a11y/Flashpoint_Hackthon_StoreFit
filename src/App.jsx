@@ -16,7 +16,7 @@ function Nav({ page, go }) {
     <header className="nav">
       <div className="logo" onClick={() => go('home')}><span className="ring" />STOREFIT</div>
       <nav>
-        {[['sites', '选址 Sites'], ['layout', '布局 Layout'], ['research', '调研依据 Research'], ['report', '报告 Report']].map(([k, l]) => (
+        {[['sites', 'Sites'], ['layout', 'Layout'], ['research', 'Research'], ['report', 'Report']].map(([k, l]) => (
           <a key={k} className={page === k ? 'on' : ''} onClick={() => go(k)}>{l}</a>
         ))}
       </nav>
@@ -35,7 +35,7 @@ function Home({ go }) {
       <div className="hero-inner">
         <div className="badge">Prototype · Flashpoint AI × CUB Hackathon</div>
         <h1>Find the storefront.<br />Fit the store.</h1>
-        <p className="lead">第一次开店，从“选哪个铺面”到“店里怎么摆”，一个 AI 顾问陪你走完。每一个分数都能点开看到公开数据来源。</p>
+        <p className="lead">Opening your first shop? From picking the storefront to placing every table, one AI advisor walks you through it. Every score opens to its public data source.</p>
         <div className="row">
           <button className="pill big" onClick={() => go('sites')}>Start a search →</button>
           <button className="ghost" onClick={() => go('research')}>How we decided</button>
@@ -280,7 +280,7 @@ function Report({ state, go }) {
 
 export default function App() {
   const [page, setPage] = useState('home')
-  const [state, setState] = useState({ signals: {}, selected: null, rent: '', revenue: '', room: { wFt: 20, dFt: 40 }, request: '12 个座位，附近学生多，想要临窗吧台、几张双人桌和一个沙发休息区', plan: null })
+  const [state, setState] = useState({ signals: {}, selected: null, rent: '', revenue: '', room: { wFt: 20, dFt: 40 }, request: '12 seats, lots of students nearby, a window bar, a few two-tops and a sofa lounge', plan: null })
   const go = (p) => { setPage(p); window.scrollTo(0, 0) }
   return (
     <div className="app">
