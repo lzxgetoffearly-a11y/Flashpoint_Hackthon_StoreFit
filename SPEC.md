@@ -24,7 +24,7 @@ Pain points to validate with Flashpoint research (see docs/RESEARCH.md):
 ## User flow
 1. **Home** — value proposition, "agent at work" ticker.
 2. **Sites** — ranked cards + map (CARTO light tiles). Click a card → factor breakdown with sources; competitors plotted on the map.
-3. **Layout** — enter frontage/depth (default 20×40 ft, labeled as an assumption) and a request ("24 seats, students, window bar"). The agent streams its steps, then shows checks. 3D scene uses CC0 KayKit models, fitted to planned footprints.
+3. **Layout** — enter frontage/depth (default 20×40 ft, labeled as an assumption) and a request ("12 seats, students, window bar, sofa corner"). The agent streams its steps, then shows checks. 3D scene: realistic Wayfair/Khronos glTF models (sofa, barn pendant, armchair, plant, cup) plus procedural PBR furniture, 1 m grid, dimension lines in m/ft. Clicking an item opens a product card; a shopping list groups items with buy links ("exact" for real-product models, "similar" retailer search otherwise).
 4. **Research** — how each rule came from Flashpoint research (placeholders until filled).
 5. **Report** — KPIs + factors + checks, print to PDF.
 
@@ -46,7 +46,7 @@ The LLM (optional, OpenAI-compatible endpoint via env vars) only extracts `{seat
 ## Honesty / labeling
 - Candidate storefronts and signals are real public data; floor sizes and rents are user inputs, never invented.
 - Synthetic survey results (Flashpoint ConnectedSynth) are labeled "synthetic" everywhere; real responses labeled "real".
-- 3D models are generic low-poly furniture (CC0), not the real equipment.
+- Only the sofa and barn pendant models are real products; other items are generic and link to "similar" searches. No prices shown.
 
 ## Tech
 Vite + React 18, three.js via @react-three/fiber + drei, Leaflet via react-leaflet. No backend; all data calls are browser → Socrata (CORS).

@@ -49,7 +49,13 @@ Never commit `.env`. Note: `VITE_` variables are bundled into the client — use
 
 ## Work during the event & disclosures
 - All code, data wiring and research in this repo were done during Nov 13–21, 2026. _Add a short log here._
-- 3D models: [KayKit Furniture Bits](https://github.com/KayKit-Game-Assets/KayKit-Furniture-Bits-1.0) and [Restaurant Bits](https://github.com/KayKit-Game-Assets/KayKit-Restaurant-Bits-1.0) by Kay Lousberg, CC0 (see `public/models/LICENSE-KayKit.txt`).
+- 3D models (realistic, from [Khronos glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)):
+  - GlamVelvetSofa — © 2021 Wayfair LLC, CC-BY 4.0 (a real Wayfair product; linked as "Buy on Wayfair")
+  - AnisotropyBarnLamp — © 2023 Wayfair LLC, CC-BY 4.0 (a real Wayfair product; linked as "Buy on Wayfair")
+  - SheenChair — © 2020 Wayfair LLC, CC0
+  - DiffuseTransmissionPlant — © 2024 Darmstadt Graphics Group, CC-BY 4.0
+  - DiffuseTransmissionTeacup — CC0
+  - Tables, chairs, stools, counter, espresso machine, fridge, sink and shelves are procedural three.js models we wrote with PBR materials. They are generic, so their links say "Find similar" and open a retailer search. We show no prices because we do not have real price data.
 - Libraries: React, three.js, @react-three/fiber, drei, Leaflet, Vite (MIT/BSD).
 - Visual style inspired by public startup landing pages; no assets copied.
 - AI tools: Flashpoint AI (primary, research). Claude was used as a coding assistant for scaffolding this prototype.

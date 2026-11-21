@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { MapContainer, TileLayer, CircleMarker, Circle, Tooltip } from 'react-leaflet'
+import { MapContainer, TileLayer, CircleMarker, Circle, Tooltip, ScaleControl, Marker, useMap } from 'react-leaflet'
+import L from 'leaflet'
+import { PRODUCTS } from './data/products.js'
 import { candidates, DATASET_URL } from './data/candidates.js'
 import { research } from './data/research.js'
 import { fetchSignals, SOURCES } from './lib/nycdata.js'
@@ -47,6 +49,32 @@ function Home({ go }) {
       </div>
     </section>
   )
+}
+
+function Radar({ center, radius }) {
+  const map = useMap()
+  const [px, setPx] = useState(100)
+  useEffect(() => {
+    const f = () => {
+      const p1 = map.latLngToLayerPoint(center)
+      const p2 = map.latLngToLayerPoint([center[0] + radius / 111320, center[1]])
+      setPx(Math.abs(p1.y - p2.y))
+    }
+    f(); map.on('zoomend', f); return () => map.off('zoomend', f)
+  }, [map, center[0], center[1], radius])
+  const icon = useMemo(() => L.divIcon({ className: '', iconSize: [px * 2, px * 2], iconAnchor: [px, px],
+    html: `<div class="radar" style="width:${px * 2}px;height:${px * 2}px"><div class="sweep"></div><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><span class="rlabel">${radius} m</span></div>` }), [px, radius])
+  return <Marker position={center} icon={icon} interactive={false} />
+}
+
+function AgentLog({ rows }) {
+  const lines = []
+  rows.forEach(({ c, s }) => {
+    if (!s) lines.push({ t: `Scanning 300 m around ${c.address}…`, live: true })
+    else if (s.error) lines.push({ t: `${c.address}: live data unavailable`, bad: true })
+    else lines.push({ t: `${c.address}: ${s.cafes.length} coffee shops · ${s.foodCount} food businesses · ${Math.round(s.subway?.d ?? 0)} m to ${s.subway?.name}` })
+  })
+  return <div className="agentlog"><div className="al-h"><span className="dot" />Site agent</div>{lines.map((l, i) => <div key={i} className={l.bad ? 'bad' : l.live ? 'live' : ''}>{l.bad ? '!' : l.live ? '◌' : '✓'} {l.t}</div>)}</div>
 }
 
 function Sites({ go, state, setState }) {
@@ -99,7 +127,9 @@ function Sites({ go, state, setState }) {
       <div className="map">
         <MapContainer center={[40.8045, -73.9625]} zoom={15} scrollWheelZoom style={{ height: '100%', width: '100%' }}>
           <TileLayer attribution='&copy; OpenStreetMap &copy; CARTO' url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
-          {sel && <Circle center={[sel.c.lat, sel.c.lng]} radius={300} pathOptions={{ color: '#5b6cff', weight: 1, fillOpacity: 0.06 }} />}
+          {sel && <Circle center={[sel.c.lat, sel.c.lng]} radius={300} pathOptions={{ color: '#5b6cff', weight: 1, fillOpacity: 0.04, dashArray: '4 4' }} />}
+          {sel && <Radar center={[sel.c.lat, sel.c.lng]} radius={300} />}
+          <ScaleControl position="topright" imperial metric />
           {sel?.s?.cafes?.map((k, i) => (
             <CircleMarker key={i} center={[k.lat, k.lng]} radius={4} pathOptions={{ color: '#b86b3b', fillOpacity: 0.9 }}><Tooltip>{k.name} · {k.address}</Tooltip></CircleMarker>
           ))}
@@ -111,9 +141,61 @@ function Sites({ go, state, setState }) {
             </CircleMarker>
           ))}
         </MapContainer>
-        <div className="legend"><span className="lg dark" />Candidate <span className="lg cafe" />Coffee/tea competitor (DOHMH)</div>
+        <div className="legend"><span className="lg dark" />Candidate <span className="lg cafe" />Coffee/tea competitor (DOHMH) <span className="lg ring300" />300 m scan</div>
+        <AgentLog rows={rows} />
       </div>
     </section>
+  )
+}
+
+function BuyLink({ p }) {
+  return (
+    <a className={'buy ' + p.link.kind} href={p.link.url} target="_blank" rel="noreferrer">
+      {p.link.kind === 'exact' ? `Buy on ${p.link.retailer} ↗` : `Find similar · ${p.link.retailer} ↗`}
+    </a>
+  )
+}
+
+function ProductCard({ it, onClose }) {
+  const p = PRODUCTS[it.product]
+  if (!p) return null
+  return (
+    <div className="pcard">
+      <button className="x" onClick={onClose}>×</button>
+      <div className="muted small">{p.cat} · {it.zone}</div>
+      <div className="pname">{p.name}</div>
+      <div className="pdims">{(it.w * 100).toFixed(0)} × {(it.d * 100).toFixed(0)} × {(it.h * 100).toFixed(0)} cm</div>
+      <span className={'tagk ' + p.link.kind}>{p.link.kind === 'exact' ? 'Exact product model' : 'Generic model · similar items'}</span>
+      <BuyLink p={p} />
+    </div>
+  )
+}
+
+function ShoppingList({ items, onPick }) {
+  const groups = {}
+  for (const it of items) {
+    const p = PRODUCTS[it.product]
+    if (!p) continue
+    const g = (groups[p.cat] ||= {})
+    ;(g[it.product] ||= { p, n: 0, first: it }).n++
+  }
+  const total = items.filter((it) => PRODUCTS[it.product]).length
+  return (
+    <div className="shop">
+      <div className="shop-h"><b>Shopping list</b><span className="muted small">{total} items · prices on retailer page</span></div>
+      {Object.entries(groups).map(([cat, g]) => (
+        <div key={cat} className="shop-g">
+          <div className="shop-cat">{cat}</div>
+          {Object.entries(g).map(([k, r]) => (
+            <div key={k} className="shop-row">
+              <span className="qty">{r.n}×</span>
+              <span className="sname" onClick={() => onPick(r.first.id)}>{r.p.name}</span>
+              <BuyLink p={r.p} />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -123,18 +205,22 @@ function Layout({ state, setState }) {
   const [req, setReq] = useState(state.request)
   const [shown, setShown] = useState(state.plan ? state.plan.steps.length : 0)
   const [busy, setBusy] = useState(false)
+  const [picked, setPicked] = useState(null)
+  const [zones, setZones] = useState(true)
+  const [tab, setTab] = useState('agent')
   const room = { W: w * FT, D: d * FT }
   async function run() {
-    setBusy(true); setShown(0)
+    setBusy(true); setShown(0); setPicked(null); setTab('agent')
     const params = await llmParams(req)
     const plan = planLayout(room, params)
     plan.via = params.via
     setState((s) => ({ ...s, plan, request: req, room: { wFt: w, dFt: d } }))
-    for (let i = 1; i <= plan.steps.length; i++) { await new Promise((r) => setTimeout(r, 420)); setShown(i) }
+    for (let i = 1; i <= plan.steps.length; i++) { await new Promise((r) => setTimeout(r, 380)); setShown(i) }
     setBusy(false)
   }
   useEffect(() => { if (!state.plan) run() }, [])
   const plan = state.plan
+  const pickedItem = plan && picked ? plan.items.find((x) => x.id === picked) : null
   return (
     <section className="layout">
       <aside className="panel">
@@ -144,28 +230,45 @@ function Layout({ state, setState }) {
           <label>Frontage (ft)<input type="number" value={w} onChange={(e) => setW(+e.target.value)} /></label>
           <label>Depth (ft)<input type="number" value={d} onChange={(e) => setD(+e.target.value)} /></label>
         </div>
-        <p className="note">Floor size is not in the city data. Default 20 × 40 ft is an assumption: replace it with the listing’s numbers.</p>
+        <p className="note">Floor size is not in the city data. Default 20 × 40 ft ({(20 * FT).toFixed(1)} × {(40 * FT).toFixed(1)} m) is an assumption: replace it with the listing’s numbers.</p>
         <label className="req">Tell the agent what you need
           <textarea value={req} onChange={(e) => setReq(e.target.value)} rows={3} />
         </label>
         <button className="pill" disabled={busy} onClick={run}>{busy ? 'Agent working…' : 'Run layout agent'}</button>
         {plan && (
           <>
-            <ol className="agent-steps">
-              {plan.steps.slice(0, shown).map((s, i) => <li key={i}>{s}</li>)}
-            </ol>
-            {shown >= plan.steps.length && (
-              <div className="checks">
-                {plan.checks.map((c, i) => <div key={i} className={c.ok ? 'ok' : 'bad'}>{c.ok ? '✓' : '!'} {c.text}</div>)}
-                <div className="muted small">Parsed by: {plan.via === 'llm' ? 'LLM' : 'built-in rules (no API key set)'} · Placement and checks: rule engine</div>
-              </div>
+            <div className="tabs">
+              <a className={tab === 'agent' ? 'on' : ''} onClick={() => setTab('agent')}>Agent log</a>
+              <a className={tab === 'shop' ? 'on' : ''} onClick={() => setTab('shop')}>Shopping list</a>
+            </div>
+            {tab === 'agent' && (
+              <>
+                <ol className="agent-steps">
+                  {plan.steps.slice(0, shown).map((s, i) => <li key={i}>{s}</li>)}
+                </ol>
+                {shown >= plan.steps.length && (
+                  <div className="checks">
+                    {plan.checks.map((c, i) => <div key={i} className={c.ok ? 'ok' : 'bad'}>{c.ok ? '✓' : '!'} {c.text}</div>)}
+                    <div className="muted small">Parsed by: {plan.via === 'llm' ? 'LLM' : 'built-in rules (no API key set)'} · Placement and checks: rule engine</div>
+                  </div>
+                )}
+              </>
             )}
+            {tab === 'shop' && <ShoppingList items={plan.items} onPick={setPicked} />}
           </>
         )}
       </aside>
       <div className="stage">
-        {plan && <Scene3D room={room} plan={plan} />}
-        <div className="stage-legend"><span className="lg aisle" />Main aisle {RULES.mainAisle} m <span className="lg queue" />Queue {RULES.queueDepth} m <span className="credit">3D models: KayKit (CC0)</span></div>
+        {plan && <Scene3D room={room} plan={plan} onPick={(id) => setPicked(id === picked ? null : id)} picked={picked} showZones={zones} />}
+        <div className="hud">
+          <div className="hud-row"><b>{plan ? plan.seats : '–'}</b> seats</div>
+          <div className="hud-row"><b>{room.W.toFixed(1)} × {room.D.toFixed(1)}</b> m · {(room.W * room.D).toFixed(0)} m² · {Math.round(w * d)} ft²</div>
+          <div className="scalebar"><span /><em>1 m</em></div>
+          <label className="tog"><input type="checkbox" checked={zones} onChange={(e) => setZones(e.target.checked)} /> Show zones</label>
+        </div>
+        {pickedItem && <ProductCard it={pickedItem} onClose={() => setPicked(null)} />}
+        <div className="stage-legend"><span className="lg aisle" />Main aisle {RULES.mainAisle} m <span className="lg queue" />Queue {RULES.queueDepth} m <span className="muted">Grid 1 m · bold 5 m · click any item to shop it</span></div>
+        <div className="credit3d">Sofa, lamp: Wayfair (CC-BY 4.0) · Chair, cup: Wayfair/Khronos (CC0) · Plant: DGG (CC-BY 4.0) · via Khronos glTF-Sample-Assets</div>
       </div>
     </section>
   )
@@ -189,7 +292,7 @@ function Research() {
       <h3>Data sources</h3>
       <ul className="src">
         {Object.values(SOURCES).map((s) => <li key={s.url}><a href={s.url} target="_blank">{s.name}</a></li>)}
-        <li><a href="https://github.com/KayKit-Game-Assets/KayKit-Furniture-Bits-1.0" target="_blank">KayKit Furniture Bits</a> and <a href="https://github.com/KayKit-Game-Assets/KayKit-Restaurant-Bits-1.0" target="_blank">Restaurant Bits</a> (CC0 3D models)</li>
+        <li>3D models: GlamVelvetSofa and AnisotropyBarnLamp (© Wayfair, CC-BY 4.0), SheenChair (© Wayfair, CC0), DiffuseTransmissionPlant (© Darmstadt Graphics Group, CC-BY 4.0), DiffuseTransmissionTeacup (CC0), via <a href="https://github.com/KhronosGroup/glTF-Sample-Assets" target="_blank">Khronos glTF-Sample-Assets</a></li>
       </ul>
     </section>
   )
@@ -220,7 +323,7 @@ function Report({ state, go }) {
 
 export default function App() {
   const [page, setPage] = useState('home')
-  const [state, setState] = useState({ signals: {}, selected: null, rent: '', revenue: '', room: { wFt: 20, dFt: 40 }, request: '24 个座位，附近学生多，想要临窗吧台和几张双人桌', plan: null })
+  const [state, setState] = useState({ signals: {}, selected: null, rent: '', revenue: '', room: { wFt: 20, dFt: 40 }, request: '12 个座位，附近学生多，想要临窗吧台、几张双人桌和一个沙发休息区', plan: null })
   const go = (p) => { setPage(p); window.scrollTo(0, 0) }
   return (
     <div className="app">
