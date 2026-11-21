@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, ContactShadows, Html, Environment, Lightformer, Line, Grid, Edges, OrthographicCamera, PerspectiveCamera } from '@react-three/drei'
 import { LidarPoints, Massing } from './Lidar.jsx'
+import Google3D from './Google3D.jsx'
 import * as THREE from 'three'
 import { Item } from './Furniture.jsx'
 
@@ -160,7 +161,7 @@ function sweptItem(it, sweep) {
   return it
 }
 
-export default function Scene3D({ room, plan, onPick, picked, showZones = false, dark = true, view = 'inside', dims = true, block = true, lidar = false, lidarData, checks, activeCheck, onCheck, sweep, compassRef }) {
+export default function Scene3D({ room, plan, onPick, picked, showZones = false, dark = true, view = 'inside', dims = true, block = true, lidar = false, google = false, site, lidarData, checks, activeCheck, onCheck, sweep, compassRef }) {
   const W0 = room.W, D0 = room.D
   const W = W0 + (sweep?.kind === 'wallR' ? sweep.off : 0), D = D0 + (sweep?.kind === 'back' ? sweep.off : 0)
   const [hover, setHover] = useState(null)
@@ -188,7 +189,7 @@ export default function Scene3D({ room, plan, onPick, picked, showZones = false,
         <Lightformer intensity={1} position={[-6, 4, 4]} rotation-y={Math.PI / 2} scale={[10, 3, 1]} />
         <Lightformer intensity={0.6} color="#ffe7c7" position={[6, 4, 6]} rotation-y={-Math.PI / 2} scale={[10, 3, 1]} />
       </Environment>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[W0 / 2, -0.06, D0 / 2]}><planeGeometry args={[900, 900]} /><meshStandardMaterial color={dark ? '#34363a' : '#eceae4'} roughness={1} /></mesh>
+      {!google && <mesh rotation={[-Math.PI / 2, 0, 0]} position={[W0 / 2, -0.06, D0 / 2]}><planeGeometry args={[900, 900]} /><meshStandardMaterial color={dark ? '#34363a' : '#eceae4'} roughness={1} /></mesh>}
       <Suspense fallback={<Html center><div className="dim3d">Loading 3D furniture…</div></Html>}>
         <Room W={W} D={D} zones={plan?.zones} showZones={showZones} dark={dark} dims={dims} items={plan?.items} />
         {plan?.items.map((raw) => {
@@ -206,7 +207,8 @@ export default function Scene3D({ room, plan, onPick, picked, showZones = false,
         })}
         <ContactShadows position={[W / 2, 0.008, D / 2]} scale={Math.max(W, D) * 1.4} opacity={0.4} blur={2.2} far={3} />
         <CheckLayer checks={checks} active={activeCheck} onCheck={onCheck} colors={colors} />
-        {lidarData && block && !lidar && <Massing data={lidarData} dark={dark} />}
+        {lidarData && google && site && <Google3D site={site} info={lidarData.info} north={lidarData.north} W={W0} D={D0} />}
+        {lidarData && block && !lidar && !google && <Massing data={lidarData} dark={dark} />}
         {lidarData && lidar && <LidarPoints data={lidarData} W={W0} D={D0} />}
       </Suspense>
       <OrbitControls makeDefault target={views.inside.t} maxPolarAngle={Math.PI / 2.05} minDistance={1} maxDistance={400} />

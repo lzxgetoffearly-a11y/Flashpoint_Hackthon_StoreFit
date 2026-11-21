@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { GOOGLE_KEY } from './Google3D.jsx'
 import Scene3D from './Scene3D.jsx'
 import { useLidar } from './Lidar.jsx'
 import { buildScene, fmtRange, fmtM, fmtFt, METHODS } from '../lib/scene.js'
@@ -93,7 +94,7 @@ export default function FitLab({ site, state, setState }) {
   const [sweep, setSweep] = useState(0)
   const [picked, setPicked] = useState(null)
   const [view, setView] = useState('inside')
-  const [layers, setLayers] = useState({ dims: true, zones: false, block: true, lidar: false })
+  const [layers, setLayers] = useState({ dims: true, zones: false, block: true, lidar: false, google: false })
   const [dark, setDark] = useState(() => { try { return localStorage.getItem('fitlab-theme') !== 'light' } catch { return true } })
   const [brief, setBrief] = useState(false)
   const compassRef = useRef(null)
@@ -203,7 +204,7 @@ export default function FitLab({ site, state, setState }) {
       </aside>
       <main id="stage">
         <Scene3D room={room} plan={plan} onPick={(id) => { setPicked(id === picked ? null : id); setActive(null) }} picked={picked}
-          showZones={layers.zones} dims={layers.dims && !layers.lidar && view !== 'overview'} block={layers.block && view === 'overview' && !active} lidar={layers.lidar} lidarData={lidarData}
+          showZones={layers.zones} dims={layers.dims && !layers.lidar && view !== 'overview'} block={layers.block && view === 'overview' && !active} lidar={layers.lidar} google={layers.google && GOOGLE_KEY !== ''} site={site} lidarData={lidarData}
           dark={dark} view={view} checks={checks3d} activeCheck={active} onCheck={pick} compassRef={compassRef}
           sweep={ac?.sweep ? { kind: ac.sweep.kind, off: sweep } : null} />
         <div id="brand"><span className="ring" />STOREFIT<i />Fit Lab</div>
@@ -234,7 +235,8 @@ export default function FitLab({ site, state, setState }) {
             <button className={layers.dims ? 'on' : ''} onClick={() => tog('dims')}>Dimensions</button>
             <button className={layers.zones ? 'on' : ''} onClick={() => tog('zones')}>Zones</button>
             <button className={layers.block ? 'on' : ''} onClick={() => tog('block')}>Block</button>
-            <button className={layers.lidar ? 'on' : ''} onClick={() => { tog('lidar'); if (!layers.lidar) { setActive(null); setView('overview') } }}>LiDAR</button>
+            <button className={layers.lidar ? 'on' : ''} onClick={() => { setLayers((l) => ({ ...l, lidar: !l.lidar, google: false })); if (!layers.lidar) { setActive(null); setView('overview') } }}>LiDAR</button>
+            {GOOGLE_KEY && <button className={layers.google ? 'on' : ''} onClick={() => { setLayers((l) => ({ ...l, google: !l.google, lidar: false })); if (!layers.google) { setActive(null); setView('overview') } }}>Google 3D</button>}
             <button className={dark ? 'on' : ''} onClick={() => setDark(!dark)}>Dark</button>
           </div>
         </nav>

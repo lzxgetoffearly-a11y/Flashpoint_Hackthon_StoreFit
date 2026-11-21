@@ -1,5 +1,6 @@
 // Transparent site score. Every factor shows its raw value, the rule and the source.
 // Weights are a starting point; EDIT them after the Flashpoint research (see docs/RESEARCH.md).
+import { RIDER_WEEK } from './nycdata.js'
 export const WEIGHTS = { demand: 0.3, competition: 0.25, transit: 0.2, buildout: 0.15, rent: 0.1 }
 
 const clamp = (x) => Math.max(0, Math.min(100, x))
@@ -17,9 +18,14 @@ export function scoreSite(c, s, opts = {}) {
     why: '1–2 competitors confirm demand; each extra one splits the same customers.' })
   // Transit
   const d = s.subway?.d ?? 9999
-  const transit = clamp(100 - Math.max(0, d - 100) / 4)
-  f.push({ key: 'transit', label: '地铁可达 Subway access', value: s.subway ? `${Math.round(d)} m to ${s.subway.name} (${s.subway.routes})` : 'n/a', score: transit, source: 'mta',
-    why: 'Commuter and student flows concentrate around station exits.' })
+  const near = clamp(100 - Math.max(0, d - 100) / 4)
+  const daily = s.subway?.daily ?? null
+  // 20,000 entries a day is a busy local station on the 1 line; scale to that.
+  const flow = daily == null ? null : clamp((daily / 20000) * 100)
+  const transit = flow == null ? near : 0.5 * near + 0.5 * flow
+  f.push({ key: 'transit', label: '地铁客流 Subway access and ridership', score: transit, source: daily == null ? 'mta' : 'riders',
+    value: s.subway ? `${Math.round(d)} m to ${s.subway.name} (${s.subway.routes})${daily == null ? '' : ` · ${daily.toLocaleString()} entries a day`}` : 'n/a',
+    why: daily == null ? 'Walking distance only: station ridership was not available for this run.' : `Half walking distance, half station entries per day (average over ${RIDER_WEEK.label}).` })
   // Build-out: previous food use means ventilation / plumbing may already exist.
   const food = /FOOD/i.test(c.prevUse)
   const buildout = food ? 90 : /RETAIL/i.test(c.prevUse) ? 60 : 45

@@ -1,9 +1,13 @@
 // Live public-data signals, fetched in the browser from NYC / NY State open data (Socrata, CORS-enabled).
 const DOHMH = 'https://data.cityofnewyork.us/resource/43nn-pn8j.json' // DOHMH restaurant inspections
+const RIDERS = 'https://data.ny.gov/resource/5wq4-mkjj.json' // MTA subway hourly ridership, 2025 onwards
+export const RIDER_WEEK = { from: '2026-10-05', to: '2026-10-11', label: 'Oct 5–11, 2026' }
 const MTA = 'https://data.ny.gov/resource/39hk-dx4f.json' // MTA subway stations
 export const SOURCES = {
   dohmh: { name: 'DOHMH Restaurant Inspection Results', url: 'https://data.cityofnewyork.us/Health/DOHMH-New-York-City-Restaurant-Inspection-Results/43nn-pn8j' },
   mta: { name: 'MTA Subway Stations', url: 'https://data.ny.gov/Transportation/MTA-Subway-Stations/39hk-dx4f' },
+  riders: { name: 'MTA Subway Hourly Ridership', url: 'https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-Beginning-2025/5wq4-mkjj' },
+  pluto: { name: 'NYC PLUTO', url: 'https://data.cityofnewyork.us/City-Government/Primary-Land-Use-Tax-Lot-Output-PLUTO-/64uk-42ks' },
   storefront: { name: 'Storefronts Reported Vacant or Not', url: 'https://data.cityofnewyork.us/City-Government/Storefronts-Reported-Vacant-or-Not/92iy-9c3n' },
 }
 
@@ -17,9 +21,15 @@ async function soql(base, params) {
 let stationsCache = null
 async function stations() {
   if (!stationsCache) {
-    stationsCache = await soql(MTA, { $select: 'stop_name,daytime_routes,gtfs_latitude,gtfs_longitude', $where: "borough='M'", $limit: 500 })
+    stationsCache = await soql(MTA, { $select: 'stop_name,complex_id,daytime_routes,gtfs_latitude,gtfs_longitude', $where: "borough='M'", $limit: 500 })
   }
   return stationsCache
+}
+
+const riderCache = {}
+function weekRiders(complex) {
+  return (riderCache[complex] ||= soql(RIDERS, { $select: 'sum(ridership) as riders', $where: `station_complex_id='${complex}' AND transit_timestamp between '${RIDER_WEEK.from}T00:00:00' and '${RIDER_WEEK.to}T23:59:59'` })
+    .then((r) => (r[0]?.riders ? Math.round(+r[0].riders / 7) : null)))
 }
 
 export function haversine(a, b) {
@@ -39,8 +49,10 @@ export async function fetchSignals(c, radius = 300) {
   let nearest = null
   for (const s of st) {
     const d = haversine(c, { lat: +s.gtfs_latitude, lng: +s.gtfs_longitude })
-    if (!nearest || d < nearest.d) nearest = { d, name: s.stop_name, routes: s.daytime_routes }
+    if (!nearest || d < nearest.d) nearest = { d, name: s.stop_name, routes: s.daytime_routes, complex: s.complex_id }
   }
+  // Entries at that station over one recent full week (turnstile + OMNY taps). Optional: the score still works without it.
+  if (nearest?.complex) nearest.daily = await weekRiders(nearest.complex).catch(() => null)
   // de-duplicate cafes by name+address
   const seen = new Set()
   const cafeList = cafes.filter((x) => { const k = `${x.dba}|${x.building}|${x.street}`; if (seen.has(k)) return false; seen.add(k); return true })

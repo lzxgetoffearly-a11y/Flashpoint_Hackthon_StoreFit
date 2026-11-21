@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { MapContainer, TileLayer, CircleMarker, Circle, Tooltip, ScaleControl, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { PRODUCTS, PRICE_DATE } from './data/products.js'
-import { candidates, DATASET_URL, snapshot } from './data/candidates.js'
+import { candidates, DATASET_URL, snapshot, estimateRoom } from './data/candidates.js'
 import { research } from './data/research.js'
 import { fetchSignals, SOURCES } from './lib/nycdata.js'
 import { scoreSite, WEIGHTS } from './lib/score.js'
@@ -116,7 +116,7 @@ function Sites({ go, state, setState }) {
         {rows.map(({ c, s, sc }, idx) => (
           <div key={c.id} className={`card ${sel?.c.id === c.id ? 'sel' : ''}`} onClick={() => setState((st) => ({ ...st, selected: c.id }))}>
             <div className="card-top">
-              <div><div className="rank">#{idx + 1}</div><h3>{c.address}</h3><div className="muted">{c.zip} · was {c.prevUse.toLowerCase()}</div></div>
+              <div><div className="rank">#{idx + 1}</div><h3>{c.address}</h3><div className="muted">{c.zip} · was {c.prevUse.toLowerCase()}{(() => { const e = estimateRoom(c); return e.source === 'pluto' ? ` · about ${e.wFt} × ${e.dFt} ft (estimated from PLUTO)` : ' · size not on record' })()}</div></div>
               <div className="score">{sc ? sc.total : s?.error ? '—' : <span className="spin" />}</div>
             </div>
             {sel?.c.id === c.id && sc && (
