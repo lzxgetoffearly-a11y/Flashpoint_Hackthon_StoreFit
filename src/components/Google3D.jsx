@@ -57,6 +57,9 @@ export default function Google3D({ site, info, north, W, D }) {
   const rotY = Math.atan2(north[0], north[1]) // the re-centred tiles have north on +z
   const args = useMemo(() => ({ lat: site.lat * Math.PI / 180, lon: site.lng * Math.PI / 180, height: info.groundElevM + GEOID, up: '+y', recenter: true }), [site.lat, site.lng, info.groundElevM])
   return (
+    <>
+    {/* slab under the unit: the cutaway also removes Google's ground here */}
+    <mesh position={[W / 2, -4.03, D / 2 - 0.45]}><boxGeometry args={[W + 0.4, 8, D + 1.3]} /><meshStandardMaterial color="#8b8d90" roughness={1} /></mesh>
     <group position={[W / 2, 0, Math.abs(info.streetFaceM) + off]} rotation={[0, rotY, 0]}>
       <TilesRenderer ref={ref} key={site.id} errorTarget={10}>
         <TilesPlugin plugin={GoogleCloudAuthPlugin} args={AUTH} />
@@ -67,5 +70,6 @@ export default function Google3D({ site, info, north, W, D }) {
         <TilesAttributionOverlay />
       </TilesRenderer>
     </group>
+    </>
   )
 }

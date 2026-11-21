@@ -24,20 +24,24 @@ export function useLidar(siteId, W, D) {
       if (dead) return
       const flip = site.streetSide === 'east' ? -1 : 1 // keep the map un-mirrored
       const pos = new Float32Array(n * 3)
-      const CELL = 2.5, N = 80, grid = new Float32Array(N * N), cnt = new Uint16Array(N * N)
+      const CELL = 2.5, N = 80, grid = new Float32Array(N * N), cnt = new Uint16Array(N * N), gnd = new Uint16Array(N * N)
       for (let i = 0; i < n; i++) {
         const x = (q[i * 3] / 10) * flip + W / 2, y = q[i * 3 + 1] / 10, z = q[i * 3 + 2] / 10
         pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z
-        if (cls[i] === 2 || y < 3) continue
         const gx = Math.floor((x - W / 2 + 100) / CELL), gz = Math.floor((z + 100) / CELL)
         if (gx < 0 || gz < 0 || gx >= N || gz >= N) continue
-        const k = gz * N + gx; cnt[k]++; if (y > grid[k]) grid[k] = y
+        const k = gz * N + gx
+        // The laser reaches the pavement through a tree but not through a roof, so a cell that
+        // still has ground returns is a tree (or a wall edge), not a building to extrude.
+        if (cls[i] === 2 || y < 1.5) { gnd[k]++; continue }
+        if (y < 3) continue
+        cnt[k]++; if (y > grid[k]) grid[k] = y
       }
       // 3×3 median so roofs read as blocks, not spikes
       const sm = new Float32Array(N * N), buf9 = []
       for (let gz = 0; gz < N; gz++) for (let gx = 0; gx < N; gx++) {
         buf9.length = 0
-        for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) { const x = gx + a, z = gz + b; if (x >= 0 && z >= 0 && x < N && z < N) buf9.push(cnt[z * N + x] >= 4 ? grid[z * N + x] : 0) }
+        for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) { const x = gx + a, z = gz + b; if (x >= 0 && z >= 0 && x < N && z < N) buf9.push(cnt[z * N + x] >= 4 && gnd[z * N + x] <= 0.1 * (cnt[z * N + x] + gnd[z * N + x]) ? grid[z * N + x] : 0) }
         buf9.sort((p, q) => p - q); sm[gz * N + gx] = Math.round(buf9[buf9.length >> 1] / 3) * 3
       }
       const cells = [], host = []
