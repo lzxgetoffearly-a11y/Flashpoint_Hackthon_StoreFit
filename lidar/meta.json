@@ -5,43 +5,43 @@
  "frame": "x along avenue (Manhattan grid 28.9\u00b0 east of north), y up from local ground median, z from the street-facing wall into the block",
  "sites": {
   "bwy-2905": {
-   "points": 220000,
+   "points": 261989,
    "streetSide": "east",
    "streetFaceM": 14.5,
    "groundElevM": 37.73
   },
   "ams-960": {
-   "points": 220000,
+   "points": 271861,
    "streetSide": "east",
    "streetFaceM": 15.5,
-   "groundElevM": 32.65
+   "groundElevM": 32.62
   },
   "bwy-2760": {
-   "points": 220000,
+   "points": 262069,
    "streetSide": "west",
    "streetFaceM": 34.5,
-   "groundElevM": 32.36
+   "groundElevM": 32.16
   },
   "bwy-2730": {
-   "points": 220000,
+   "points": 278265,
    "streetSide": "west",
    "streetFaceM": 22.5,
-   "groundElevM": 32.08
+   "groundElevM": 31.96
   },
   "ams-1270": {
    "points": 109893,
    "streetSide": "west",
    "streetFaceM": 13.0,
-   "groundElevM": 20.28
+   "groundElevM": 21.42
   },
   "w121-537": {
-   "points": 220000,
+   "points": 324109,
    "streetSide": "west",
    "streetFaceM": 14.5,
-   "groundElevM": 31.41
+   "groundElevM": 30.92
   },
   "bwy-2592": {
-   "points": 220000,
+   "points": 275308,
    "streetSide": "east",
    "streetFaceM": 26.5,
    "groundElevM": 24.17
@@ -50,7 +50,7 @@
    "points": 107212,
    "streetSide": "east",
    "streetFaceM": 6.5,
-   "groundElevM": 6.96
+   "groundElevM": 7.23
   }
  }
 }
