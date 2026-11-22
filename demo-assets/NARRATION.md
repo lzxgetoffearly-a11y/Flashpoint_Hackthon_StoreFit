@@ -3,60 +3,63 @@
 Voice: Kokoro (af_heart), synthesized.
 
 **0:00**
-"This is 2905 Broadway, an empty storefront next to Columbia. We gave an AI agent one question: what should open here? It didn't just answer. It went and found out."
+"One objective in. An agent does the research, and comes back with a decision. Ours: what cafe should open here, at 2905 Broadway?"
 
-**0:11**
-"At its heart is a loop, running on Flashpoint AI through MCP. Make a guess, ask, read what comes back, change its mind, and then ask a sharper question."
+**0:08**
+"That's the MCP challenge: one objective, and the agent researches it alone through Flashpoint's MCP. It decides what to ask, learns, and iterates."
 
-**0:20**
-"It starts with five guesses, each with a confidence score. Then it pulls demographics, notices they cover all of Manhattan, and throws them out. Too blurry to trust."
+**0:18**
+"We built a loop with six tools. Surveys, demographics, waiting, a belief notebook, our 3D planner, and finish. It can't finish until it has learned from the latest answers. And its limits live in code."
 
 **0:30**
-"So it writes its own survey, skip logic included. Flashpoint checks it, publishes it, and sends it. The agent pays for every call, in USDC."
+"Lap one: five guesses, each with a confidence. County-wide demographics? Too blurry, dropped."
 
-**0:40**
-"Back come five AI-generated test responses. Two, two, one. No winner."
+**0:36**
+"Then it writes a survey where your answer decides your next question. Who are you? Cafe worker: what's the biggest risk here? Anyone else: why come, how long do you stay, what if it's full? The agent designed that branch."
 
-**0:45**
-"So it changes its mind. The takeout theory falls from fifty percent to twenty-five. Studying climbs to seventy. And its own starting answer, the balanced layout, gets replaced."
+**0:49**
+"Five AI-generated test responses: two, two, one. No winner."
 
-**0:56**
-"Then it corrects its own questions. Halfway through writing one, it stops: wait, instead ask. A vague how-do-you-feel becomes a real trade-off. A slider becomes one clear choice."
+**0:54**
+"So it changes its mind. Takeout falls to twenty-five percent, studying rises to seventy, and balanced is replaced by max seating."
 
-**1:07**
-"Round two goes straight at the disagreement, quoting round one back: twenty-one busier seats, or fourteen calmer ones?"
+**1:02**
+"Now the key: those answers write the next survey. A tie becomes a forced choice. A sofa complaint becomes a trade-off question. A wish for quiet becomes a laptop-free question. A blocked door becomes a pickup shelf question. We didn't write these. The agent did."
 
-**1:14**
-"When Flashpoint times out, the agent checks what happened and keeps going. We shortened the waits. The decisions are its own."
+**1:18**
+"It even corrects itself mid-sentence: wait, instead ask."
 
 **1:22**
-"The new AI-generated test responses break the tie, three to two. It adds a new hypothesis, flags bias in its own wording, and decides a third round wouldn't change the answer."
+"Round two's AI-generated test responses say twenty-one seats, three to two. The pickup shelf comes top. One answer changed a question, and that question changed the plan."
 
 **1:33**
+"It recovered from a timeout, flagged its own bias, and decided to stop. We shortened the waits. The decisions are its own."
+
+**1:40**
 "And then, the answer becomes a place you can see."
 
-**1:38**
+**1:45**
 "StoreFit scores eight real vacant storefronts on live New York City and transit data. Every number links to its source."
 
-**1:45**
+**1:52**
 "It estimates the room from city records and builds three layouts. This is the agent's pick: twenty-one seats."
 
-**1:52**
+**1:59**
 "See it from above, from the street, or walk right in through the front door."
 
-**2:01**
+**2:08**
 "Every clearance is checked against accessibility and building rules. When something fails, like this single exit, it tells you."
 
-**2:08**
+**2:15**
 "Around it is the real block, rebuilt from more than two hundred sixty thousand LiDAR points."
 
-**2:15**
+**2:22**
 "And here it is in Google's photorealistic 3D, with the cafe set right inside its building."
 
-**2:22**
+**2:29**
 "Click the furniture to get a product you can buy, in a priced shopping list."
 
-**2:28**
+**2:35**
 "One question went in. The agent doubted itself, corrected itself, and asked again. What came out is a store you can walk into. That's StoreFit."
 
 ## Don't say
