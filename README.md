@@ -31,7 +31,7 @@ We give an AI agent one sentence and it does the research itself through the Fla
 **What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
 1. Wrote down five hypotheses with a confidence for each (for example "mostly takeaway" at 50%, "there is a long-stay study crowd" at 55%).
 2. Compared StoreFit's three layouts for the unit with the same planner the Fit Lab uses: Grab-and-go (9 seats), Your brief (14 seats, sofa lounge), Max seating (21 seats). All three fail the one-exit check.
-3. Called Flashpoint `demographics` for the address, saw the answer covered the whole county (all of Manhattan), and chose not to rely on it.
+3. Called Flashpoint `demographics` for the address to check who lives nearby. The data came back at county level (all of Manhattan), so the agent turned to its own survey for the local picture.
 4. **Round 1.** Wrote an 11-question survey with branching (cafe owners and workers get an extra operator question), published it and emailed the panel: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
    Result: Max seating 2, Balanced lounge 2, Grab-and-go 1. Banquette and two-tops ranked ahead of the sofa and the window bar.
 5. Updated its notebook ("mostly takeaway" 50% to 25%, "long-stay study crowd" 55% to 70%) and judged that one question was still open: more seats, or fewer and calmer.
