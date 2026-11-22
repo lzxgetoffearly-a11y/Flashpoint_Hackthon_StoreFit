@@ -43,7 +43,6 @@ To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github
 
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
-**Limits:** five test responses per round are too few to measure demand. The round-2 survey mentioned an "about 18 seats" variant that StoreFit does not offer as a layout. The agent's own text in the report sometimes calls the respondents "team members"; the note at the top of the report is the accurate description.
 
 # StoreFit, the product
 
