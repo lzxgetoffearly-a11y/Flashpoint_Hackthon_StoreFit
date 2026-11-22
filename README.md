@@ -28,7 +28,7 @@ We give an AI agent one sentence and it does the research itself through the Fla
 **Objective given to the agent:**
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
 
-**What the agent did, lap by lap.** Nobody told it which questions to ask, how many rounds to run, or when to stop. Everything below is from the run log (run `2026-11-22T05-58-32`, about 35 minutes).
+**What the agent did, lap by lap.** Nobody told it which questions to ask. It decided on its own to run a follow-up round, and when to stop. Everything below is from the run log (run `2026-11-22T05-58-32`, about 35 minutes).
 
 **1. It started with guesses, and put a number on each.** Five hypotheses with a confidence level, before any data. For example: "demand is mostly quick takeaway" 50%, "a real group wants to sit and study for hours" 55%, "a balanced layout is the best fit" 40%.
 
@@ -38,9 +38,11 @@ We give an AI agent one sentence and it does the research itself through the Fla
 - **Branching inside the survey.** The first question asks who you are, and that answer changes what you see next. Customers get three questions about their habits (why they come, how long they stay, what they do when the cafe is full). A cafe owner or worker skips those and instead gets an operator question: "From an operator's view, what is the biggest risk with a ~23×47 ft cafe like this?" Both paths then rejoin for the layout questions.
   ```text
   Q1  "Which best describes you?"
-   ├─ Cafe owner or worker ──► "From an operator's view, what is the biggest risk with a ~23×47 ft cafe like this?"
+   ├─ Cafe owner or worker ──► "Biggest risk with a cafe like this?"
    │                            (the three customer questions are skipped)
-   └─ Everyone else ─────────► "Why do you visit?" → "How long do you stay?" → "What if it's full?"
+   └─ Everyone else ─────────► "Why do you visit?"
+                                "How long do you stay?"
+                                "What if it's full?"
   Both paths rejoin for seating rank, layout choice, spend and open questions.
   ```
 - It had Flashpoint run a survey check, then published and sent the invitations itself, passing two confirmation steps.
