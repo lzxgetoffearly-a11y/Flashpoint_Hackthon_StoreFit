@@ -152,8 +152,8 @@ if (process.stdin.isTTY) {
 async function runTool(name, input) {
   if (name === "flashpoint_demographics") {
     charge("demographics");
+    state.spent += PRICE.demographics; save(); // counted when attempted: a call can be paid for and still fail
     const out = await flashpoint("demographics", { location: input.location, ...(input.question ? { question: input.question } : {}) });
-    state.spent += PRICE.demographics;
     const r = out?.result ?? out;
     // Keep what a researcher needs; the raw reply repeats itself and is saved in full in the log.
     return { costUSD: PRICE.demographics, areaQueried: r?.demographics?.location, source: r?.demographics?.metadata, data: r?.demographics ? { age: r.demographics.age, education: r.demographics.education, income: r.demographics.income, gender: r.demographics.gender, race: r.demographics.race } : r, commentary: (r?.aiInsights?.insightsList ?? []).map((i) => i.insight) };
@@ -164,8 +164,8 @@ async function runTool(name, input) {
     charge("survey");
     const ctx = (state.rounds[round] ??= { briefs: [] });
     const args = { brief: input.brief, ...(ctx.conversation_id ? { conversation_id: ctx.conversation_id } : {}), ...(ctx.survey_id ? { survey_id: ctx.survey_id } : {}) };
+    state.spent += PRICE.survey; save(); // counted when attempted: a call can be paid for and still fail
     const out = await flashpoint("tool_survey", args);
-    state.spent += PRICE.survey;
     ctx.conversation_id = out?.conversation_id ?? out?.result?.conversation_id ?? ctx.conversation_id;
     ctx.survey_id = out?.result?.survey_id ?? ctx.survey_id;
     ctx.briefs.push(input.brief);
@@ -288,7 +288,7 @@ async function main() {
     say(C.yellow, "resume", `continuing run ${state.id} at turn ${state.turn}`);
     // If the run stopped while a tool was running, run those tool calls again.
     const last = state.messages.at(-1);
-    if (last.role === "assistant") await answerTools(last.content);
+    if (last.role === "assistant") await answerTools(last.content, true);
   }
   save();
 
@@ -315,7 +315,7 @@ async function main() {
   process.exit(0);
 }
 
-async function answerTools(content) {
+async function answerTools(content, resumed = false) {
   const calls = content.filter((b) => b.type === "tool_use");
   if (!calls.length) return false;
   const results = [];
@@ -324,7 +324,12 @@ async function answerTools(content) {
     log("tool_call", { turn: state.turn, name: c.name, input: c.input });
     let out, isError = false;
     const t0 = Date.now();
-    try { out = await runTool(c.name, c.input); } catch (e) { out = { error: e.message }; isError = true; }
+    try {
+      // A Flashpoint call that was cut off may or may not have gone through (and may have sent email),
+      // so after a resume it is never repeated blindly: the model is told to check first.
+      if (resumed && c.name.startsWith("flashpoint")) throw new Error("The run was interrupted during this call, so it is unknown whether it went through. Do not repeat it as is. First ask Flashpoint for the current status of this survey (is it published, were invitations sent, how many completes), then continue from there.");
+      out = await runTool(c.name, c.input);
+    } catch (e) { out = { error: e.message }; isError = true; }
     const text = typeof out === "string" ? out : JSON.stringify(out);
     log("tool_result", { turn: state.turn, name: c.name, seconds: Math.round((Date.now() - t0) / 1000), isError, spent: +state.spent.toFixed(2), output: out });
     const shown = c.name === "storefit_compare_layouts" && !isError
