@@ -130,6 +130,8 @@ We give an AI agent one sentence and it does the research itself through the Fla
 
 To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating. The web app was not changed for this; the agent picks one of the layouts it already offers.
 
+**Agent demo video (2:17, silent, narration script alongside):** [`demo-assets/storefit-agent-demo.mp4`](https://github.com/lzxgetoffearly-a11y/flashpoint-hackthon/raw/main/demo-assets/storefit-agent-demo.mp4) · [`NARRATION.md`](demo-assets/NARRATION.md). The agent part is a sped-up replay of the saved run log and is labelled as a replay on screen. The $6.05 shown at the end is the program's estimate; the wallet was charged $5.55.
+
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
 **Cost:** $5.55 in USDC over 12 paid Flashpoint calls (wallet 21.95 to 16.40). One send call timed out after 600 seconds without being charged; the agent then asked for the status and Flashpoint reported the 7 invitations as sent. Screenshots from the run are in [`demo-assets/screenshots/`](demo-assets/screenshots/).

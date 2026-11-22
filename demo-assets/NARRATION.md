@@ -15,7 +15,8 @@ its own survey through the Flashpoint MCP, paying per call in USDC."
 we label them that way. The agent updates its confidence and writes a second survey aimed at that tie."
 
 **About 0:55**
-"When a send timed out, it checked the status and carried on. In the second round the test responses went
+"When a send timed out, it asked for the status, with permission to send if needed, and Flashpoint reported the
+seven invitations as sent. A team member ended some of the waits by hand. In the second round the test responses went
 three to two for the bigger room, so it chose Max seating, twenty-one seats, and said the margin was one vote."
 
 **1:26 Live site**
