@@ -1,0 +1,3148 @@
+{
+ "site": {
+  "slug": "bwy-2905",
+  "address": "2905 Broadway",
+  "zip": "10025",
+  "lat": 40.80652,
+  "lng": -73.96549,
+  "previousUse": "FOOD SERVICES",
+  "pluto": {
+   "bbl": "1018950055",
+   "lot": "2901 BROADWAY",
+   "bldgfront": 98,
+   "bldgdepth": 174,
+   "retailarea": 12000,
+   "storefronts": 11,
+   "numfloors": 12,
+   "yearbuilt": 1910,
+   "zone": "R8"
+  },
+  "vacancySource": "NYC Storefronts Reported Vacant or Not (Local Law 157), reporting year 2025",
+  "lidar": null
+ },
+ "layout": {
+  "client": "First-time cafe owner",
+  "use": "12 seats, lots of students nearby, a window bar, a few two-tops and a sofa lounge",
+  "room": {
+   "W": 7.01,
+   "D": 14.33,
+   "ceilingPlaceholder": 3.4
+  },
+  "elements": [
+   {
+    "id": "wall_back",
+    "kind": "wall",
+    "label": "Back wall"
+   },
+   {
+    "id": "wall_left",
+    "kind": "wall",
+    "label": "Left wall"
+   },
+   {
+    "id": "wall_right",
+    "kind": "wall",
+    "label": "Right wall"
+   },
+   {
+    "id": "storefront",
+    "kind": "glass",
+    "label": "Storefront glass and entrance"
+   }
+  ],
+  "views": [
+   "overview",
+   "top",
+   "street",
+   "inside",
+   "walk",
+   "counter"
+  ]
+ },
+ "rules": {
+  "aisle": 0.915,
+  "mainAisle": 1.2,
+  "queueDepth": 1.5,
+  "bohDepth": 2.1,
+  "counterDepth": 0.75,
+  "staffPass": 0.915
+ },
+ "tolerances": {
+  "wall": 0.3,
+  "place": 0.05,
+  "chair": 0.3
+ },
+ "alternatives": [
+  {
+   "id": "brief",
+   "name": "Your brief",
+   "params": {
+    "seats": 12,
+    "style": "dinein",
+    "windowBar": true,
+    "lounge": true
+   },
+   "seats": 14,
+   "items": [
+    {
+     "id": "fridge-0",
+     "rotY": 0,
+     "kind": "fridge",
+     "w": 0.75,
+     "d": 0.8,
+     "h": 2,
+     "label": "Fridge",
+     "x": 0.525,
+     "z": 13.8756,
+     "zone": "boh",
+     "product": "fridge"
+    },
+    {
+     "id": "sink-1",
+     "rotY": 0,
+     "kind": "sink",
+     "w": 1.5,
+     "d": 0.6,
+     "h": 0.9,
+     "label": "Sink",
+     "x": 1.8499999999999999,
+     "z": 13.9756,
+     "zone": "boh",
+     "product": "sink"
+    },
+    {
+     "id": "shelf-2",
+     "rotY": 0,
+     "kind": "shelf",
+     "w": 1.6,
+     "d": 0.35,
+     "h": 1.8,
+     "label": "Shelving",
+     "x": 3.5999999999999996,
+     "z": 14.1006,
+     "zone": "boh",
+     "product": "shelf"
+    },
+    {
+     "id": "counter-3",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 0.75,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-4",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 1.95,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-5",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 3.15,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-6",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "espresso-7",
+     "rotY": 0,
+     "kind": "espresso",
+     "w": 0.75,
+     "d": 0.55,
+     "h": 0.5,
+     "y": 1,
+     "x": 0.75,
+     "z": 11.900600000000003,
+     "zone": "counter",
+     "label": "Espresso",
+     "product": "espresso",
+     "onTop": true
+    },
+    {
+     "id": "pastry-8",
+     "rotY": 0,
+     "kind": "pastry",
+     "w": 0.9,
+     "d": 0.6,
+     "h": 0.45,
+     "y": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Pastry case",
+     "product": "pastry",
+     "onTop": true
+    },
+    {
+     "id": "lamp-9",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 1.35,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-10",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 2.55,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-11",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 3.75,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "windowbar-12",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 3.186448000000001,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 1.7432240000000003,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-13",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 0.51,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-14",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.13,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-15",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.75,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-16",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 2.37,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "windowbar-17",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 1.963952,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 5.878424000000001,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-18",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.256448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-19",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.876448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-20",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 6.496448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "sofa-21",
+     "rotY": 1.5707963267948966,
+     "kind": "sofa",
+     "w": 2.2,
+     "d": 0.95,
+     "h": 0.85,
+     "x": 0.625,
+     "z": 3.0650000000000004,
+     "zone": "seat",
+     "label": "Sofa",
+     "product": "sofa"
+    },
+    {
+     "id": "coffeetable-22",
+     "rotY": 0,
+     "kind": "coffeetable",
+     "w": 0.6,
+     "d": 0.6,
+     "h": 0.45,
+     "x": 1.45,
+     "z": 3.0650000000000004,
+     "zone": "seat",
+     "label": "Coffee table",
+     "product": "coffeetable"
+    },
+    {
+     "id": "armchair-23",
+     "rotY": -1.5707963267948966,
+     "kind": "armchair",
+     "w": 0.75,
+     "d": 0.75,
+     "h": 0.85,
+     "x": 2.3,
+     "z": 3.0650000000000004,
+     "zone": "seat",
+     "label": "Armchair",
+     "product": "armchair"
+    },
+    {
+     "id": "rug-24",
+     "rotY": 0,
+     "kind": "rug",
+     "w": 2.9,
+     "d": 2.7,
+     "h": 0.01,
+     "y": 0.007,
+     "x": 1.5999999999999999,
+     "z": 3.0650000000000004,
+     "zone": "decor",
+     "label": "Rug",
+     "onTop": true
+    },
+    {
+     "id": "banquette-25",
+     "rotY": 0,
+     "kind": "banquette",
+     "w": 0.55,
+     "d": 2.6,
+     "h": 0.95,
+     "x": 0.42500000000000004,
+     "z": 6.215,
+     "zone": "seat",
+     "label": "Banquette (custom millwork, no product link)"
+    },
+    {
+     "id": "cafetable-26",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 5.565,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-27",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 5.465000000000001,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-28",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 5.565,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "art-29",
+     "rotY": 0,
+     "kind": "art",
+     "w": 0.03,
+     "d": 0.6,
+     "h": 0.8,
+     "y": 1.45,
+     "x": 0.17,
+     "z": 5.565,
+     "zone": "decor",
+     "label": "Wall art",
+     "onTop": true
+    },
+    {
+     "id": "cafetable-30",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 6.865,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-31",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 6.765000000000001,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-32",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 6.865,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "plant-33",
+     "rotY": 0,
+     "kind": "plant",
+     "w": 0.6,
+     "d": 0.6,
+     "h": 1.4,
+     "x": 6.5604000000000005,
+     "z": 9.575600000000001,
+     "zone": "decor",
+     "label": "Plant",
+     "product": "plant"
+    }
+   ],
+   "zones": {
+    "seatZoneEnd": 9.975600000000002,
+    "counterZ": 11.850600000000002,
+    "zStart": 1.965,
+    "aisle": [
+     3.7464480000000004,
+     4.946448
+    ],
+    "doorX": 4.3464480000000005
+   },
+   "measures": [
+    {
+     "id": "frontage",
+     "label": "Frontage (wall to wall)",
+     "value": 7.010400000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 6.410400000000001,
+      "max": 7.6104
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "depth",
+     "label": "Depth (storefront to back wall)",
+     "value": 14.325600000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 13.725600000000002,
+      "max": 14.925600000000001
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "area",
+     "label": "Floor area",
+     "value": 100.42818624000002,
+     "unit": "m²",
+     "method": "derived",
+     "range": {
+      "min": 87.98658624000002,
+      "max": 113.58978624000001
+     },
+     "source": "frontage × depth"
+    },
+    {
+     "id": "ceiling",
+     "label": "Ceiling height",
+     "value": null,
+     "unit": "m",
+     "method": "not_measured",
+     "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+    },
+    {
+     "id": "door",
+     "label": "Entrance position",
+     "value": 4.3464480000000005,
+     "unit": "m",
+     "method": "assumed",
+     "range": {
+      "min": 4.046448000000001,
+      "max": 4.646448
+     },
+     "source": "Placed at 62% of the frontage. Check where the real door is."
+    },
+    {
+     "id": "aisle:clear",
+     "label": "Narrowest point on the straight path from the entrance to the counter",
+     "value": 1.5600000000000005,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4600000000000004,
+      "max": 1.6600000000000006
+     },
+     "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+    },
+    {
+     "id": "door:clear",
+     "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+     "value": 11.475600000000002,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 11.425600000000001,
+      "max": 11.525600000000003
+     },
+     "source": "Distance from the storefront to the first item in front of the door"
+    },
+    {
+     "id": "queue:clear",
+     "label": "Open depth between the counter front and the nearest seat",
+     "value": 3.960600000000002,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 3.360600000000002,
+      "max": 4.560600000000002
+     },
+     "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+    },
+    {
+     "id": "staff:clear",
+     "label": "Gap between the end of the counter and the side wall",
+     "value": 2.0604000000000013,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4604000000000013,
+      "max": 2.6604000000000014
+     },
+     "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+    },
+    {
+     "id": "exit:load",
+     "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+     "value": 57,
+     "unit": "people",
+     "method": "derived",
+     "range": {
+      "min": 50,
+      "max": 65
+     },
+     "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+    },
+    {
+     "id": "seats",
+     "label": "Seats placed (stools, chairs, lounge seats)",
+     "value": 14,
+     "unit": "seats",
+     "method": "counted",
+     "range": {
+      "min": 14,
+      "max": 14
+     },
+     "source": "Counted from the plan"
+    }
+   ],
+   "checks": [
+    {
+     "id": "aisle",
+     "label": "Main aisle, door to counter",
+     "op": ">=",
+     "need": {
+      "value": 1.2,
+      "unit": "m",
+      "source": "Our rule: two people can pass. ADA 2010 §403.5.1 sets 36 in (0.915 m) as the minimum."
+     },
+     "have": "aisle:clear",
+     "pin": [
+      4.116448000000001,
+      0.05,
+      0.1
+     ],
+     "measure": [
+      [
+       3.3364480000000007,
+       0.1
+      ],
+      [
+       4.896448000000001,
+       0.1
+      ]
+     ],
+     "explain": "The path from the door to the counter stays open the whole way.",
+     "tour": "After the furniture is in, tape the narrowest point: it must stay at 1.2 m or more.",
+     "haveMeasure": {
+      "id": "aisle:clear",
+      "label": "Narrowest point on the straight path from the entrance to the counter",
+      "value": 1.5600000000000005,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4600000000000004,
+       "max": 1.6600000000000006
+      },
+      "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.20 m; has 1.46 to 1.66 m"
+    },
+    {
+     "id": "door",
+     "label": "Clear floor inside the entrance",
+     "op": ">=",
+     "need": {
+      "value": 1.525,
+      "unit": "m",
+      "source": "ADA 2010 §404.2.4.1: 60 in (1.52 m) deep on the pull side of a door"
+     },
+     "have": "door:clear",
+     "pin": [
+      4.3464480000000005,
+      0.05,
+      1.5
+     ],
+     "measure": [
+      [
+       4.3464480000000005,
+       0
+      ],
+      [
+       4.3464480000000005,
+       11.475600000000002
+      ]
+     ],
+     "explain": "The window bar stops short of the door so a wheelchair can turn in.",
+     "tour": "Check which way the door swings. If it swings in, the swing must not hit a stool.",
+     "haveMeasure": {
+      "id": "door:clear",
+      "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+      "value": 11.475600000000002,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 11.425600000000001,
+       "max": 11.525600000000003
+      },
+      "source": "Distance from the storefront to the first item in front of the door"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.52 m; has 11.43 to 11.53 m"
+    },
+    {
+     "id": "queue",
+     "label": "Queue space at the counter",
+     "op": ">=",
+     "need": {
+      "value": 1.5,
+      "unit": "m",
+      "source": "Our rule: 1.5 m holds one line without blocking seats"
+     },
+     "have": "queue:clear",
+     "pin": [
+      2.55,
+      0.05,
+      9.4953
+     ],
+     "measure": [
+      [
+       2.55,
+       7.515
+      ],
+      [
+       2.55,
+       11.475600000000002
+      ]
+     ],
+     "explain": "The counter and back of house are measured off the back wall.",
+     "tour": "Tape the depth from the storefront glass to the back wall.",
+     "sweep": {
+      "kind": "back",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the back wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "queue:clear",
+      "label": "Open depth between the counter front and the nearest seat",
+      "value": 3.960600000000002,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 3.360600000000002,
+       "max": 4.560600000000002
+      },
+      "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.50 m; has 3.36 to 4.56 m"
+    },
+    {
+     "id": "staff",
+     "label": "Staff pass beside the counter",
+     "op": ">=",
+     "need": {
+      "value": 0.915,
+      "unit": "m",
+      "source": "Our rule: 36 in, same as an accessible route (ADA §403.5.1)"
+     },
+     "have": "staff:clear",
+     "pin": [
+      5.9802,
+      0.05,
+      11.850600000000002
+     ],
+     "measure": [
+      [
+       4.949999999999999,
+       11.850600000000002
+      ],
+      [
+       7.010400000000001,
+       11.850600000000002
+      ]
+     ],
+     "explain": "Staff walk around the end of the counter to reach the back of house.",
+     "tour": "Tape the frontage wall to wall at the back. Old buildings are rarely square.",
+     "sweep": {
+      "kind": "wallR",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the side wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "staff:clear",
+      "label": "Gap between the end of the counter and the side wall",
+      "value": 2.0604000000000013,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4604000000000013,
+       "max": 2.6604000000000014
+      },
+      "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 0.92 m; has 1.46 to 2.66 m"
+    },
+    {
+     "id": "head",
+     "label": "Headroom under the pendants",
+     "op": ">=",
+     "need": {
+      "value": 2.03,
+      "unit": "m",
+      "source": "ADA 2010 §307.4: 80 in (2.03 m) clear over walkways"
+     },
+     "have": "ceiling",
+     "pin": [
+      1.35,
+      2.3,
+      11.850600000000002
+     ],
+     "explain": "Pendants hang about 1.1 m below the ceiling, so the ceiling must be at least 3.1 m for this drop.",
+     "tour": "Measure floor to ceiling above the counter. Under 3.1 m, use a shorter drop.",
+     "haveMeasure": {
+      "id": "ceiling",
+      "label": "Ceiling height",
+      "value": null,
+      "unit": "m",
+      "method": "not_measured",
+      "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+     },
+     "verdict": "NEEDS",
+     "why": "Needs at least 2.03 m; not measured yet"
+    },
+    {
+     "id": "exit",
+     "label": "One exit is enough",
+     "op": "<=",
+     "need": {
+      "value": 49,
+      "unit": "people",
+      "source": "NYC Building Code / IBC Table 1006.2.1: one exit up to 49 people; Table 1004.5: 15 net ft² per person at tables"
+     },
+     "have": "exit:load",
+     "pin": [
+      3.5052000000000003,
+      0.05,
+      6.311580000000001
+     ],
+     "explain": "The dining area stays under the 49-person line where a second exit is required.",
+     "tour": "Ask the landlord for the Certificate of Occupancy: it caps the number of people.",
+     "haveMeasure": {
+      "id": "exit:load",
+      "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+      "value": 57,
+      "unit": "people",
+      "method": "derived",
+      "range": {
+       "min": 50,
+       "max": 65
+      },
+      "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+     },
+     "verdict": "FAILS",
+     "why": "Needs at most 49 people; has 50 to 65 people"
+    },
+    {
+     "id": "seats",
+     "label": "Seats: at least 12",
+     "op": ">=",
+     "need": {
+      "value": 12,
+      "unit": "seats",
+      "source": "Your brief"
+     },
+     "have": "seats",
+     "pin": [
+      1.9629120000000004,
+      0.05,
+      1.3
+     ],
+     "explain": "The brief fits.",
+     "tour": "Short on seats? Trade the lounge corner for two more two-tops.",
+     "haveMeasure": {
+      "id": "seats",
+      "label": "Seats placed (stools, chairs, lounge seats)",
+      "value": 14,
+      "unit": "seats",
+      "method": "counted",
+      "range": {
+       "min": 14,
+       "max": 14
+      },
+      "source": "Counted from the plan"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 12 seats; has 14 seats"
+    }
+   ],
+   "sections": [
+    {
+     "id": "space",
+     "title": "The space and what we assumed",
+     "view": "top",
+     "table": true,
+     "body": "The city vacancy record gives the address and the last use, not the floor size. We size the room from the lot record where there is one (retail area ÷ storefronts on the lot), otherwise from a 20 × 40 ft default. Until someone tapes the walls it is an estimate, so the frontage and depth carry a margin and every check below is tested at the worst end of it."
+    },
+    {
+     "id": "entry",
+     "title": "Getting in and through",
+     "view": "walk",
+     "checks": [
+      "door",
+      "aisle",
+      "exit"
+     ],
+     "body": "The entrance sits at 62% of the frontage. A 1.2 m aisle runs straight from the door to the counter, and the window bar stops short of the door to leave the 60 in turning space."
+    },
+    {
+     "id": "counter",
+     "title": "Counter and queue",
+     "view": "counter",
+     "checks": [
+      "queue",
+      "staff",
+      "head"
+     ],
+     "body": "The back of house takes 2.1 m off the back wall. The counter stands in front of it, set off the left wall, with a staff pass at the right end. Both move with the walls, which is why two of these checks carry the full wall margin."
+    },
+    {
+     "id": "seating",
+     "title": "Seating: 14 seats",
+     "view": "inside",
+     "checks": [
+      "seats"
+     ],
+     "body": "Stools face the street at the window bar. Two-tops fill the floor between the bar and the queue, each with a 36 in route around it."
+    },
+    {
+     "id": "shop",
+     "title": "Furniture and equipment: 31 items",
+     "view": "inside",
+     "shop": true,
+     "body": "Click any item in the model for its product page. Only the sofa and the pendants are the exact modeled products; the rest link to one comparable product each."
+    },
+    {
+     "id": "agent",
+     "title": "How the agent built this",
+     "view": "inside",
+     "steps": [
+      "Read the space: 23 ft wide × 47 ft deep, about 1081 sq ft (100 m²)",
+      "Read the brief: 12 seats, mostly dine-in, window bar, sofa lounge",
+      "Back of house: fridge, three-compartment sink and shelving along the back wall, 2.1 m deep",
+      "Counter: 4 × 1.2 m modules with espresso machine and pastry case, a 0.915 m staff pass on the right, 3 pendants above",
+      "Queue: 1.5 m kept clear in front of the counter",
+      "Main aisle: a straight 1.2 m path from the door to the counter",
+      "Window bar: 7 stools facing the street, with a 0.915 m aisle behind them",
+      "Lounge: velvet sofa, coffee table and armchair on the left wall (+3 seats)",
+      "Banquette: a 2.6 m bench on the left wall with 2 small tables and a chair opposite each (+4 seats), keeping the middle free to walk",
+      "Tables: 2 two-tops, with at least 0.915 m of accessible route between groups",
+      "Checks: 4/4 passed"
+     ],
+     "body": null
+    }
+   ]
+  },
+  {
+   "id": "grab",
+   "name": "Grab-and-go",
+   "params": {
+    "seats": 8,
+    "style": "takeout",
+    "windowBar": true,
+    "lounge": false
+   },
+   "seats": 9,
+   "items": [
+    {
+     "id": "fridge-0",
+     "rotY": 0,
+     "kind": "fridge",
+     "w": 0.75,
+     "d": 0.8,
+     "h": 2,
+     "label": "Fridge",
+     "x": 0.525,
+     "z": 13.8756,
+     "zone": "boh",
+     "product": "fridge"
+    },
+    {
+     "id": "sink-1",
+     "rotY": 0,
+     "kind": "sink",
+     "w": 1.5,
+     "d": 0.6,
+     "h": 0.9,
+     "label": "Sink",
+     "x": 1.8499999999999999,
+     "z": 13.9756,
+     "zone": "boh",
+     "product": "sink"
+    },
+    {
+     "id": "shelf-2",
+     "rotY": 0,
+     "kind": "shelf",
+     "w": 1.6,
+     "d": 0.35,
+     "h": 1.8,
+     "label": "Shelving",
+     "x": 3.5999999999999996,
+     "z": 14.1006,
+     "zone": "boh",
+     "product": "shelf"
+    },
+    {
+     "id": "counter-3",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 0.75,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-4",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 1.95,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-5",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 3.15,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-6",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "espresso-7",
+     "rotY": 0,
+     "kind": "espresso",
+     "w": 0.75,
+     "d": 0.55,
+     "h": 0.5,
+     "y": 1,
+     "x": 0.75,
+     "z": 11.900600000000003,
+     "zone": "counter",
+     "label": "Espresso",
+     "product": "espresso",
+     "onTop": true
+    },
+    {
+     "id": "pastry-8",
+     "rotY": 0,
+     "kind": "pastry",
+     "w": 0.9,
+     "d": 0.6,
+     "h": 0.45,
+     "y": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Pastry case",
+     "product": "pastry",
+     "onTop": true
+    },
+    {
+     "id": "lamp-9",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 1.35,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-10",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 2.55,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-11",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 3.75,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "windowbar-12",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 3.186448000000001,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 1.7432240000000003,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-13",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 0.51,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-14",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.13,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-15",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.75,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-16",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 2.37,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "windowbar-17",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 1.963952,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 5.878424000000001,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-18",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.256448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-19",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.876448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-20",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 6.496448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "bistro-21",
+     "rotY": 0,
+     "kind": "bistro",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.1157240000000004,
+     "z": 2.795,
+     "zone": "seat",
+     "label": "Bistro table",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-22",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1.2357240000000003,
+     "z": 2.695,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-23",
+     "rotY": 3.141592653589793,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 1.1157240000000004,
+     "z": 2.2449999999999997,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "chair-24",
+     "rotY": 0,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 1.1157240000000004,
+     "z": 3.345,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "plant-25",
+     "rotY": 0,
+     "kind": "plant",
+     "w": 0.6,
+     "d": 0.6,
+     "h": 1.4,
+     "x": 6.5604000000000005,
+     "z": 9.575600000000001,
+     "zone": "decor",
+     "label": "Plant",
+     "product": "plant"
+    }
+   ],
+   "zones": {
+    "seatZoneEnd": 9.975600000000002,
+    "counterZ": 11.850600000000002,
+    "zStart": 1.965,
+    "aisle": [
+     3.7464480000000004,
+     4.946448
+    ],
+    "doorX": 4.3464480000000005
+   },
+   "measures": [
+    {
+     "id": "frontage",
+     "label": "Frontage (wall to wall)",
+     "value": 7.010400000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 6.410400000000001,
+      "max": 7.6104
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "depth",
+     "label": "Depth (storefront to back wall)",
+     "value": 14.325600000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 13.725600000000002,
+      "max": 14.925600000000001
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "area",
+     "label": "Floor area",
+     "value": 100.42818624000002,
+     "unit": "m²",
+     "method": "derived",
+     "range": {
+      "min": 87.98658624000002,
+      "max": 113.58978624000001
+     },
+     "source": "frontage × depth"
+    },
+    {
+     "id": "ceiling",
+     "label": "Ceiling height",
+     "value": null,
+     "unit": "m",
+     "method": "not_measured",
+     "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+    },
+    {
+     "id": "door",
+     "label": "Entrance position",
+     "value": 4.3464480000000005,
+     "unit": "m",
+     "method": "assumed",
+     "range": {
+      "min": 4.046448000000001,
+      "max": 4.646448
+     },
+     "source": "Placed at 62% of the frontage. Check where the real door is."
+    },
+    {
+     "id": "aisle:clear",
+     "label": "Narrowest point on the straight path from the entrance to the counter",
+     "value": 1.5600000000000005,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4600000000000004,
+      "max": 1.6600000000000006
+     },
+     "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+    },
+    {
+     "id": "door:clear",
+     "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+     "value": 11.475600000000002,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 11.425600000000001,
+      "max": 11.525600000000003
+     },
+     "source": "Distance from the storefront to the first item in front of the door"
+    },
+    {
+     "id": "queue:clear",
+     "label": "Open depth between the counter front and the nearest seat",
+     "value": 7.890600000000002,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 7.290600000000002,
+      "max": 8.490600000000002
+     },
+     "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+    },
+    {
+     "id": "staff:clear",
+     "label": "Gap between the end of the counter and the side wall",
+     "value": 2.0604000000000013,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4604000000000013,
+      "max": 2.6604000000000014
+     },
+     "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+    },
+    {
+     "id": "tables:clear",
+     "label": "Tightest gap between a table (chairs in) and the next piece of furniture",
+     "value": 0.9949999999999999,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 0.6949999999999998,
+      "max": 0.9949999999999999
+     },
+     "source": "Every pair of seating groups checked; a chair in use sits up to 0.30 m further out"
+    },
+    {
+     "id": "exit:load",
+     "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+     "value": 57,
+     "unit": "people",
+     "method": "derived",
+     "range": {
+      "min": 50,
+      "max": 65
+     },
+     "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+    },
+    {
+     "id": "seats",
+     "label": "Seats placed (stools, chairs, lounge seats)",
+     "value": 9,
+     "unit": "seats",
+     "method": "counted",
+     "range": {
+      "min": 9,
+      "max": 9
+     },
+     "source": "Counted from the plan"
+    }
+   ],
+   "checks": [
+    {
+     "id": "aisle",
+     "label": "Main aisle, door to counter",
+     "op": ">=",
+     "need": {
+      "value": 1.2,
+      "unit": "m",
+      "source": "Our rule: two people can pass. ADA 2010 §403.5.1 sets 36 in (0.915 m) as the minimum."
+     },
+     "have": "aisle:clear",
+     "pin": [
+      4.116448000000001,
+      0.05,
+      0.1
+     ],
+     "measure": [
+      [
+       3.3364480000000007,
+       0.1
+      ],
+      [
+       4.896448000000001,
+       0.1
+      ]
+     ],
+     "explain": "The path from the door to the counter stays open the whole way.",
+     "tour": "After the furniture is in, tape the narrowest point: it must stay at 1.2 m or more.",
+     "haveMeasure": {
+      "id": "aisle:clear",
+      "label": "Narrowest point on the straight path from the entrance to the counter",
+      "value": 1.5600000000000005,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4600000000000004,
+       "max": 1.6600000000000006
+      },
+      "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.20 m; has 1.46 to 1.66 m"
+    },
+    {
+     "id": "door",
+     "label": "Clear floor inside the entrance",
+     "op": ">=",
+     "need": {
+      "value": 1.525,
+      "unit": "m",
+      "source": "ADA 2010 §404.2.4.1: 60 in (1.52 m) deep on the pull side of a door"
+     },
+     "have": "door:clear",
+     "pin": [
+      4.3464480000000005,
+      0.05,
+      1.5
+     ],
+     "measure": [
+      [
+       4.3464480000000005,
+       0
+      ],
+      [
+       4.3464480000000005,
+       11.475600000000002
+      ]
+     ],
+     "explain": "The window bar stops short of the door so a wheelchair can turn in.",
+     "tour": "Check which way the door swings. If it swings in, the swing must not hit a stool.",
+     "haveMeasure": {
+      "id": "door:clear",
+      "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+      "value": 11.475600000000002,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 11.425600000000001,
+       "max": 11.525600000000003
+      },
+      "source": "Distance from the storefront to the first item in front of the door"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.52 m; has 11.43 to 11.53 m"
+    },
+    {
+     "id": "queue",
+     "label": "Queue space at the counter",
+     "op": ">=",
+     "need": {
+      "value": 1.5,
+      "unit": "m",
+      "source": "Our rule: 1.5 m holds one line without blocking seats"
+     },
+     "have": "queue:clear",
+     "pin": [
+      2.55,
+      0.05,
+      7.5303
+     ],
+     "measure": [
+      [
+       2.55,
+       3.585
+      ],
+      [
+       2.55,
+       11.475600000000002
+      ]
+     ],
+     "explain": "The counter and back of house are measured off the back wall.",
+     "tour": "Tape the depth from the storefront glass to the back wall.",
+     "sweep": {
+      "kind": "back",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the back wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "queue:clear",
+      "label": "Open depth between the counter front and the nearest seat",
+      "value": 7.890600000000002,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 7.290600000000002,
+       "max": 8.490600000000002
+      },
+      "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.50 m; has 7.29 to 8.49 m"
+    },
+    {
+     "id": "staff",
+     "label": "Staff pass beside the counter",
+     "op": ">=",
+     "need": {
+      "value": 0.915,
+      "unit": "m",
+      "source": "Our rule: 36 in, same as an accessible route (ADA §403.5.1)"
+     },
+     "have": "staff:clear",
+     "pin": [
+      5.9802,
+      0.05,
+      11.850600000000002
+     ],
+     "measure": [
+      [
+       4.949999999999999,
+       11.850600000000002
+      ],
+      [
+       7.010400000000001,
+       11.850600000000002
+      ]
+     ],
+     "explain": "Staff walk around the end of the counter to reach the back of house.",
+     "tour": "Tape the frontage wall to wall at the back. Old buildings are rarely square.",
+     "sweep": {
+      "kind": "wallR",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the side wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "staff:clear",
+      "label": "Gap between the end of the counter and the side wall",
+      "value": 2.0604000000000013,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4604000000000013,
+       "max": 2.6604000000000014
+      },
+      "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 0.92 m; has 1.46 to 2.66 m"
+    },
+    {
+     "id": "head",
+     "label": "Headroom under the pendants",
+     "op": ">=",
+     "need": {
+      "value": 2.03,
+      "unit": "m",
+      "source": "ADA 2010 §307.4: 80 in (2.03 m) clear over walkways"
+     },
+     "have": "ceiling",
+     "pin": [
+      1.35,
+      2.3,
+      11.850600000000002
+     ],
+     "explain": "Pendants hang about 1.1 m below the ceiling, so the ceiling must be at least 3.1 m for this drop.",
+     "tour": "Measure floor to ceiling above the counter. Under 3.1 m, use a shorter drop.",
+     "haveMeasure": {
+      "id": "ceiling",
+      "label": "Ceiling height",
+      "value": null,
+      "unit": "m",
+      "method": "not_measured",
+      "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+     },
+     "verdict": "NEEDS",
+     "why": "Needs at least 2.03 m; not measured yet"
+    },
+    {
+     "id": "tables",
+     "label": "Aisles between seating groups",
+     "op": ">=",
+     "need": {
+      "value": 0.915,
+      "unit": "m",
+      "source": "ADA 2010 §403.5.1 and §902: a 36 in (0.915 m) route to accessible seating"
+     },
+     "have": "tables:clear",
+     "pin": [
+      1.13,
+      0.05,
+      1.5074999999999998
+     ],
+     "measure": [
+      [
+       1.13,
+       2.005
+      ],
+      [
+       1.13,
+       1.01
+      ]
+     ],
+     "explain": "Passes with chairs pushed in. With someone seated, the gap can drop below 36 in.",
+     "tour": "Sit at the tightest table and check that someone can still walk behind you.",
+     "sweep": {
+      "kind": "chair",
+      "min": -0.3,
+      "max": 0,
+      "nominal": 0,
+      "label": "Pull the chairs out, as when someone is seated"
+     },
+     "haveMeasure": {
+      "id": "tables:clear",
+      "label": "Tightest gap between a table (chairs in) and the next piece of furniture",
+      "value": 0.9949999999999999,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 0.6949999999999998,
+       "max": 0.9949999999999999
+      },
+      "source": "Every pair of seating groups checked; a chair in use sits up to 0.30 m further out"
+     },
+     "verdict": "TIGHT",
+     "why": "Needs at least 0.92 m; has 0.69 to 0.99 m"
+    },
+    {
+     "id": "exit",
+     "label": "One exit is enough",
+     "op": "<=",
+     "need": {
+      "value": 49,
+      "unit": "people",
+      "source": "NYC Building Code / IBC Table 1006.2.1: one exit up to 49 people; Table 1004.5: 15 net ft² per person at tables"
+     },
+     "have": "exit:load",
+     "pin": [
+      3.5052000000000003,
+      0.05,
+      6.311580000000001
+     ],
+     "explain": "The dining area stays under the 49-person line where a second exit is required.",
+     "tour": "Ask the landlord for the Certificate of Occupancy: it caps the number of people.",
+     "haveMeasure": {
+      "id": "exit:load",
+      "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+      "value": 57,
+      "unit": "people",
+      "method": "derived",
+      "range": {
+       "min": 50,
+       "max": 65
+      },
+      "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+     },
+     "verdict": "FAILS",
+     "why": "Needs at most 49 people; has 50 to 65 people"
+    },
+    {
+     "id": "seats",
+     "label": "Seats: at least 8",
+     "op": ">=",
+     "need": {
+      "value": 8,
+      "unit": "seats",
+      "source": "Your brief"
+     },
+     "have": "seats",
+     "pin": [
+      1.9629120000000004,
+      0.05,
+      1.3
+     ],
+     "explain": "The brief fits.",
+     "tour": "Short on seats? Trade the lounge corner for two more two-tops.",
+     "haveMeasure": {
+      "id": "seats",
+      "label": "Seats placed (stools, chairs, lounge seats)",
+      "value": 9,
+      "unit": "seats",
+      "method": "counted",
+      "range": {
+       "min": 9,
+       "max": 9
+      },
+      "source": "Counted from the plan"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 8 seats; has 9 seats"
+    }
+   ],
+   "sections": [
+    {
+     "id": "space",
+     "title": "The space and what we assumed",
+     "view": "top",
+     "table": true,
+     "body": "The city vacancy record gives the address and the last use, not the floor size. We size the room from the lot record where there is one (retail area ÷ storefronts on the lot), otherwise from a 20 × 40 ft default. Until someone tapes the walls it is an estimate, so the frontage and depth carry a margin and every check below is tested at the worst end of it."
+    },
+    {
+     "id": "entry",
+     "title": "Getting in and through",
+     "view": "walk",
+     "checks": [
+      "door",
+      "aisle",
+      "exit"
+     ],
+     "body": "The entrance sits at 62% of the frontage. A 1.2 m aisle runs straight from the door to the counter, and the window bar stops short of the door to leave the 60 in turning space."
+    },
+    {
+     "id": "counter",
+     "title": "Counter and queue",
+     "view": "counter",
+     "checks": [
+      "queue",
+      "staff",
+      "head"
+     ],
+     "body": "The back of house takes 2.1 m off the back wall. The counter stands in front of it, set off the left wall, with a staff pass at the right end. Both move with the walls, which is why two of these checks carry the full wall margin."
+    },
+    {
+     "id": "seating",
+     "title": "Seating: 9 seats",
+     "view": "inside",
+     "checks": [
+      "tables",
+      "seats"
+     ],
+     "body": "Stools face the street at the window bar. Two-tops fill the floor between the bar and the queue, each with a 36 in route around it."
+    },
+    {
+     "id": "shop",
+     "title": "Furniture and equipment: 26 items",
+     "view": "inside",
+     "shop": true,
+     "body": "Click any item in the model for its product page. Only the sofa and the pendants are the exact modeled products; the rest link to one comparable product each."
+    },
+    {
+     "id": "agent",
+     "title": "How the agent built this",
+     "view": "inside",
+     "steps": [
+      "Read the space: 23 ft wide × 47 ft deep, about 1081 sq ft (100 m²)",
+      "Read the brief: 8 seats, mostly takeout, window bar",
+      "Back of house: fridge, three-compartment sink and shelving along the back wall, 2.1 m deep",
+      "Counter: 4 × 1.2 m modules with espresso machine and pastry case, a 0.915 m staff pass on the right, 3 pendants above",
+      "Queue: 1.5 m kept clear in front of the counter",
+      "Main aisle: a straight 1.2 m path from the door to the counter",
+      "Window bar: 7 stools facing the street, with a 0.915 m aisle behind them",
+      "Tables: 1 two-tops, with at least 0.915 m of accessible route between groups",
+      "Checks: 4/4 passed"
+     ],
+     "body": null
+    }
+   ]
+  },
+  {
+   "id": "max",
+   "name": "Max seating",
+   "params": {
+    "seats": 20,
+    "style": "dinein",
+    "windowBar": true,
+    "lounge": false
+   },
+   "seats": 21,
+   "items": [
+    {
+     "id": "fridge-0",
+     "rotY": 0,
+     "kind": "fridge",
+     "w": 0.75,
+     "d": 0.8,
+     "h": 2,
+     "label": "Fridge",
+     "x": 0.525,
+     "z": 13.8756,
+     "zone": "boh",
+     "product": "fridge"
+    },
+    {
+     "id": "sink-1",
+     "rotY": 0,
+     "kind": "sink",
+     "w": 1.5,
+     "d": 0.6,
+     "h": 0.9,
+     "label": "Sink",
+     "x": 1.8499999999999999,
+     "z": 13.9756,
+     "zone": "boh",
+     "product": "sink"
+    },
+    {
+     "id": "shelf-2",
+     "rotY": 0,
+     "kind": "shelf",
+     "w": 1.6,
+     "d": 0.35,
+     "h": 1.8,
+     "label": "Shelving",
+     "x": 3.5999999999999996,
+     "z": 14.1006,
+     "zone": "boh",
+     "product": "shelf"
+    },
+    {
+     "id": "counter-3",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 0.75,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-4",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 1.95,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-5",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 3.15,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "counter-6",
+     "rotY": 0,
+     "kind": "counter",
+     "w": 1.2,
+     "d": 0.75,
+     "h": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Counter",
+     "product": "counter"
+    },
+    {
+     "id": "espresso-7",
+     "rotY": 0,
+     "kind": "espresso",
+     "w": 0.75,
+     "d": 0.55,
+     "h": 0.5,
+     "y": 1,
+     "x": 0.75,
+     "z": 11.900600000000003,
+     "zone": "counter",
+     "label": "Espresso",
+     "product": "espresso",
+     "onTop": true
+    },
+    {
+     "id": "pastry-8",
+     "rotY": 0,
+     "kind": "pastry",
+     "w": 0.9,
+     "d": 0.6,
+     "h": 0.45,
+     "y": 1,
+     "x": 4.35,
+     "z": 11.850600000000002,
+     "zone": "counter",
+     "label": "Pastry case",
+     "product": "pastry",
+     "onTop": true
+    },
+    {
+     "id": "lamp-9",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 1.35,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-10",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 2.55,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "lamp-11",
+     "rotY": 0,
+     "kind": "lamp",
+     "w": 0.4,
+     "d": 0.4,
+     "h": 0.45,
+     "y": 2.35,
+     "x": 3.75,
+     "z": 11.850600000000002,
+     "zone": "light",
+     "label": "Pendant",
+     "product": "lamp",
+     "onTop": true
+    },
+    {
+     "id": "windowbar-12",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 3.186448000000001,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 1.7432240000000003,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-13",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 0.51,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-14",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.13,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-15",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 1.75,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-16",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 2.37,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "windowbar-17",
+     "rotY": 0,
+     "kind": "windowbar",
+     "w": 1.963952,
+     "d": 0.45,
+     "h": 1.05,
+     "x": 5.878424000000001,
+     "z": 0.325,
+     "zone": "seat",
+     "label": "Window bar",
+     "product": "windowbar"
+    },
+    {
+     "id": "stool-18",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.256448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-19",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 5.876448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "stool-20",
+     "rotY": 3.141592653589793,
+     "kind": "stool",
+     "w": 0.42,
+     "d": 0.42,
+     "h": 0.75,
+     "x": 6.496448000000001,
+     "z": 0.8,
+     "zone": "seat",
+     "label": "Stool",
+     "product": "stool"
+    },
+    {
+     "id": "banquette-21",
+     "rotY": 0,
+     "kind": "banquette",
+     "w": 0.55,
+     "d": 6.5,
+     "h": 0.95,
+     "x": 0.42500000000000004,
+     "z": 5.3149999999999995,
+     "zone": "seat",
+     "label": "Banquette (custom millwork, no product link)"
+    },
+    {
+     "id": "cafetable-22",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 2.715,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-23",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 2.6149999999999998,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-24",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 2.715,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "art-25",
+     "rotY": 0,
+     "kind": "art",
+     "w": 0.03,
+     "d": 0.6,
+     "h": 0.8,
+     "y": 1.45,
+     "x": 0.17,
+     "z": 2.715,
+     "zone": "decor",
+     "label": "Wall art",
+     "onTop": true
+    },
+    {
+     "id": "cafetable-26",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 4.015,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-27",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 3.9149999999999996,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-28",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 4.015,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "cafetable-29",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 5.3149999999999995,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-30",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 5.215,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-31",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 5.3149999999999995,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "art-32",
+     "rotY": 0,
+     "kind": "art",
+     "w": 0.03,
+     "d": 0.6,
+     "h": 0.8,
+     "y": 1.45,
+     "x": 0.17,
+     "z": 5.3149999999999995,
+     "zone": "decor",
+     "label": "Wall art",
+     "onTop": true
+    },
+    {
+     "id": "cafetable-33",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 6.615,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-34",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 6.515000000000001,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-35",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 6.615,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "cafetable-36",
+     "rotY": 0,
+     "kind": "cafetable",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 1.07,
+     "z": 7.915,
+     "zone": "seat",
+     "label": "Two-top",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-37",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 1,
+     "z": 7.815,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-38",
+     "rotY": 1.5707963267948966,
+     "kind": "chair",
+     "w": 0.48,
+     "d": 0.45,
+     "h": 0.82,
+     "x": 1.66,
+     "z": 7.915,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "art-39",
+     "rotY": 0,
+     "kind": "art",
+     "w": 0.03,
+     "d": 0.6,
+     "h": 0.8,
+     "y": 1.45,
+     "x": 0.17,
+     "z": 7.915,
+     "zone": "decor",
+     "label": "Wall art",
+     "onTop": true
+    },
+    {
+     "id": "bistro-40",
+     "rotY": 0,
+     "kind": "bistro",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 3.2557240000000003,
+     "z": 2.795,
+     "zone": "seat",
+     "label": "Bistro table",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-41",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 3.3757240000000004,
+     "z": 2.695,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-42",
+     "rotY": 3.141592653589793,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 3.2557240000000003,
+     "z": 2.2449999999999997,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "chair-43",
+     "rotY": 0,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 3.2557240000000003,
+     "z": 3.345,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "bistro-44",
+     "rotY": 0,
+     "kind": "bistro",
+     "w": 0.7,
+     "d": 0.7,
+     "h": 0.75,
+     "x": 5.928424,
+     "z": 2.795,
+     "zone": "seat",
+     "label": "Bistro table",
+     "product": "bistro"
+    },
+    {
+     "id": "cup-45",
+     "rotY": 0,
+     "kind": "cup",
+     "w": 0.12,
+     "d": 0.12,
+     "h": 0.1,
+     "y": 0.76,
+     "x": 6.048424,
+     "z": 2.695,
+     "zone": "decor",
+     "label": "Cup",
+     "product": "cup",
+     "onTop": true
+    },
+    {
+     "id": "chair-46",
+     "rotY": 3.141592653589793,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 5.928424,
+     "z": 2.2449999999999997,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "chair-47",
+     "rotY": 0,
+     "kind": "chair",
+     "w": 0.45,
+     "d": 0.48,
+     "h": 0.82,
+     "x": 5.928424,
+     "z": 3.345,
+     "zone": "seat",
+     "label": "Chair",
+     "product": "chair"
+    },
+    {
+     "id": "plant-48",
+     "rotY": 0,
+     "kind": "plant",
+     "w": 0.6,
+     "d": 0.6,
+     "h": 1.4,
+     "x": 6.5604000000000005,
+     "z": 9.575600000000001,
+     "zone": "decor",
+     "label": "Plant",
+     "product": "plant"
+    }
+   ],
+   "zones": {
+    "seatZoneEnd": 9.975600000000002,
+    "counterZ": 11.850600000000002,
+    "zStart": 1.965,
+    "aisle": [
+     3.7464480000000004,
+     4.946448
+    ],
+    "doorX": 4.3464480000000005
+   },
+   "measures": [
+    {
+     "id": "frontage",
+     "label": "Frontage (wall to wall)",
+     "value": 7.010400000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 6.410400000000001,
+      "max": 7.6104
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "depth",
+     "label": "Depth (storefront to back wall)",
+     "value": 14.325600000000001,
+     "unit": "m",
+     "method": "estimated",
+     "range": {
+      "min": 13.725600000000002,
+      "max": 14.925600000000001
+     },
+     "source": "Estimated: 1,091 ft² (retail area on the lot ÷ storefronts on the lot, NYC PLUTO), drawn at 1 : 2. Not taped, so we allow ±0.60 m (±2 ft)"
+    },
+    {
+     "id": "area",
+     "label": "Floor area",
+     "value": 100.42818624000002,
+     "unit": "m²",
+     "method": "derived",
+     "range": {
+      "min": 87.98658624000002,
+      "max": 113.58978624000001
+     },
+     "source": "frontage × depth"
+    },
+    {
+     "id": "ceiling",
+     "label": "Ceiling height",
+     "value": null,
+     "unit": "m",
+     "method": "not_measured",
+     "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+    },
+    {
+     "id": "door",
+     "label": "Entrance position",
+     "value": 4.3464480000000005,
+     "unit": "m",
+     "method": "assumed",
+     "range": {
+      "min": 4.046448000000001,
+      "max": 4.646448
+     },
+     "source": "Placed at 62% of the frontage. Check where the real door is."
+    },
+    {
+     "id": "aisle:clear",
+     "label": "Narrowest point on the straight path from the entrance to the counter",
+     "value": 1.5600000000000005,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4600000000000004,
+      "max": 1.6600000000000006
+     },
+     "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+    },
+    {
+     "id": "door:clear",
+     "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+     "value": 2.005,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.9549999999999998,
+      "max": 2.0549999999999997
+     },
+     "source": "Distance from the storefront to the first item in front of the door"
+    },
+    {
+     "id": "queue:clear",
+     "label": "Open depth between the counter front and the nearest seat",
+     "value": 2.9106000000000023,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 2.310600000000002,
+      "max": 3.5106000000000024
+     },
+     "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+    },
+    {
+     "id": "staff:clear",
+     "label": "Gap between the end of the counter and the side wall",
+     "value": 2.0604000000000013,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 1.4604000000000013,
+      "max": 2.6604000000000014
+     },
+     "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+    },
+    {
+     "id": "tables:clear",
+     "label": "Tightest gap between a table (chairs in) and the next piece of furniture",
+     "value": 0.9949999999999999,
+     "unit": "m",
+     "method": "derived",
+     "range": {
+      "min": 0.6949999999999998,
+      "max": 0.9949999999999999
+     },
+     "source": "Every pair of seating groups checked; a chair in use sits up to 0.30 m further out"
+    },
+    {
+     "id": "exit:load",
+     "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+     "value": 57,
+     "unit": "people",
+     "method": "derived",
+     "range": {
+      "min": 50,
+      "max": 65
+     },
+     "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+    },
+    {
+     "id": "seats",
+     "label": "Seats placed (stools, chairs, lounge seats)",
+     "value": 21,
+     "unit": "seats",
+     "method": "counted",
+     "range": {
+      "min": 21,
+      "max": 21
+     },
+     "source": "Counted from the plan"
+    }
+   ],
+   "checks": [
+    {
+     "id": "aisle",
+     "label": "Main aisle, door to counter",
+     "op": ">=",
+     "need": {
+      "value": 1.2,
+      "unit": "m",
+      "source": "Our rule: two people can pass. ADA 2010 §403.5.1 sets 36 in (0.915 m) as the minimum."
+     },
+     "have": "aisle:clear",
+     "pin": [
+      4.116448000000001,
+      0.05,
+      0.1
+     ],
+     "measure": [
+      [
+       3.3364480000000007,
+       0.1
+      ],
+      [
+       4.896448000000001,
+       0.1
+      ]
+     ],
+     "explain": "The path from the door to the counter stays open the whole way.",
+     "tour": "After the furniture is in, tape the narrowest point: it must stay at 1.2 m or more.",
+     "haveMeasure": {
+      "id": "aisle:clear",
+      "label": "Narrowest point on the straight path from the entrance to the counter",
+      "value": 1.5600000000000005,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4600000000000004,
+       "max": 1.6600000000000006
+      },
+      "source": "Path swept every 5 cm; furniture placed within ±5 cm on each side"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.20 m; has 1.46 to 1.66 m"
+    },
+    {
+     "id": "door",
+     "label": "Clear floor inside the entrance",
+     "op": ">=",
+     "need": {
+      "value": 1.525,
+      "unit": "m",
+      "source": "ADA 2010 §404.2.4.1: 60 in (1.52 m) deep on the pull side of a door"
+     },
+     "have": "door:clear",
+     "pin": [
+      4.3464480000000005,
+      0.05,
+      1.0025
+     ],
+     "measure": [
+      [
+       4.3464480000000005,
+       0
+      ],
+      [
+       4.3464480000000005,
+       2.005
+      ]
+     ],
+     "explain": "The window bar stops short of the door so a wheelchair can turn in.",
+     "tour": "Check which way the door swings. If it swings in, the swing must not hit a stool.",
+     "haveMeasure": {
+      "id": "door:clear",
+      "label": "Open floor inside the entrance (door width plus 18 in on the latch side)",
+      "value": 2.005,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.9549999999999998,
+       "max": 2.0549999999999997
+      },
+      "source": "Distance from the storefront to the first item in front of the door"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.52 m; has 1.95 to 2.05 m"
+    },
+    {
+     "id": "queue",
+     "label": "Queue space at the counter",
+     "op": ">=",
+     "need": {
+      "value": 1.5,
+      "unit": "m",
+      "source": "Our rule: 1.5 m holds one line without blocking seats"
+     },
+     "have": "queue:clear",
+     "pin": [
+      2.55,
+      0.05,
+      10.0203
+     ],
+     "measure": [
+      [
+       2.55,
+       8.565
+      ],
+      [
+       2.55,
+       11.475600000000002
+      ]
+     ],
+     "explain": "The counter and back of house are measured off the back wall.",
+     "tour": "Tape the depth from the storefront glass to the back wall.",
+     "sweep": {
+      "kind": "back",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the back wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "queue:clear",
+      "label": "Open depth between the counter front and the nearest seat",
+      "value": 2.9106000000000023,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 2.310600000000002,
+       "max": 3.5106000000000024
+      },
+      "source": "The counter is set off the back wall, so it moves with the depth (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 1.50 m; has 2.31 to 3.51 m"
+    },
+    {
+     "id": "staff",
+     "label": "Staff pass beside the counter",
+     "op": ">=",
+     "need": {
+      "value": 0.915,
+      "unit": "m",
+      "source": "Our rule: 36 in, same as an accessible route (ADA §403.5.1)"
+     },
+     "have": "staff:clear",
+     "pin": [
+      5.9802,
+      0.05,
+      11.850600000000002
+     ],
+     "measure": [
+      [
+       4.949999999999999,
+       11.850600000000002
+      ],
+      [
+       7.010400000000001,
+       11.850600000000002
+      ]
+     ],
+     "explain": "Staff walk around the end of the counter to reach the back of house.",
+     "tour": "Tape the frontage wall to wall at the back. Old buildings are rarely square.",
+     "sweep": {
+      "kind": "wallR",
+      "min": -0.6,
+      "max": 0.6,
+      "label": "Slide the side wall anywhere in its margin"
+     },
+     "haveMeasure": {
+      "id": "staff:clear",
+      "label": "Gap between the end of the counter and the side wall",
+      "value": 2.0604000000000013,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 1.4604000000000013,
+       "max": 2.6604000000000014
+      },
+      "source": "The counter is set off the left wall, so this gap takes the whole frontage margin (±0.60 m)"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 0.92 m; has 1.46 to 2.66 m"
+    },
+    {
+     "id": "head",
+     "label": "Headroom under the pendants",
+     "op": ">=",
+     "need": {
+      "value": 2.03,
+      "unit": "m",
+      "source": "ADA 2010 §307.4: 80 in (2.03 m) clear over walkways"
+     },
+     "have": "ceiling",
+     "pin": [
+      1.35,
+      2.3,
+      11.850600000000002
+     ],
+     "explain": "Pendants hang about 1.1 m below the ceiling, so the ceiling must be at least 3.1 m for this drop.",
+     "tour": "Measure floor to ceiling above the counter. Under 3.1 m, use a shorter drop.",
+     "haveMeasure": {
+      "id": "ceiling",
+      "label": "Ceiling height",
+      "value": null,
+      "unit": "m",
+      "method": "not_measured",
+      "source": "Not in any public record. The 3D view draws 3.4 m as a placeholder."
+     },
+     "verdict": "NEEDS",
+     "why": "Needs at least 2.03 m; not measured yet"
+    },
+    {
+     "id": "tables",
+     "label": "Aisles between seating groups",
+     "op": ">=",
+     "need": {
+      "value": 0.915,
+      "unit": "m",
+      "source": "ADA 2010 §403.5.1 and §902: a 36 in (0.915 m) route to accessible seating"
+     },
+     "have": "tables:clear",
+     "pin": [
+      5.876448000000001,
+      0.05,
+      1.5074999999999998
+     ],
+     "measure": [
+      [
+       5.876448000000001,
+       2.005
+      ],
+      [
+       5.876448000000001,
+       1.01
+      ]
+     ],
+     "explain": "Passes with chairs pushed in. With someone seated, the gap can drop below 36 in.",
+     "tour": "Sit at the tightest table and check that someone can still walk behind you.",
+     "sweep": {
+      "kind": "chair",
+      "min": -0.3,
+      "max": 0,
+      "nominal": 0,
+      "label": "Pull the chairs out, as when someone is seated"
+     },
+     "haveMeasure": {
+      "id": "tables:clear",
+      "label": "Tightest gap between a table (chairs in) and the next piece of furniture",
+      "value": 0.9949999999999999,
+      "unit": "m",
+      "method": "derived",
+      "range": {
+       "min": 0.6949999999999998,
+       "max": 0.9949999999999999
+      },
+      "source": "Every pair of seating groups checked; a chair in use sits up to 0.30 m further out"
+     },
+     "verdict": "TIGHT",
+     "why": "Needs at least 0.92 m; has 0.69 to 0.99 m"
+    },
+    {
+     "id": "exit",
+     "label": "One exit is enough",
+     "op": "<=",
+     "need": {
+      "value": 49,
+      "unit": "people",
+      "source": "NYC Building Code / IBC Table 1006.2.1: one exit up to 49 people; Table 1004.5: 15 net ft² per person at tables"
+     },
+     "have": "exit:load",
+     "pin": [
+      3.5052000000000003,
+      0.05,
+      6.311580000000001
+     ],
+     "explain": "The dining area stays under the 49-person line where a second exit is required.",
+     "tour": "Ask the landlord for the Certificate of Occupancy: it caps the number of people.",
+     "haveMeasure": {
+      "id": "exit:load",
+      "label": "People the dining area is counted for (net floor area ÷ 15 ft²)",
+      "value": 57,
+      "unit": "people",
+      "method": "derived",
+      "range": {
+       "min": 50,
+       "max": 65
+      },
+      "source": "Floor in front of the counter, at each end of the frontage and depth margins"
+     },
+     "verdict": "FAILS",
+     "why": "Needs at most 49 people; has 50 to 65 people"
+    },
+    {
+     "id": "seats",
+     "label": "Seats: at least 20",
+     "op": ">=",
+     "need": {
+      "value": 20,
+      "unit": "seats",
+      "source": "Your brief"
+     },
+     "have": "seats",
+     "pin": [
+      1.9629120000000004,
+      0.05,
+      1.3
+     ],
+     "explain": "The brief fits.",
+     "tour": "Short on seats? Trade the lounge corner for two more two-tops.",
+     "haveMeasure": {
+      "id": "seats",
+      "label": "Seats placed (stools, chairs, lounge seats)",
+      "value": 21,
+      "unit": "seats",
+      "method": "counted",
+      "range": {
+       "min": 21,
+       "max": 21
+      },
+      "source": "Counted from the plan"
+     },
+     "verdict": "WORKS",
+     "why": "Needs at least 20 seats; has 21 seats"
+    }
+   ],
+   "sections": [
+    {
+     "id": "space",
+     "title": "The space and what we assumed",
+     "view": "top",
+     "table": true,
+     "body": "The city vacancy record gives the address and the last use, not the floor size. We size the room from the lot record where there is one (retail area ÷ storefronts on the lot), otherwise from a 20 × 40 ft default. Until someone tapes the walls it is an estimate, so the frontage and depth carry a margin and every check below is tested at the worst end of it."
+    },
+    {
+     "id": "entry",
+     "title": "Getting in and through",
+     "view": "walk",
+     "checks": [
+      "door",
+      "aisle",
+      "exit"
+     ],
+     "body": "The entrance sits at 62% of the frontage. A 1.2 m aisle runs straight from the door to the counter, and the window bar stops short of the door to leave the 60 in turning space."
+    },
+    {
+     "id": "counter",
+     "title": "Counter and queue",
+     "view": "counter",
+     "checks": [
+      "queue",
+      "staff",
+      "head"
+     ],
+     "body": "The back of house takes 2.1 m off the back wall. The counter stands in front of it, set off the left wall, with a staff pass at the right end. Both move with the walls, which is why two of these checks carry the full wall margin."
+    },
+    {
+     "id": "seating",
+     "title": "Seating: 21 seats",
+     "view": "inside",
+     "checks": [
+      "tables",
+      "seats"
+     ],
+     "body": "Stools face the street at the window bar. Two-tops fill the floor between the bar and the queue, each with a 36 in route around it."
+    },
+    {
+     "id": "shop",
+     "title": "Furniture and equipment: 45 items",
+     "view": "inside",
+     "shop": true,
+     "body": "Click any item in the model for its product page. Only the sofa and the pendants are the exact modeled products; the rest link to one comparable product each."
+    },
+    {
+     "id": "agent",
+     "title": "How the agent built this",
+     "view": "inside",
+     "steps": [
+      "Read the space: 23 ft wide × 47 ft deep, about 1081 sq ft (100 m²)",
+      "Read the brief: 20 seats, mostly dine-in, window bar",
+      "Back of house: fridge, three-compartment sink and shelving along the back wall, 2.1 m deep",
+      "Counter: 4 × 1.2 m modules with espresso machine and pastry case, a 0.915 m staff pass on the right, 3 pendants above",
+      "Queue: 1.5 m kept clear in front of the counter",
+      "Main aisle: a straight 1.2 m path from the door to the counter",
+      "Window bar: 7 stools facing the street, with a 0.915 m aisle behind them",
+      "Banquette: a 6.5 m bench on the left wall with 5 small tables and a chair opposite each (+10 seats), keeping the middle free to walk",
+      "Tables: 7 two-tops, with at least 0.915 m of accessible route between groups",
+      "Checks: 4/4 passed"
+     ],
+     "body": null
+    }
+   ]
+  }
+ ],
+ "builtAt": "2026-11-22T05:58:36.543Z"
+}
