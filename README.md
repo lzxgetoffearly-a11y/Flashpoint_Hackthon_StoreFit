@@ -1,8 +1,8 @@
 # StoreFit — find the storefront, fit the store
 
 **Two things are in this repo:**
-1. **The MCP Challenge agent** (Nov 21–22): one objective in, and an AI agent runs its own Flashpoint surveys, follows up, and picks a store layout. [Jump to it](#mcp-challenge-a-research-agent-that-runs-its-own-surveys).
-2. **StoreFit, the product** (Nov 13–21): a site-selection and 3D layout tool for first-time shop owners, which the agent plugs into. [Jump to it](#storefit-the-product).
+1. **The MCP Challenge agent:** one objective in, and an AI agent runs its own Flashpoint surveys, follows up, and picks a store layout. [Jump to it](#mcp-challenge-a-research-agent-that-runs-its-own-surveys).
+2. **StoreFit, the product:** a site-selection and 3D layout tool for first-time shop owners, which the agent plugs into. [Jump to it](#storefit-the-product).
 
 ## ▶ Live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
 No install or login. Open the link in Chrome on a laptop, click **Start a search**, pick **2905 Broadway**, then **Fit a cafe in this space**. (Hosted on GitHub Pages from the `gh-pages` branch, built from `main`.)
