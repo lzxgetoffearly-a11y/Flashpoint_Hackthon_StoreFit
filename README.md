@@ -71,7 +71,7 @@ Every factor shows its raw value, its rule and its source, so the score is a dec
 
 **4. Constraint-solving layout agent.** The agent places the counter, back of house, queue and seating. It checks every layout against accessibility and egress codes (ADA 2010, IBC / NYC Building Code) and treats each dimension as a range, not a single number. Each layout gets a verdict: **Works**, **Tight**, **Fails** or **Needs measuring**.
 
-## What to try (for judges)
+## What to try
 Use **2905 Broadway** for the walkthrough; it is the address we checked end to end.
 
 1. **Start a search.** Eight storefronts reported vacant near Columbia load with live numbers from NYC and MTA open data (a few seconds). Click a card to see each factor, its raw value and its source. Competitors show on the map; the Satellite and Street View toggles show the real place.
