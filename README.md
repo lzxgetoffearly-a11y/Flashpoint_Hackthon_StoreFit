@@ -84,7 +84,7 @@ Use **2905 Broadway** for the walkthrough; it is the address we checked end to e
    - Click any furniture for its product page; "Furniture and equipment" totals list prices.
 3. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
 
-## Business model (proposed, not yet tested)
+## Business model
 The Fit Lab places real, purchasable furniture and equipment into the owner's actual space. Each item links to its product page, and the shopping list totals the list prices. That makes it a sales channel for manufacturers:
 - **Manufacturers and suppliers** (furniture, seating, coffee and refrigeration equipment) pay to have their catalog as 3D models inside the Fit Lab. Their products then get "demoed" in thousands of real storefronts before purchase, which shortens the sales cycle and cuts returns from items that don't fit.
 - **Revenue:** a per-SKU listing fee, plus a referral commission on orders placed from the shopping list.
