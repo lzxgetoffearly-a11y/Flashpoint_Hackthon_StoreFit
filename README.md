@@ -1,6 +1,10 @@
 # StoreFit — find the storefront, fit the store
 
-## ▶ Open the live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
+**Two things are in this repo:**
+1. **The MCP Challenge agent** (Nov 21–22): one objective in, and an AI agent runs its own Flashpoint surveys, follows up, and picks a store layout. [Jump to it](#mcp-challenge-a-research-agent-that-runs-its-own-surveys).
+2. **StoreFit, the product** (Nov 13–21): a site-selection and 3D layout tool for first-time shop owners, which the agent plugs into. [Jump to it](#storefit-the-product).
+
+## ▶ Live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
 No install or login. Open the link in Chrome on a laptop, click **Start a search**, pick **2905 Broadway**, then **Fit a cafe in this space**. (Hosted on GitHub Pages from the `gh-pages` branch, built from `main`.)
 
 ### Demo video (75 s)
@@ -14,7 +18,34 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 
 > Status: prototype. Scores use public data (food businesses, coffee competitors, subway distance and station ridership), not pedestrian counts or real rents. Unit sizes are estimates from city lot data that the user can overwrite; rent is a user input. See [SPEC.md](SPEC.md).
 
+## MCP Challenge: a research agent that runs its own surveys
+We give an AI agent one sentence and it does the research itself through the Flashpoint MCP: it decides what to ask, builds and publishes the survey, emails our panel, reads the results, decides whether a follow-up round is needed, and ends by choosing one of StoreFit's existing layouts for the storefront. Code: [`agent/`](agent/). How to run it: [`agent/README.md`](agent/README.md).
 
+**Who answered, stated up front.** The run below is a demonstration of the agent, not market research. Each round has 5 completes, and all of them are AI-generated test-persona responses (undergraduate, graduate student, university staff, neighbourhood resident, barista) that our AI assistant submitted through the public survey link at the team's direction. Every open-text answer starts with "(Team test response, persona: ...)". The invitations really went to the 7 addresses on our first-party panel, and 0 independent people had answered when the run ended. Flashpoint itself flagged the answers as test responses. The counts below are counts of test responses and say nothing about real demand.
+
+**Objective given to the agent (the only research instruction; a team member also started the run and ended some of its waits by pressing Enter):**
+> Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
+
+**What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
+1. Wrote down five hypotheses with a confidence for each (for example "mostly takeaway" at 50%, "there is a long-stay study crowd" at 55%).
+2. Compared StoreFit's three layouts for the unit with the same planner the Fit Lab uses: Grab-and-go (9 seats), Your brief (14 seats, sofa lounge), Max seating (21 seats). All three fail the one-exit check.
+3. Called Flashpoint `demographics` for the address, saw the answer covered the whole county (all of Manhattan), and chose not to rely on it.
+4. **Round 1.** Wrote an 11-question survey with branching (cafe owners and workers get an extra operator question), published it and emailed the panel: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
+   Result: Max seating 2, Balanced lounge 2, Grab-and-go 1. Banquette and two-tops ranked ahead of the sofa and the window bar.
+5. Updated its notebook ("mostly takeaway" 50% to 25%, "long-stay study crowd" 55% to 70%) and judged that one question was still open: more seats, or fewer and calmer.
+6. **Round 2 (follow-up, its own decision).** Wrote a second survey about exactly that trade-off, quoting round-1 comments from both camps: https://flashpointopinions.com/55d4c1dc-fa98-4676-a65b-3be8b2c1f8b0
+   Result: 21 seats without a sofa 3, 14 seats with a sofa 2. A laptop-free third of the room at peak: 3 for, 2 against. Most-wanted service: an order-ahead pickup shelf (3 of 5).
+7. **Final recommendation:** a study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent notes that this won by a single vote and that the layout still fails the one-exit check.
+
+To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating. The web app was not changed for this; the agent picks one of the layouts it already offers.
+
+**Agent demo video (2:17, with English voice-over and subtitles):** [`demo-assets/storefit-agent-demo-narrated.mp4`](https://github.com/lzxgetoffearly-a11y/flashpoint-hackthon/raw/main/demo-assets/storefit-agent-demo-narrated.mp4) · script: [`NARRATION.md`](demo-assets/NARRATION.md). The agent part is a sped-up replay of the saved run log; the voice is synthesized.
+
+**Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
+
+**Limits:** five test responses per round cannot show demand. A real run needs independent respondents, and with a larger panel the same code runs unchanged (`--panel` or `--emails`). The round-2 survey mentioned an "about 18 seats" variant that StoreFit does not offer as a layout. The agent's own text in the report sometimes calls the respondents "team members"; the note at the top of the report is the accurate description.
+
+# StoreFit, the product
 
 ## Why this matters
 - **Roughly 50 million new businesses start worldwide every year: about 137,000 a day, or about 95 every minute.** This is a widely cited industry estimate, not an official count. (A stricter measure, registered limited-liability companies, is about 4.3 per 1,000 working-age adults a year across 188 economies ([World Bank, 2026](https://blogs.worldbank.org/en/psd/a-global-snapshot-of-entrepreneurship-trends)).)
@@ -42,14 +73,6 @@ Every factor shows its raw value, its rule and its source, so the score is a dec
 
 **4. Constraint-solving layout agent.** The agent places the counter, back of house, queue and seating. It checks every layout against accessibility and egress codes (ADA 2010, IBC / NYC Building Code) and treats each dimension as a range, not a single number. Each layout gets a verdict: **Works**, **Tight**, **Fails** or **Needs measuring**.
 
-## Business model (proposed, not yet tested)
-The Fit Lab places real, purchasable furniture and equipment into the owner's actual space. Each item links to its product page, and the shopping list totals the list prices. That makes it a sales channel for manufacturers:
-- **Manufacturers and suppliers** (furniture, seating, coffee and refrigeration equipment) pay to have their catalog as 3D models inside the Fit Lab. Their products then get "demoed" in thousands of real storefronts before purchase, which shortens the sales cycle and cuts returns from items that don't fit.
-- **Revenue:** a per-SKU listing fee, plus a referral commission on orders placed from the shopping list.
-- **Owners** use site search and layout for free. A paid, detailed report can be added later.
-
-This model is a hypothesis. Our next research step is to interview suppliers and owners to test it.
-
 ## What to try (for judges)
 Use **2905 Broadway** for the walkthrough; it is the address we checked end to end.
 
@@ -62,6 +85,16 @@ Use **2905 Broadway** for the walkthrough; it is the address we checked end to e
    - Views: Overview, Top, Street, Inside, Walk in. Context layers in Overview: **Block** (building massing from LiDAR), **LiDAR** (the raw point cloud), **Google 3D** (photorealistic tiles, needs a key).
    - Click any furniture for its product page; "Furniture and equipment" totals list prices.
 3. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
+
+## Business model (proposed, not yet tested)
+The Fit Lab places real, purchasable furniture and equipment into the owner's actual space. Each item links to its product page, and the shopping list totals the list prices. That makes it a sales channel for manufacturers:
+- **Manufacturers and suppliers** (furniture, seating, coffee and refrigeration equipment) pay to have their catalog as 3D models inside the Fit Lab. Their products then get "demoed" in thousands of real storefronts before purchase, which shortens the sales cycle and cuts returns from items that don't fit.
+- **Revenue:** a per-SKU listing fee, plus a referral commission on orders placed from the shopping list.
+- **Owners** use site search and layout for free. A paid, detailed report can be added later.
+
+This model is a hypothesis. Our next research step is to interview suppliers and owners to test it.
+
+# Hackathon write-up and reference
 
 ## How we use Flashpoint AI
 Status (Nov 21): **we ran a Flashpoint survey of our own first-party panel; the results are below.** It is an early pilot with five people we know, so we read it as directional.
@@ -108,33 +141,6 @@ Each question is tied to a product decision:
 | The mistake you most want to avoid when choosing a space (open) | Which checks the Fit Lab runs |
 
 Not done for this pilot survey: no synthetic panel was run, no AI-moderated interviews, and Flashpoint demographics are not used in the scores. The score weights and layout rules in this build are our own starting assumptions plus cited codes (ADA 2010, IBC / NYC Building Code), not survey results.
-
-## MCP Challenge: a research agent that runs its own surveys
-We give an AI agent one sentence and it does the research itself through the Flashpoint MCP: it decides what to ask, builds and publishes the survey, emails our panel, reads the results, decides whether a follow-up round is needed, and ends by choosing one of StoreFit's existing layouts for the storefront. Code: [`agent/`](agent/). How to run it: [`agent/README.md`](agent/README.md).
-
-**Who answered, stated up front.** The run below is a demonstration of the agent, not market research. Each round has 5 completes, and all of them are AI-generated test-persona responses (undergraduate, graduate student, university staff, neighbourhood resident, barista) that our AI assistant submitted through the public survey link at the team's direction. Every open-text answer starts with "(Team test response, persona: ...)". The invitations really went to the 7 addresses on our first-party panel, and 0 independent people had answered when the run ended. Flashpoint itself flagged the answers as test responses. The counts below are counts of test responses and say nothing about real demand.
-
-**Objective given to the agent (the only research instruction; a team member also started the run and ended some of its waits by pressing Enter):**
-> Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
-
-**What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
-1. Wrote down five hypotheses with a confidence for each (for example "mostly takeaway" at 50%, "there is a long-stay study crowd" at 55%).
-2. Compared StoreFit's three layouts for the unit with the same planner the Fit Lab uses: Grab-and-go (9 seats), Your brief (14 seats, sofa lounge), Max seating (21 seats). All three fail the one-exit check.
-3. Called Flashpoint `demographics` for the address, saw the answer covered the whole county (all of Manhattan), and chose not to rely on it.
-4. **Round 1.** Wrote an 11-question survey with branching (cafe owners and workers get an extra operator question), published it and emailed the panel: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
-   Result: Max seating 2, Balanced lounge 2, Grab-and-go 1. Banquette and two-tops ranked ahead of the sofa and the window bar.
-5. Updated its notebook ("mostly takeaway" 50% to 25%, "long-stay study crowd" 55% to 70%) and judged that one question was still open: more seats, or fewer and calmer.
-6. **Round 2 (follow-up, its own decision).** Wrote a second survey about exactly that trade-off, quoting round-1 comments from both camps: https://flashpointopinions.com/55d4c1dc-fa98-4676-a65b-3be8b2c1f8b0
-   Result: 21 seats without a sofa 3, 14 seats with a sofa 2. A laptop-free third of the room at peak: 3 for, 2 against. Most-wanted service: an order-ahead pickup shelf (3 of 5).
-7. **Final recommendation:** a study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent notes that this won by a single vote and that the layout still fails the one-exit check.
-
-To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating. The web app was not changed for this; the agent picks one of the layouts it already offers.
-
-**Agent demo video (2:17, with English voice-over and subtitles):** [`demo-assets/storefit-agent-demo-narrated.mp4`](https://github.com/lzxgetoffearly-a11y/flashpoint-hackthon/raw/main/demo-assets/storefit-agent-demo-narrated.mp4) · script: [`NARRATION.md`](demo-assets/NARRATION.md). The agent part is a sped-up replay of the saved run log; the voice is synthesized.
-
-**Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
-
-**Limits:** five test responses per round cannot show demand. A real run needs independent respondents, and with a larger panel the same code runs unchanged (`--panel` or `--emails`). The round-2 survey mentioned an "about 18 seats" variant that StoreFit does not offer as a layout. The agent's own text in the report sometimes calls the respondents "team members"; the note at the top of the report is the accurate description.
 
 ## Required write-up
 - **Problem and audience:** A first-time owner has to commit to a lease before knowing two things: whether the location has demand without too much competition, and whether the counter, queue and seats they need will fit legally in that unit. Our intended user is a first-time independent cafe owner near Columbia. This is our hypothesis; the survey's first and last questions are there to test it.
