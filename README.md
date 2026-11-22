@@ -185,7 +185,9 @@ Added in the last round:
 - **Google Photorealistic 3D Tiles** (Map Tiles API, needs a key): the real block around the storefront, shown with the "Google 3D" toggle. The column above the unit is cut away so the plan is visible.
 - **USGS 3DEP LiDAR** is now exported at the survey's full density (about 8 points per m², 260–320k points per site).
 
-## Work during the event & disclosures
+<details>
+<summary><b>Credits and disclosures (click to expand)</b></summary>
+
 - The web app, data wiring and pilot research in this repo were done during Nov 13–21, 2026. The MCP Challenge agent (`agent/`) was built and run on Nov 21–22, 2026.
 - 3D models (realistic, from [Khronos glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)):
   - GlamVelvetSofa — © 2021 Wayfair LLC, CC-BY 4.0 (a real Wayfair product; linked as "Buy on Wayfair")
@@ -197,3 +199,5 @@ Added in the last round:
 - Libraries: React, three.js, @react-three/fiber, drei, Leaflet, Vite (MIT/BSD).
 - Visual style inspired by public startup landing pages; no assets copied.
 - AI tools: Flashpoint AI (primary, research). Claude was used as a coding assistant for scaffolding this prototype.
+
+</details>
