@@ -4,15 +4,15 @@
 
 [![StoreFit research agent demo: click to play the video](docs/agent-demo-cover.jpg)](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/agent-demo.mp4)
 
-▶ **[Watch the demo video (2:39)](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/agent-demo.mp4)** · **[Try the live app](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/)** · [Agent code](agent/) · [Full run log](agent/runs/2026-11-22T05-58-32/REPORT.md)
+▶ **[Watch the demo video (2:46)](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/agent-demo.mp4)** · **[Try the live app](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/)** · [Agent code](agent/) · [Full run log](agent/runs/2026-11-22T05-58-32/REPORT.md)
 
 ## The objective we gave it
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
 
-That one sentence is the only instruction. Nobody told the agent which questions to ask. It decided on its own to run a follow-up round, and when to stop.
+That one sentence is the only research objective we gave it. Nobody told the agent which questions to ask. It decided on its own to run a follow-up round, and when to stop.
 
 ## The loop
-![How the agent works: guess, ask, read, change its mind, decide, then ask a sharper round or recommend](docs/agent-loop.png)
+![How the agent works: guess, ask, read, change its mind, decide, then ask a sharper round or recommend](docs/agent-loop.gif)
 
 ## What the agent did, lap by lap
 Everything below is from the run log (run `2026-11-22T05-58-32`, about 35 minutes).
