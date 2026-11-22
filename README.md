@@ -54,7 +54,7 @@ This model is a hypothesis. Our next research step is to interview suppliers and
 Use **2905 Broadway** for the walkthrough; it is the address we checked end to end.
 
 1. **Start a search.** Eight storefronts reported vacant near Columbia load with live numbers from NYC and MTA open data (a few seconds). Click a card to see each factor, its raw value and its source. Competitors show on the map; the Satellite and Street View toggles show the real place.
-2. **Fit a cafe in this space** opens the **Fit Lab** (the form follows Obia's Fit Lab case-study viewer; all code is ours).
+2. **Fit a cafe in this space** opens the **Fit Lab**.
    - The room size is estimated per address from PLUTO (ground-floor retail area ÷ storefronts on the lot), so each address gets a different plan. Type measured dimensions to replace it.
    - The agent lays out a counter and back of house, a window bar, a wall banquette with two-tops, a lounge corner and free-standing tables, and keeps a straight 1.2 m aisle from the door to the counter.
    - Every number has a range, a method and a source. Verdicts use the whole range: **Works**, **Tight**, **Fails**, or **Needs measuring** (ceiling height). Open a check and drag its slider to move the wall or chairs inside the margin.
