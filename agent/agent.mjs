@@ -46,6 +46,9 @@ if (resumeDir) {
     maxRounds: Number(opt("max-rounds", "3")),
     model: opt("model", "claude-sonnet-5-5"),
     dryRun: DRY,
+    // Demo conditions: the surveys are answered by the team itself, in assigned test personas,
+    // so the loop can run in hours instead of days. Stamped on the report and told to the agent.
+    testRespondents: flag("test-respondents"),
   };
   const id = (DRY ? "dryrun-" : "") + new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
   runDir = path.join(here, "runs", id);
@@ -234,7 +237,10 @@ ${site ? `${site.address}, New York (site id ${site.id}). Previous use: ${site.p
 - Flashpoint asks for confirmation before publishing and before sending. You are authorised to confirm, provided the recipients are exactly the ones named above. If Flashpoint proposes to send to anyone else, or to use paid or synthetic respondents, refuse and correct it.
 - Real first-party respondents only. Do not use synthetic panels or paid recruitment.
 - Be honest about evidence. The sample is tiny. Report counts ("3 of 5"), never bare percentages, and never describe a guess as a finding. If a data source turns out to be coarser or less reliable than expected, say so in your notebook and do not lean on it.
-- Every Flashpoint call takes a short "note" for the run log: one or two sentences on what the step is for. Keep other commentary brief.${cfg.dryRun ? `
+- Every Flashpoint call takes a short "note" for the run log: one or two sentences on what the step is for. Keep other commentary brief.${cfg.testRespondents ? `
+
+# Who is answering in this run
+This is a demonstration run. The surveys are real and go through Flashpoint, but the people answering are members of the team behind this project, each answering in an assigned test persona (for example an undergraduate, a graduate student, a staff member, a neighbour, a cafe owner) so that the research loop can be shown end to end in a few hours. Run the research exactly as you would otherwise. In your notebook and your final recommendation, call the answers "test responses" and say plainly in the caveats that they show how the process works and are not evidence about real demand.` : ""}${cfg.dryRun ? `
 
 # Rehearsal
 This run is a rehearsal of the software. Flashpoint is replaced by a stand-in that returns fixed test data marked [SIMULATED TEST DATA]. Work through the whole process as you would with real answers, so every step is exercised. The report is stamped as a rehearsal automatically.` : ""}`;
@@ -276,6 +282,7 @@ async function main() {
   const system = systemPrompt(sites);
   console.log(`\n${C.bold}StoreFit research agent${C.off}${cfg.dryRun ? `  ${C.yellow}[DRY RUN: Flashpoint is simulated, nothing is sent or paid]${C.off}` : ""}`);
   console.log(`${C.bold}Objective:${C.off} ${cfg.objective}`);
+  if (cfg.testRespondents) console.log(`${C.yellow}Demo run: surveys are answered by the team in assigned test personas, not by the public.${C.off}`);
   console.log(`${C.dim}model ${cfg.model} · budget $${cfg.budget} · up to ${cfg.maxRounds} rounds · recipients: ${emails.length ? emails.length + " emails" : `panel "${cfg.panel}"`} · log: ${path.relative(process.cwd(), runDir)}${C.off}\n`);
 
   if (!state.messages.length) {

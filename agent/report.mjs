@@ -12,6 +12,7 @@ export function buildReport(state, runDir) {
   const out = [];
   out.push(`# Agent run ${state.id}`, "");
   if (cfg.dryRun) out.push("> **DRY RUN.** Flashpoint was replaced by a stand-in. No survey was sent, nobody answered, and every \"result\" below is fixed test data. This file is a rehearsal of the code path, not research.", "");
+  if (cfg.testRespondents) out.push("> **Demonstration run.** The surveys below were really built, published and sent through the Flashpoint MCP, and the agent made every decision itself. The answers were entered by members of our own team, each in an assigned test persona (with AI assistance), as the challenge organisers suggested, so the loop could run in hours. They show how the agent works. They are not evidence about real demand, and every count below is a count of test responses.", "");
   out.push(`**Objective given to the agent:** ${cfg.objective}`, "");
   out.push(`- Started ${state.startedAt}${state.finished ? `, finished ${state.finished.t}` : ", not finished"}`);
   out.push(`- Model: \`${cfg.model}\` · budget $${cfg.budget} · round limit ${cfg.maxRounds} · recipients: ${cfg.emailsFile ? "email list supplied at launch" : `first-party panel "${cfg.panel}"`}`);

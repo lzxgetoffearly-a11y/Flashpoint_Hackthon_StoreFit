@@ -24,6 +24,7 @@ Options:
 | `--emails file.txt` | none | Send to this list of addresses instead of a named panel |
 | `--budget 12` | 12 | USDC limit for the run; the code refuses calls past it |
 | `--max-rounds 3` | 3 | Most survey rounds allowed |
+| `--test-respondents` | off | Say that the team itself answers the surveys in test personas (demo conditions); stamped on the report |
 | `--dry-run` | off | Rehearse with a stand-in for Flashpoint: no emails, no USDC, fixed test answers |
 | `--resume runs/<id>` | | Continue an interrupted run from its saved state |
 
