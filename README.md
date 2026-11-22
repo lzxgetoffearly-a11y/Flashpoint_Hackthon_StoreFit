@@ -36,7 +36,7 @@ StoreFit is a **location-intelligence engine plus a 3D spatial-planning agent**.
 - build-out readiness (previous use of the unit)
 - rent-to-revenue ratio
 
-Every factor shows its raw value, its rule and its source, so the score is a decision aid, not a black box. Flashpoint research showed users distrust opaque scores (2.8 / 5), which is why we kept it this way.
+Every factor shows its raw value, its rule and its source, so the score is a decision aid, not a black box. In our 5-person Flashpoint pilot, trust in an automatic score was low (2.8 / 5), which is why we kept it this way.
 
 **3. Spatial reconstruction.** StoreFit estimates each unit's footprint from lot geometry and orients the storefront from the LiDAR point cloud. This gives a 3D model of the real block.
 
@@ -64,12 +64,12 @@ Use **2905 Broadway** for the walkthrough; it is the address we checked end to e
 3. **Research** shows how Flashpoint findings shaped each rule. **Report** prints a one-page summary.
 
 ## How we use Flashpoint AI
-Status (Nov 21): **a Flashpoint survey of our own first-party panel is live and the results below update as responses arrive.** It is an early pilot with people we know, so we read it as directional.
+Status (Nov 21): **we ran a Flashpoint survey of our own first-party panel; the results are below.** It is an early pilot with five people we know, so we read it as directional.
 
 What we actually did with Flashpoint:
 - Connected the Flashpoint MCP tools with the team's Base USDC wallet (funded with 25 USDC).
 - Built, published and sent a 5-question survey to our own first-party panel, "StoreFit testers" (real people we invited, no third-party sample): https://flashpointopinions.com/bdcdb46f-cd9d-4e09-91e1-25ccd022274e
-- Cost: $2.00 over 4 paid calls. On-chain receipts:
+- Cost: $2.50 over 5 paid calls. On-chain receipts:
   [create](https://basescan.org/tx/0x0e4dd2a3bd01d379aad04ec537128bb5b3f7a50a973f357bef96fb89da00dd01) ·
   [confirm](https://basescan.org/tx/0xb7aaaddc7c6988cbc25f6f89e31846f0f4b3074fdb724584e7c5187c4d797cb0) ·
   [publish](https://basescan.org/tx/0x9f38091424d68d05dda84387331c069c3ed5d6ef73469399da9e627df365c64f) ·
@@ -97,7 +97,7 @@ Open answers, verbatim:
 - **Ruled out as a headline:** foot traffic alone (20%) and competitor counts (0%). Rent worth it is the top concern (80%). Answers 2 and 3 say a busy street is not the same as paying customers, so the next step is a demand-vs-rent check (daily sales needed to cover rent), not a bigger traffic number.
 - **Added to the Fit Lab backlog (not built yet):** entrance and queue path not blocking seats (answer 1); ventilation and electrical capacity flags (answers 4 and 5); target-customer share and seasonality in the demand check (answer 2); access for existing regulars when relocating (answer 4).
 
-Each question is tied to a product decision we will make when answers arrive:
+Each question is tied to a product decision:
 
 | Survey question | Decision it will drive |
 |---|---|
@@ -178,14 +178,14 @@ Added in the last round:
 - **USGS 3DEP LiDAR** is now exported at the survey's full density (about 8 points per m², 260–320k points per site).
 
 ## Work during the event & disclosures
-- All code, data wiring and research in this repo were done during Nov 13–21, 2026. _Add a short log here._
+- The web app, data wiring and pilot research in this repo were done during Nov 13–21, 2026. The MCP Challenge agent (`agent/`) was built and run on Nov 21–22, 2026.
 - 3D models (realistic, from [Khronos glTF-Sample-Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)):
   - GlamVelvetSofa — © 2021 Wayfair LLC, CC-BY 4.0 (a real Wayfair product; linked as "Buy on Wayfair")
   - AnisotropyBarnLamp — © 2023 Wayfair LLC, CC-BY 4.0 (a real Wayfair product; linked as "Buy on Wayfair")
   - SheenChair — © 2020 Wayfair LLC, CC0
   - DiffuseTransmissionPlant — © 2024 Darmstadt Graphics Group, CC-BY 4.0
   - DiffuseTransmissionTeacup — CC0
-  - Tables, chairs, stools, counter, espresso machine, fridge, sink and shelves are procedural three.js models we wrote with PBR materials. They are generic, so their links say "Find similar" and open a retailer search. They link to one specific comparable product page each, labeled "similar product".
+  - Tables, chairs, stools, counter, espresso machine, fridge, sink and shelves are procedural three.js models we wrote with PBR materials. They are generic, so each links to one specific comparable product page, labeled "similar product".
 - Libraries: React, three.js, @react-three/fiber, drei, Leaflet, Vite (MIT/BSD).
 - Visual style inspired by public startup landing pages; no assets copied.
 - AI tools: Flashpoint AI (primary, research). Claude was used as a coding assistant for scaffolding this prototype.
