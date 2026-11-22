@@ -12,7 +12,7 @@ export function buildReport(state, runDir) {
   const out = [];
   out.push(`# Agent run ${state.id}`, "");
   if (cfg.dryRun) out.push("> **DRY RUN.** Flashpoint was replaced by a stand-in. No survey was sent, nobody answered, and every \"result\" below is fixed test data. This file is a rehearsal of the code path, not research.", "");
-  if (cfg.testRespondents) out.push("> **Demonstration run.** The surveys below were really built, published and sent through the Flashpoint MCP, and the agent made every decision itself. The answers were entered by members of our own team, each in an assigned test persona (with AI assistance), as the challenge organisers suggested, so the loop could run in hours. They show how the agent works. They are not evidence about real demand, and every count below is a count of test responses.", "");
+  if (cfg.testRespondents) out.push("> **Demonstration run.** The surveys below were really built, published and sent through the Flashpoint MCP, and the agent made every decision itself. The answers are test responses: " + (cfg.respondentsNote ?? "they were submitted by our own team in assigned test personas so the loop could run in hours") + " They show how the agent works. They are not evidence about real demand, and every count below is a count of test responses.", "");
   out.push(`**Objective given to the agent:** ${cfg.objective}`, "");
   out.push(`- Started ${state.startedAt}${state.finished ? `, finished ${state.finished.t}` : ", not finished"}`);
   out.push(`- Model: \`${cfg.model}\` · budget $${cfg.budget} · round limit ${cfg.maxRounds} · recipients: ${cfg.emailsFile ? "email list supplied at launch" : `first-party panel "${cfg.panel}"`}`);
@@ -60,4 +60,13 @@ export function buildReport(state, runDir) {
   }
   if (state.receipts.length) out.push("## Payment receipts (USDC on Base)", "", ...state.receipts.map((r) => `- ${r.t.slice(11, 19)} \`${r.tool}\` ${r.url}`), "");
   return out.join("\n");
+}
+
+// Rebuild a run's report from its saved files:  node report.mjs runs/<id> ["note on who answered."]
+if (process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1])) && process.argv[2]) {
+  const dir = path.resolve(process.argv[2]);
+  const state = JSON.parse(fs.readFileSync(path.join(dir, "state.json"), "utf8"));
+  if (process.argv[3]) state.cfg.respondentsNote = process.argv[3];
+  fs.writeFileSync(path.join(dir, "REPORT.md"), buildReport(state, dir));
+  console.log(`wrote ${path.join(dir, "REPORT.md")}`);
 }
