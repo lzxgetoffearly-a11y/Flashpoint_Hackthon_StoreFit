@@ -114,7 +114,7 @@ We give an AI agent one sentence and it does the research itself through the Fla
 
 **Who answered, stated up front.** The run below is a demonstration of the agent, not market research. Each round has 5 completes, and all of them are AI-generated test-persona responses (undergraduate, graduate student, university staff, neighbourhood resident, barista) that our AI assistant submitted through the public survey link at the team's direction. Every open-text answer starts with "(Team test response, persona: ...)". The invitations really went to the 7 addresses on our first-party panel, and 0 independent people had answered when the run ended. Flashpoint itself flagged the answers as test responses. The counts below are counts of test responses and say nothing about real demand.
 
-**Objective given to the agent (the only human input):**
+**Objective given to the agent (the only research instruction; a team member also started the run and ended some of its waits by pressing Enter):**
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
 
 **What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
@@ -132,7 +132,7 @@ To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github
 
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
-**Cost:** $5.55 in USDC over 12 paid Flashpoint calls (wallet 21.95 to 16.40). One send call timed out after 600 seconds; the agent checked the status before doing anything else, so the invitations went out once.
+**Cost:** $5.55 in USDC over 12 paid Flashpoint calls (wallet 21.95 to 16.40). One send call timed out after 600 seconds without being charged; the agent then asked for the status and Flashpoint reported the 7 invitations as sent. Screenshots from the run are in [`demo-assets/screenshots/`](demo-assets/screenshots/).
 
 **Limits:** five test responses per round cannot show demand. A real run needs independent respondents, and with a larger panel the same code runs unchanged (`--panel` or `--emails`). The round-2 survey mentioned an "about 18 seats" variant that StoreFit does not offer as a layout. The agent's own text in the report sometimes calls the respondents "team members"; the note at the top of the report is the accurate description.
 
