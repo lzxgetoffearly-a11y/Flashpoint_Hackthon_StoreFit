@@ -130,7 +130,7 @@ We give an AI agent one sentence and it does the research itself through the Fla
 
 To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating. The web app was not changed for this; the agent picks one of the layouts it already offers.
 
-**Agent demo video (2:17, silent, narration script alongside):** [`demo-assets/storefit-agent-demo.mp4`](https://github.com/lzxgetoffearly-a11y/flashpoint-hackthon/raw/main/demo-assets/storefit-agent-demo.mp4) · [`NARRATION.md`](demo-assets/NARRATION.md). The agent part is a sped-up replay of the saved run log and is labelled as a replay on screen. The $6.05 shown at the end is the program's estimate; the wallet was charged $5.55.
+**Agent demo video (2:17, with English voice-over and subtitles):** [`demo-assets/storefit-agent-demo-narrated.mp4`](https://github.com/lzxgetoffearly-a11y/flashpoint-hackthon/raw/main/demo-assets/storefit-agent-demo-narrated.mp4) · script: [`NARRATION.md`](demo-assets/NARRATION.md). The agent part is a sped-up replay of the saved run log; the voice is synthesized.
 
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
