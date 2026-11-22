@@ -25,7 +25,7 @@ We give an AI agent one sentence and it does the research itself through the Fla
 
 **How we tested the loop.** We had AI play five personas to answer each survey: an undergraduate, a graduate student, a university staff member, a neighbourhood resident and a cafe worker. The agent read those test responses, revised its hypotheses, wrote a sharper second survey on the question still open, got a new round of answers from the same five personas, and then chose the layout. Answering in different personas let us verify that the whole loop runs end to end. With a real panel, or a larger survey, the same code runs unchanged.
 
-**Objective given to the agent (the only research instruction; a team member also started the run and ended some of its waits by pressing Enter):**
+**Objective given to the agent:**
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
 
 **What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
