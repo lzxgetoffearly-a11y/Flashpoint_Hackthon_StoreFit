@@ -1,23 +1,23 @@
 # StoreFit — find the storefront, fit the store
 
 ## ▶ Watch the agent demo (2:39, narrated)
-[![StoreFit research agent demo: click to play the video](docs/agent-demo-cover.jpg)](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/agent-demo.mp4)
+[![StoreFit research agent demo: click to play the video](docs/agent-demo-cover.jpg)](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/agent-demo.mp4)
 
-Click the image to play the video in your browser ([direct link](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/agent-demo.mp4) · script: [`NARRATION.md`](demo-assets/NARRATION.md)). It shows the agent loop from the saved run log, then the store it chose in 3D. The voice-over is synthesized.
+Click the image to play the video in your browser ([direct link](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/agent-demo.mp4) · script: [`NARRATION.md`](demo-assets/NARRATION.md)). It shows the agent loop from the saved run log, then the store it chose in 3D. The voice-over is synthesized.
 
 **Two things are in this repo:**
 1. **The MCP Challenge agent:** one objective in, and an AI agent runs its own Flashpoint surveys, follows up, and picks a store layout. [Jump to it](#mcp-challenge-a-research-agent-that-runs-its-own-surveys).
 2. **StoreFit, the product:** a site-selection and 3D layout tool for first-time shop owners, which the agent plugs into. [Jump to it](#storefit-the-product).
 
-## ▶ Live demo: https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/
+## ▶ Live demo: https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/
 No install or login. Open the link in Chrome on a laptop, click **Start a search**, pick **2905 Broadway**, then **Fit a cafe in this space**. (Hosted on GitHub Pages from the `gh-pages` branch, built from `main`.)
 
 <details>
 <summary>Earlier product demo video (75 s, the web app without the agent)</summary>
 
-[![StoreFit demo: click to watch the video](docs/demo.gif)](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)
+[![StoreFit demo: click to watch the video](docs/demo.gif)](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/demo.mp4)
 
-Click the preview to watch the MP4 ([direct link](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/demo.mp4)). Recorded step by step on the live site; every screen shows real data. It ends with clicking a piece of furniture, the shopping list, and the retailer product page the link opens.
+Click the preview to watch the MP4 ([direct link](https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/demo.mp4)). Recorded step by step on the live site; every screen shows real data. It ends with clicking a piece of furniture, the shopping list, and the retailer product page the link opens.
 
 </details>
 

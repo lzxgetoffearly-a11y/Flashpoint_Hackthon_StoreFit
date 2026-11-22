@@ -11,7 +11,7 @@ import { PRODUCTS } from "../src/data/products.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const FT = 0.3048;
-export const LIVE_APP = "https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/";
+export const LIVE_APP = "https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/";
 // The brief the Fit Lab opens with (src/App.jsx).
 const DEFAULT_BRIEF = "12 seats, lots of students nearby, a window bar, a few two-tops and a sofa lounge";
 // Button labels in the Fit Lab for each layout id.

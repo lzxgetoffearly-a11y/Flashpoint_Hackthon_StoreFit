@@ -53,7 +53,7 @@ The demographics tool returned New York County data (population 1.6M), not the a
 - 21 seats, dinein; window bar with stools, wall banquette with two-tops, free-standing two-tops
 - Code checks: 5 work, 1 tight, 1 fail, 1 need measuring on site (Headroom under the pendants: NEEDS; Aisles between seating groups: TIGHT; One exit is enough: FAILS)
 - Furniture and equipment list-price estimate: $13,689 (4 items have no captured price)
-- To see it in 3D: Open https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/ → Start a search → 2905 Broadway → Fit a cafe in this space → choose **Max seating**.
+- To see it in 3D: Open https://lzxgetoffearly-a11y.github.io/Flashpoint_Hackthon_StoreFit/ → Start a search → 2905 Broadway → Fit a cafe in this space → choose **Max seating**.
 
 ### Limits of this evidence
 
