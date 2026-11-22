@@ -23,7 +23,7 @@ StoreFit helps a first-time owner open a small cafe in New York. It ranks **real
 ## MCP Challenge: a research agent that runs its own surveys
 We give an AI agent one sentence and it does the research itself through the Flashpoint MCP: it decides what to ask, builds and publishes the survey, emails our panel, reads the results, decides whether a follow-up round is needed, and ends by choosing one of StoreFit's existing layouts for the storefront. Code: [`agent/`](agent/). How to run it: [`agent/README.md`](agent/README.md).
 
-**Who answered.** For this demo run we answered the surveys in five test personas, as the organisers suggested, so the agent could get results quickly and run a second round: an undergraduate, a graduate student, a university staff member, a neighbourhood resident and a barista. The answers were written with our AI assistant and submitted through the public survey link, 5 per round. They exercise the agent's loop and are not market evidence; the same code runs unchanged with a real panel.
+**How we tested the loop.** We had AI play five personas to answer each survey: an undergraduate, a graduate student, a university staff member, a neighbourhood resident and a cafe worker. The agent read those test responses, revised its hypotheses, wrote a sharper second survey on the question still open, got a new round of answers from the same five personas, and then chose the layout.
 
 **Objective given to the agent (the only research instruction; a team member also started the run and ended some of its waits by pressing Enter):**
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
