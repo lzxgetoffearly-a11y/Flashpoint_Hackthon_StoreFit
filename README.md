@@ -107,14 +107,41 @@ Each question is tied to a product decision we will make when answers arrive:
 | How much do you trust an automatic site score (1–5) | How much source and range detail we show on every number |
 | The mistake you most want to avoid when choosing a space (open) | Which checks the Fit Lab runs |
 
-Not done: no synthetic panel was run, no AI-moderated interviews, and Flashpoint demographics are not used in the scores. The score weights and layout rules in this build are our own starting assumptions plus cited codes (ADA 2010, IBC / NYC Building Code), not survey results.
+Not done for this pilot survey: no synthetic panel was run, no AI-moderated interviews, and Flashpoint demographics are not used in the scores. The score weights and layout rules in this build are our own starting assumptions plus cited codes (ADA 2010, IBC / NYC Building Code), not survey results.
+
+## MCP Challenge: a research agent that runs its own surveys
+We give an AI agent one sentence and it does the research itself through the Flashpoint MCP: it decides what to ask, builds and publishes the survey, emails our panel, reads the results, decides whether a follow-up round is needed, and ends by choosing one of StoreFit's existing layouts for the storefront. Code: [`agent/`](agent/). How to run it: [`agent/README.md`](agent/README.md).
+
+**Who answered, stated up front.** The run below is a demonstration of the agent, not market research. Each round has 5 completes, and all of them are AI-generated test-persona responses (undergraduate, graduate student, university staff, neighbourhood resident, barista) that our AI assistant submitted through the public survey link at the team's direction. Every open-text answer starts with "(Team test response, persona: ...)". The invitations really went to the 7 addresses on our first-party panel, and 0 independent people had answered when the run ended. Flashpoint itself flagged the answers as test responses. The counts below are counts of test responses and say nothing about real demand.
+
+**Objective given to the agent (the only human input):**
+> Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
+
+**What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
+1. Wrote down five hypotheses with a confidence for each (for example "mostly takeaway" at 50%, "there is a long-stay study crowd" at 55%).
+2. Compared StoreFit's three layouts for the unit with the same planner the Fit Lab uses: Grab-and-go (9 seats), Your brief (14 seats, sofa lounge), Max seating (21 seats). All three fail the one-exit check.
+3. Called Flashpoint `demographics` for the address, saw the answer covered the whole county (all of Manhattan), and chose not to rely on it.
+4. **Round 1.** Wrote an 11-question survey with branching (cafe owners and workers get an extra operator question), published it and emailed the panel: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
+   Result: Max seating 2, Balanced lounge 2, Grab-and-go 1. Banquette and two-tops ranked ahead of the sofa and the window bar.
+5. Updated its notebook ("mostly takeaway" 50% to 25%, "long-stay study crowd" 55% to 70%) and judged that one question was still open: more seats, or fewer and calmer.
+6. **Round 2 (follow-up, its own decision).** Wrote a second survey about exactly that trade-off, quoting round-1 comments from both camps: https://flashpointopinions.com/55d4c1dc-fa98-4676-a65b-3be8b2c1f8b0
+   Result: 21 seats without a sofa 3, 14 seats with a sofa 2. A laptop-free third of the room at peak: 3 for, 2 against. Most-wanted service: an order-ahead pickup shelf (3 of 5).
+7. **Final recommendation:** a study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent notes that this won by a single vote and that the layout still fails the one-exit check.
+
+To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating. The web app was not changed for this; the agent picks one of the layouts it already offers.
+
+**Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
+
+**Cost:** $5.55 in USDC over 12 paid Flashpoint calls (wallet 21.95 to 16.40). One send call timed out after 600 seconds; the agent checked the status before doing anything else, so the invitations went out once.
+
+**Limits:** five test responses per round cannot show demand. A real run needs independent respondents, and with a larger panel the same code runs unchanged (`--panel` or `--emails`). The round-2 survey mentioned an "about 18 seats" variant that StoreFit does not offer as a layout. The agent's own text in the report sometimes calls the respondents "team members"; the note at the top of the report is the accurate description.
 
 ## Required write-up
 - **Problem and audience:** A first-time owner has to commit to a lease before knowing two things: whether the location has demand without too much competition, and whether the counter, queue and seats they need will fit legally in that unit. Our intended user is a first-time independent cafe owner near Columbia. This is our hypothesis; the survey's first and last questions are there to test it.
 - **Use of Flashpoint (question + evidence):** Question: "what do people opening a small shop find hardest to judge, and do a 3D fit preview and a sourced score help?" Evidence: survey sent to our first-party panel; results and receipts above.
 - **Impact of decisions (changed / kept / ruled out):** Kept the Fit Lab as the lead feature; kept sources and ranges on every score because trust in automatic scores was low; ruled out foot traffic and competitor counts as headline metrics; added entrance/queue, ventilation and electrical checks and a sales-vs-rent check to the backlog. Early pilot, so directional.
 - **Proposed solution:** live-data site shortlist + 3D layout agent (this repo).
-- **Supporting evidence (what was actually tested vs simulated):** Real: live NYC / MTA open-data queries, USGS LiDAR, PLUTO lot data, Google 3D tiles, product pages and list prices, and a survey answered by real people on our first-party panel. Estimated or assumed, and labelled so in the app: unit dimensions (from lot data), ceiling height, door position. Simulated: nothing is presented as user feedback; there are no synthetic respondents and no fabricated results. The layout itself is generated by rules, not validated with owners.
+- **Supporting evidence (what was actually tested vs simulated):** Real: live NYC / MTA open-data queries, USGS LiDAR, PLUTO lot data, Google 3D tiles, product pages and list prices, and the pilot survey above, answered by people on our first-party panel. Estimated or assumed, and labelled so in the app: unit dimensions (from lot data), ceiling height, door position. Simulated: the pilot survey has no synthetic respondents and no fabricated results. The MCP Challenge agent run is different and is labelled as such: its surveys were answered only by AI-generated test-persona responses submitted by our AI assistant, with 0 independent human respondents, so it demonstrates the agent and is not evidence of demand. The layout itself is generated by rules, not validated with owners.
 - **Limitations and next steps:** no pedestrian counts or rent data; unit size is an estimate from lot data (±0.6 m) until someone measures; ceiling height is assumed; the layout is rule-generated with one counter position (across the back) and needs professional review; the Google 3D facade alignment was checked on 2905 Broadway only. Next: store-type templates (side counter, loop circulation), listing integration, floor-plan upload, interviews with owners.
 
 ## Run locally
