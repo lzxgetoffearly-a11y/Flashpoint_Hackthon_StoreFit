@@ -140,6 +140,9 @@ const TOOLS = [
 ];
 
 let skipWait = null;
+// Without a terminal (background run), `kill -USR1 <pid>` ends the current wait the same way Enter does.
+process.on("SIGUSR1", () => { if (skipWait) skipWait(); });
+fs.writeFileSync(path.join(runDir, "pid"), String(process.pid));
 if (process.stdin.isTTY) {
   process.stdin.setEncoding("utf8");
   process.stdin.on("data", () => { if (skipWait) skipWait(); });
