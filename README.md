@@ -39,7 +39,6 @@ We give an AI agent one sentence and it does the research itself through the Fla
    Result: 21 seats without a sofa 3, 14 seats with a sofa 2. A laptop-free third of the room at peak: 3 for, 2 against. Most-wanted service: an order-ahead pickup shelf (3 of 5).
 7. **Final recommendation:** a study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent notes that this won by a single vote and that the layout still fails the one-exit check.
 
-To see the chosen layout: open the [live app](https://lzxgetoffearly-a11y.github.io/flashpoint-hackthon/), Start a search, 2905 Broadway, Fit a cafe in this space, then choose Max seating.
 
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
