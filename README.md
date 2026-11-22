@@ -28,17 +28,40 @@ We give an AI agent one sentence and it does the research itself through the Fla
 **Objective given to the agent:**
 > Figure out what kind of cafe we should open in the vacant storefront at 2905 Broadway, next to Columbia University: who it should serve, what it should offer, and which layout to build.
 
-**What the agent decided, in order** (run `2026-11-22T05-58-32`, about 35 minutes):
-1. Wrote down five hypotheses with a confidence for each (for example "mostly takeaway" at 50%, "there is a long-stay study crowd" at 55%).
-2. Compared StoreFit's three layouts for the unit with the same planner the Fit Lab uses: Grab-and-go (9 seats), Your brief (14 seats, sofa lounge), Max seating (21 seats). All three fail the one-exit check.
-3. Called Flashpoint `demographics` for the address to check who lives nearby. The data came back at county level (all of Manhattan), so the agent turned to its own survey for the local picture.
-4. **Round 1.** Wrote an 11-question survey with branching (cafe owners and workers get an extra operator question), published it and emailed the panel: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
-   Result: Max seating 2, Balanced lounge 2, Grab-and-go 1. Banquette and two-tops ranked ahead of the sofa and the window bar.
-5. Updated its notebook ("mostly takeaway" 50% to 25%, "long-stay study crowd" 55% to 70%) and judged that one question was still open: more seats, or fewer and calmer.
-6. **Round 2 (follow-up, its own decision).** Wrote a second survey about exactly that trade-off, quoting round-1 comments from both camps: https://flashpointopinions.com/55d4c1dc-fa98-4676-a65b-3be8b2c1f8b0
-   Result: 21 seats without a sofa 3, 14 seats with a sofa 2. A laptop-free third of the room at peak: 3 for, 2 against. Most-wanted service: an order-ahead pickup shelf (3 of 5).
-7. **Final recommendation:** a study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent notes that this won by a single vote and that the layout still fails the one-exit check.
+**What the agent did, lap by lap.** Nobody told it which questions to ask, how many rounds to run, or when to stop. Everything below is from the run log (run `2026-11-22T05-58-32`, about 35 minutes).
 
+**1. It started with guesses, and put a number on each.** Five hypotheses with a confidence level, before any data. For example: "demand is mostly quick takeaway" 50%, "a real group wants to sit and study for hours" 55%, "a balanced layout is the best fit" 40%.
+
+**2. It checked what it could before asking anyone.** It ran StoreFit's own layout planner to see what the room can hold (9, 14 or 21 seats), and those three layouts became answer options in its survey. It also called Flashpoint `demographics` for the address to check who lives nearby. The data came back at county level (all of Manhattan), so the agent turned to its own survey for the local picture.
+
+**3. Round 1: it designed a survey that adapts to the person answering.** The agent wrote the whole brief itself and chose the question types: single choice, a drag-to-rank of five seating styles, multi-select and open text.
+- **Branching inside the survey.** The first question asks who you are, and that answer changes what you see next. Customers get three questions about their habits (why they come, how long they stay, what they do when the cafe is full). A cafe owner or worker skips those and instead gets an operator question: "From an operator's view, what is the biggest risk with a ~23×47 ft cafe like this?" Both paths then rejoin for the layout questions.
+- It had Flashpoint run a survey check, then published and sent the invitations itself, passing two confirmation steps.
+- Survey: https://flashpointopinions.com/bd639614-5465-45e7-836a-90255c3c9229
+
+**4. It read the answers and changed its mind.** Round 1 came back split: Max seating 2, Balanced 2, Grab-and-go 1.
+
+| Hypothesis | Before | After round 1 |
+|---|---|---|
+| Demand is mostly quick takeaway | 50% | **25%** |
+| A real group wants to sit and study for hours | 55% | **70%** |
+| Sofas are valued less than tables and banquettes | 35% | **60%** |
+| Best layout | "Balanced" 40% | **replaced by "Max seating" 45%** |
+
+It also named what was still unsettled: the people who chose Max cared about getting a seat, and the people who chose Balanced cared about quiet.
+
+**5. Round 2: it wrote a sharper follow-up about exactly that disagreement.** This round was the agent's own decision.
+- **It quoted round 1 back.** The new survey opens with both camps' own words ("more small tables so everyone can sit" against "fewer, nicer seats with a quiet corner") and then forces the trade-off: 21 busier seats, or 14 calmer ones?
+- **It corrected its own questions while writing them.** Mid-brief it wrote "Wait—instead ask" and replaced a vague question with a concrete trade-off. It also swapped a 0–10 slider for a plain Yes / Maybe / No.
+- **It asked about things it had only learned in round 1.** A laptop-free zone and an order-ahead pickup shelf both came from round-1 open answers.
+- **New branching.** Owners and workers skip two customer questions and get "At peak, how many staff do you think a cafe this size needs behind the counter?"
+- Survey: https://flashpointopinions.com/55d4c1dc-fa98-4676-a65b-3be8b2c1f8b0
+
+**6. It handled a failure without help.** The send call for round 2 timed out after 600 seconds. Instead of sending again blindly, the agent asked Flashpoint for the status first, and Flashpoint reported the 7 invitations as sent. When its first read of the results showed no answers yet, it waited and read again.
+
+**7. It decided when to stop, and criticised its own work.** Round 2 went 3 to 2 for the 21-seat room. The agent raised "Max seating is best" to 55%, added a new hypothesis (a laptop-free zone and a pickup shelf are worth building, 55%), and judged that "a third round would not change the recommendation", so it stopped with one round of its limit unused. In its report it flags its own mistakes: one round-1 question described Max as "more crowded", which may have biased answers, and one round-2 question was clumsily worded.
+
+**8. Final recommendation.** A study-friendly, seat-rich neighbourhood cafe for Columbia students and staff, with outlets at tables, a laptop-free zone and an order-ahead pickup shelf kept away from the seating, built as the **Max seating** layout (21 seats). The agent states that this won by a single vote, and that the layout still fails the one-exit check and needs a design professional.
 
 **Run logs:** [`agent/runs/2026-11-22T05-58-32/`](agent/runs/2026-11-22T05-58-32/). `REPORT.md` has every decision, every brief the agent wrote, every Flashpoint reply and the payment receipts; `log.jsonl` is the raw event log.
 
